@@ -1,41 +1,39 @@
-package StudyShare.src.services.microservices.filehandling;
+package src.services.microservices.filehandling;
 
-import java.nio.Files;
-import java.nio.Paths;
-import StudyShare.src.services.microservices.filehandling.CustomFilePool;
-
-public class CustomFile {
+import java.io.File;
+import java.io.FileNotFoundException;
+/*TBD : add a function to obtain name of the file by substringing the path. 
+This class acts as a placeholder for the file name and its contents*/
+public class CustomFile{
 	private String path;
+	private String fName;
 	private byte[] fileContents;
-	private static CustomFilePool customFilePool;
-	/* Sharing an instance of the file pool to prevent the main thread from being blocked*/
-	static{
-		CustomFile.customFilePool=new CustomFilePool();
-	}
+	private long fileSize;
+	public CustomFile(String path,byte[] bytes)throws FileNotFoundException{
+		File f=new File(path);
+		if(!f.exists()) throw new FileNotFoundException();
 
-	public CustomFile(String path){
+		this.fName=f.getName();
+		this.fileSize=f.length();
 		this.path=path;
-		this.readFile();
-	}
-	/*Reads the file in a thread and adds it to the file pool */
-	private void readFile(){
-		new Thread(new Runnable(){
-			
-			@Override
-			public void run(){
-				CustomFile.this.fileContents=Files.readAllBytes(Paths.get(this.path));
-				CustomFile.customFilePool.add(CustomFile.this);
-			}
-		}).start();
+
+		this.fileContents=bytes;
 	}
 
 	public byte[] getContents(){
 		return this.fileContents;
 	}
-
-	public CustomFilePool getPool(){
-		return CustomFile.customFilePool;
+	
+	public String getPath(){
+		return this.path;
 	}
+	
+
+	@Override
+	public String toString(){
+		return "{fName:"+this.fName+",path:"+this.path+",fileSize:"+this.fileSize+"}";
+	}
+
 	
 
 
