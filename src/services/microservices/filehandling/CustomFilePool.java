@@ -1,6 +1,7 @@
-package StudyShare.src.services.microservices.filehandling;
+package src.services.microservices.filehandling;
 
 import java.util.HashMap;
+import src.services.microservices.filehandling.CustomFile;
 public class CustomFilePool{
 	private HashMap <String,CustomFile>pool;
 
@@ -22,15 +23,20 @@ public class CustomFilePool{
 	public boolean isPoolEmpty(){
 		return this.pool.isEmpty();
 	}
-	public boolean getPoolSize(){
+	public int getPoolSize(){
 		return this.pool.size();
 	}
 	public void clearPool(){
 		this.pool.clear();
 	}
 	public boolean containsKey(String key){
-		return this.pool.contains(key);
+		return this.pool.containsKey(key);
 	}
+	/* this function returns the paths that are stored in the list*/
+	public Set getKeySet(){
+		return this.pool.keySet();
+	}
+	
 
-
+	
 }
