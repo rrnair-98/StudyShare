@@ -7,5 +7,8 @@ public class Server{
 	static{
 	
 	}
+	public static void main(String ar[]){
+		
+	}
 
 }
