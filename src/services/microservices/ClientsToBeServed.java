@@ -8,7 +8,7 @@ public class ClientsToBeServed{
 	private ArrayList <String>accesibleFilePaths;
 
 	private Socket socket;	
-	public Client(final Socket sock,final ArrayList accessible){
+	public ClientsToBeServed(final Socket sock,final ArrayList accessible){
 
 		this.socket=sock;
 		this.accesibleFilePaths=accessible;
