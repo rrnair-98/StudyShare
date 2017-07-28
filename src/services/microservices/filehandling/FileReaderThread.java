@@ -31,7 +31,7 @@ public class FileReaderThread extends Thread{
 		private void loop(){
 			for(int i=this.begIndex;i<this.finalIndex;i++){
 				String path=this.filePaths.get(i);
-				FileReaderThread.pool.add(FileReaderThread.readFile(path));
+				FileReaderThread.pool.add(path,FileReaderThread.readFile(path));
 
 			}
 		}
@@ -52,8 +52,6 @@ public class FileReaderThread extends Thread{
 		}
 		
 		
-
-
 
 
 }
