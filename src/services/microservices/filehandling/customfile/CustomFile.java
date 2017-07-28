@@ -4,16 +4,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 /*TBD : add a function to obtain name of the file by substringing the path. 
 This class acts as a placeholder for the file name and its contents*/
+@Author 
 public class CustomFile{
 	private String path;
-	private String fName;
+	private String fileName;
 	private byte[] fileContents;
 	private long fileSize;
 	public CustomFile(String path,byte[] bytes)throws FileNotFoundException{
 		File f=new File(path);
 		if(!f.exists()) throw new FileNotFoundException();
 
-		this.fName=f.getName();
+		this.fileName=f.getName();
 		this.fileSize=f.length();
 		this.path=path;
 
@@ -31,7 +32,7 @@ public class CustomFile{
 
 	@Override
 	public String toString(){
-		return "{fName:"+this.fName+",path:"+this.path+",fileSize:"+this.fileSize+"}";
+		return "{fileName:"+this.fileName+",path:"+this.path+",fileSize:"+this.fileSize+"}";
 	}
 
 	

@@ -29,7 +29,7 @@ public class CustomFilePool{
 	public void clearPool(){
 		this.pool.clear();
 	}
-	public boolean containsKey(String key){
+	public boolean containsKey(final String key){
 		return this.pool.containsKey(key);
 	}
 	/* this function returns the paths that are stored in the list*/
