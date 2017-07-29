@@ -1,34 +1,156 @@
 /* To be used by SERVER ONLY. Will be placed in authenticated Que.*/
-package src.services.microservices;
+package services.microservices;
+import javafx.concurrent.Task;
+
+import java.io.PrintWriter;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.net.Socket;
-
-public class ClientsToBeServed{
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import services.microservices.database.DatabaseHandler;
+/*@author: Rohan
+This class will be created for every user that hits the server. It does the following things
+*  1.Authenticates the user.
+*  2.Provides information about the user.(username and jointime)
+*  3.Maintains a list of accessibleFiles.
+*  4.Will communicate with the user once the user has been authenticated.
+*
+* */
+public class ClientsToBeServed extends Task<Boolean>{
 	//acessibleFilePaths will be obtained from the authenticator thread.
-	private ArrayList <String>accesibleFilePaths;
+	private ArrayList <String>accessibleFilePaths;
+	private static DatabaseHandler databaseHandler;
+	static{
+		ClientsToBeServed.databaseHandler=new DatabaseHandler();
+	}
+	private Socket socket;
 
-	private Socket socket;	
+	//will be set whenever call is executed
+	private UserInfo userInfo;
+	private boolean isAuthenticated;
+
 	public ClientsToBeServed(final Socket sock,final ArrayList accessible){
 
 		this.socket=sock;
-		this.accesibleFilePaths=accessible;
+		this.accessibleFilePaths=accessible;
 
 	}
 
 
 	public ArrayList<String> getAccessibleFiles(){
-		return this.accesibleFilePaths;
+		return this.accessibleFilePaths;
 	}
 
-	public OutputStream getOutputStream(){
+	public OutputStream getOutputStream()throws IOException{
 		return this.socket.getOutputStream();
 	}
-	public InputStream getInputStream(){
+	public InputStream getInputStream()throws IOException{
 		return this.socket.getInputStream();
 	}
 
-	
+	public void setUserInfo(UserInfo user){
+		this.userInfo=user;
+	}
+
+	public UserInfo getUserInfo() {
+		return this.userInfo;
+	}
+
+	private void setIsAuthenticated(boolean b){
+		this.isAuthenticated=b;
+	}
 
 
+	public boolean isAuthenticated(){return this.isAuthenticated;}
+
+	@Override
+	public Boolean call(){
+     /* TBD open streams and check the db for valid username password combo.
+     * Set required vars (isAuth and userInfo)thereafter
+     * */
+		PrintWriter printWriter=null;BufferedReader bufferedReader=null;
+		try{
+			printWriter=new PrintWriter(this.getOutputStream());
+			bufferedReader=new BufferedReader(new InputStreamReader(this.getInputStream()));
+
+			String s;
+			String arr[]=new String[2];
+			while((s= bufferedReader.readLine())!=null){
+				if(s.contains("username") && s.contains("password")){
+					//extracting username and password
+              /* The string is expected to be sent as a json string ie
+              {
+                 username: "helloWorld",
+                 password: "somePassword"
+
+              }*/
+					Pattern pattern= Pattern.compile("\"(.*?)\"");
+					Matcher matcher= pattern.matcher(s);
+					int m=0;
+					try {
+						while (matcher.find())
+							arr[m++] = matcher.group(1);
+
+						//username and password extracted succesfully
+						if(ClientsToBeServed.databaseHandler.verifyUser(arr[0],arr[1])) {
+							ClientsToBeServed.this.setUserInfo(new UserInfo(arr[0], System.currentTimeMillis()));
+							ClientsToBeServed.this.setIsAuthenticated(true);
+							//TBD code to place in Authenticated queue ... Done by authenticator?
+							return true;
+						}
+
+						return false;
+
+
+					}catch (ArrayIndexOutOfBoundsException arrayIndex){
+						//thrown only when a unformatted string is received.
+						arrayIndex.printStackTrace();
+					}
+				}
+			}
+
+
+
+
+		}catch (IOException ioe){
+			ioe.printStackTrace();
+		}finally {
+        /* Always executed gc :)*/
+			try{
+				if(printWriter!=null)
+					printWriter.close();
+				if(bufferedReader!=null)
+					bufferedReader.close();
+			}catch (IOException ioe){
+				ioe.printStackTrace();
+			}
+		}
+
+		return false;
+
+	}
+
+
+	//TBD add a reference of another task object for the authenticated queue.
+
+
+
+	class UserInfo {
+		private String username;
+		private long joinTime;
+
+		public UserInfo(String username,long joinTime){
+			this.username=username;
+			this.joinTime=joinTime;
+		}
+
+		public String getUsername(){return this.username;}
+		public long getJoinTime(){return this.joinTime;}
+	}
 
 }
