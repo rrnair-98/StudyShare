@@ -1,10 +1,12 @@
-package src.services.microservices.filehandling;
+package services.microservices.filehandling.customfile;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-/*TBD : add a function to obtain name of the file by substringing the path. 
+/*
+@Author Rohan
+TBD : add a function to obtain name of the file by substringing the path.
 This class acts as a placeholder for the file name and its contents*/
-@Author 
+
 public class CustomFile{
 	private String path;
 	private String fileName;

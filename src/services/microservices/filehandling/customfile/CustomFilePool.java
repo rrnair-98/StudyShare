@@ -1,7 +1,9 @@
-package src.services.microservices.filehandling;
+package services.microservices.filehandling.customfile;
 
 import java.util.HashMap;
-import src.services.microservices.filehandling.CustomFile;
+import java.util.Set;
+
+import services.microservices.filehandling.customfile.CustomFile;
 public class CustomFilePool{
 	private HashMap <String,CustomFile>pool;
 
@@ -33,7 +35,7 @@ public class CustomFilePool{
 		return this.pool.containsKey(key);
 	}
 	/* this function returns the paths that are stored in the list*/
-	public Set getKeySet(){
+	public Set<String> getKeySet(){
 		return this.pool.keySet();
 	}
 	

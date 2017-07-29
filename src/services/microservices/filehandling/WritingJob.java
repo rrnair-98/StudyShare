@@ -1,4 +1,4 @@
-package StudyShare.src.services.microservices.filehandling;
+package services.microservices.filehandling;
 import java.nio.file.Files;
 import java.io.DataOutputStream;
 import java.io.File;
