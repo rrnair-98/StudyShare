@@ -1,30 +1,38 @@
 package services.microservices.filehandling;
 import java.nio.file.Files;
 import java.io.DataOutputStream;
+import java.io.OutputStream;
 import java.io.File;
 import java.io.IOException;
+import javafx.scene.control.ProgressBar;
+//import src.services.microservices.ClientsToBeServed;
+/*
+Does all the low level writing jobs and implements ProgressBarUpdater interface 
 
-public class WritingJob
+	@author Pratik Tiwari
+	
+*/
+public class WritingJob implements ProgressBarUpdater
 {
-	User user;
 	File file;
 	DataOutputStream dos;
-	WritingJob(File file,User user)
+	ProgressBar pgb;
+	WritingJob(File file,OutputStream dos)
 	{
-		this.user=user;
+		this.dos=new DataOutputStream(dos);
 		this.file=file;		
 	}
-	public void writeToUser() throws IOException
+	public void setProgress(ProgressBar pgb)
 	{
-		dos=user.getOutputStream();
-		int progressInc=0;
-		byte data[]=File.readAllBytes(file.toPath());
-		progressInc=0;
-		for(byte byt:data)
+		this.pgb=pgb;
+	}
+	public void writeJob() throws IOException
+	{
+		byte data[]=Files.readAllBytes(file.toPath());
+		for(int i=0;i<data.length;i++)
 		{
-			dos.write(byt);
-			progressInc++;
-			user.updateProgress(progressInc,data.length);
+			dos.write(data[i]);
+			pgb.setProgress(i);
 		}
 		dos.close();
 	}
