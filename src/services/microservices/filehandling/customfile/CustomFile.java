@@ -30,7 +30,7 @@ public class CustomFile{
 	public String getPath(){
 		return this.path;
 	}
-	
+	public String getFileName(){return this.fileName;}
 
 	@Override
 	public String toString(){

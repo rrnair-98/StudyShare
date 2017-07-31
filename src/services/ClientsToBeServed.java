@@ -1,5 +1,5 @@
 /* To be used by SERVER ONLY. Will be placed in authenticated Que.*/
-package services.microservices;
+package services;
 import javafx.concurrent.Task;
 
 import java.io.PrintWriter;
@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.net.Socket;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import services.microservices.UserInfo;
 import services.microservices.database.DatabaseHandler;
 /*@author: Rohan
 This class will be created for every user that hits the server. It does the following things
@@ -21,7 +22,7 @@ This class will be created for every user that hits the server. It does the foll
 *  4.Will communicate with the user once the user has been authenticated.
 *
 * */
-public class ClientsToBeServed extends Task<Boolean>{
+public class ClientsToBeServed implements Runnable{
 	//acessibleFilePaths will be obtained from the authenticator thread.
 	private ArrayList <String>accessibleFilePaths;
 	private static DatabaseHandler databaseHandler;
@@ -69,7 +70,7 @@ public class ClientsToBeServed extends Task<Boolean>{
 	public boolean isAuthenticated(){return this.isAuthenticated;}
 
 	@Override
-	public Boolean call(){
+	public void run(){
      /* TBD open streams and check the db for valid username password combo.
      * Set required vars (isAuth and userInfo)thereafter
      * */
@@ -98,14 +99,14 @@ public class ClientsToBeServed extends Task<Boolean>{
 
 						//username and password extracted succesfully
 						if(ClientsToBeServed.databaseHandler.verifyUser(arr[0],arr[1])) {
-							ClientsToBeServed.this.setUserInfo(new UserInfo(arr[0], System.currentTimeMillis()));
-							ClientsToBeServed.this.setIsAuthenticated(true);
-							//TBD code to place in Authenticated queue ... Done by authenticator?
-							return true;
+							ClientsToBeServed.this.setUserInfo(new UserInfo(arr[0], System.currentTimeMillis(),this.getInputStream(),this.getOutputStream()));
+							ClientsToBeServed.this.isAuthenticated=true;
+							//TBD code to place in Authenticated queue ... Done by authenticator?adding an interface?
+							printWriter.println(s);
+							return;
 						}
 
-						return false;
-
+						printWriter.println("couldnt be authenticated");
 
 					}catch (ArrayIndexOutOfBoundsException arrayIndex){
 						//thrown only when a unformatted string is received.
@@ -131,8 +132,6 @@ public class ClientsToBeServed extends Task<Boolean>{
 			}
 		}
 
-		return false;
-
 	}
 
 
@@ -140,17 +139,5 @@ public class ClientsToBeServed extends Task<Boolean>{
 
 
 
-	class UserInfo {
-		private String username;
-		private long joinTime;
-
-		public UserInfo(String username,long joinTime){
-			this.username=username;
-			this.joinTime=joinTime;
-		}
-
-		public String getUsername(){return this.username;}
-		public long getJoinTime(){return this.joinTime;}
-	}
 
 }
