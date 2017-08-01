@@ -43,16 +43,9 @@ public class FileReaderTask implements Runnable{
 
 		try{
 					byte fileBytes[] = Files.readAllBytes(Paths.get(this.filePath));
-
 					FileReaderTask.pool.add(this.filePath, new CustomFile(this.filePath, fileBytes));
-
-
 		}catch (IOException exception){
 			Logger.wtf(exception.toString());
 		}
-
-
 	}
-
-
 }

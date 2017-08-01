@@ -4,6 +4,10 @@ import services.microservices.FileReaderTask;
 
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
+/*
+@author Pratik
+Manages the File reading task threads
+*/
 public class FileReaderRunnablePool {
     private static ScheduledThreadPoolExecutor readerPool;
     static{

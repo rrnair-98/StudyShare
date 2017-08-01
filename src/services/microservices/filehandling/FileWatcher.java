@@ -1,19 +1,18 @@
-package 
+package services.microservices.filehandling;
 import java.io.IOException;
-import java.nio.WatchService;
-import java.nio.WatchEvent;
-import java.nio.WatchKey;
-import java.nio.Path;
-import java.nio.Paths;
-import java.nio.FileSystems;
-import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
-import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATED;
-import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETED;
-import static java.nio.file.StandardWatchEventKinds.ENTRY_OVERFLOW;
-import src.services.microservices.filehandling.CustomFilePool;
-import src.services.microservices.filehandling.CustomFile;
+import java.nio.file.*;
 
-/*Saves changes to the file pool if some file gets modified in the watched directory. The full path of the subdirectory should be provided if any*/
+import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
+import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
+import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
+//import static java.nio.file.StandardWatchEventKinds.ENTRY_OVERFLOW;
+import services.microservices.filehandling.customfile.CustomFile;
+import services.microservices.filehandling.customfile.CustomFilePool;
+
+/*
+@author Pratik
+Saves changes to the file pool if some file gets modified in the watched directory. The full path of the subdirectory should be provided if any
+*/
 
 public class FileWatcher extends Thread
 {
@@ -27,42 +26,48 @@ public class FileWatcher extends Thread
 		this.cfp=cfp;
 		this.watcher = FileSystems.getDefault().newWatchService();
         Path dir = Paths.get(path);
-        dir.register(watcher,ENTRY_MODIFY,ENTRY_CREATED,ENTRY_DELETED); //ONLY THE REQUIRED EVENT IS REGISTERED.
+        dir.register(watcher,ENTRY_MODIFY,ENTRY_CREATE,ENTRY_DELETE); //ONLY THE REQUIRED EVENT IS REGISTERED.
 		start();
 		}
 		catch(IOException e){}
 	}
 	public void run()
 	{
-		while(true){
-		try{
-			WatchKey key=watcher.take(); 
-			for(WatchEvent<?> e:key.pollEvents())
-			{
-				WatchEvent.Kind<?> kind=e.kind();
-				switch(kind)
-				{
-					case ENTRY_MODIFY:
-						WatchEvent<Path> pev=(WatchEvent<Path>)e;
-						Path p=e.context();
-						cfp.add(p.toString,new CustomFile(p.toString()));
-					break;
-					case ENTRY_CREATED:
-						WatchEvent<Path> pev=(WatchEvent<Path>)e;
-						Path p=e.context();
-						cfp.add(p.toString(),new CustomFile(p.toString()));
-					break;
-					case ENTRY_DELETED:
-						WatchEvent<Path> pev=(WatchEvent<Path>)e;
-						Path p=e.context();
-						cfp.remove(p.toString());
-					break;
+		try {
+			while (true) {
+				try {
+					WatchKey key = watcher.take();
+					for (WatchEvent<?> e : key.pollEvents()) {
+						WatchEvent.Kind<?> kind = e.kind();
+						if(kind==ENTRY_MODIFY)
+						{
+							WatchEvent<Path> pev = (WatchEvent<Path>) e;
+							Path p = pev.context();
+							cfp.add(p.toString(), new CustomFile(p.toString(), Files.readAllBytes(p)));
+						}
+						else if(kind==ENTRY_CREATE)
+						{
+							WatchEvent<Path> pev = (WatchEvent<Path>) e;
+							Path p = pev.context();
+							cfp.add(p.toString(), new CustomFile(p.toString(),Files.readAllBytes(p)));
+						}
+						else if(kind==ENTRY_DELETE)
+						{
+							WatchEvent<Path> pev = (WatchEvent<Path>) e;
+							Path p = pev.context();
+							cfp.remove(p.toString());
+						}
+
+					}
+					if (key.reset() == false)
+						break;
+				} catch (IOException e) {
 				}
 			}
-			if(key.reset()==false)
-				break;
 		}
-		catch(IOException e){}
+		catch(InterruptedException ie)
+		{
+
 		}
 	}
 }
