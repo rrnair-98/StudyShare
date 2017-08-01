@@ -30,8 +30,6 @@ public class FileReaderTask implements Runnable{
 		if(!file.exists())
 			throw new FileNotFoundException();
 		this.filePath=filePath;
-
-
 	}
 
 
