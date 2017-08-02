@@ -1,9 +1,8 @@
 package services.microservices.utilities;
 
-import javafx.application.Platform;
 import javafx.scene.control.ProgressBar;
-/*import org.json.JSONException;
-import org.json.JSONObject;*/
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.*;
 import java.math.BigInteger;
@@ -22,17 +21,21 @@ import java.util.zip.ZipOutputStream;
 import services.microservices.filehandling.customfile.CustomFile;
 import services.microservices.utilities.logger.Logger;
 
+<<<<<<< Updated upstream
 /*
 *@author Pratik
 *This class contains methods that are going to be used frequently.
 * Has several functions
 * */
+=======
+>>>>>>> Stashed changes
 public class Housekeeper{
 
-    public static byte[] getCompressedBytes(String inputfilepath)
+    public static byte[] getCompressedBytes(String inputfilepath) throws IOException
     {
-        String fileName = inputfilepath.substring(inputfilepath.lastIndexOf("//"+2),inputfilepath.length());
+        String fileName = inputfilepath.substring(inputfilepath.length() - 1, inputfilepath.lastIndexOf("//"));
         File f = new File("d:\\" + fileName + ".zip");
+<<<<<<< Updated upstream
         byte output[] = {0};
         try {
 
@@ -50,13 +53,28 @@ public class Housekeeper{
             } else {
                 output = Files.readAllBytes(f.toPath());
             }
+=======
+        byte output[]={0};
+        if(f.exists()==false) {
+            File inputfileobj=new File(inputfilepath);
+            ZipOutputStream out = new ZipOutputStream(new FileOutputStream(f));
+            ZipEntry e = new ZipEntry(fileName);
+            out.putNextEntry(e);
+            byte[] data = Files.readAllBytes(inputfileobj.toPath());
+            out.write(data,0, data.length);
+            out.closeEntry();
+            out.close();
+             output= Files.readAllBytes(f.toPath());
+            //f.delete();
+>>>>>>> Stashed changes
         }
-        catch (IOException ie)
+        else
         {
-            Logger.wtf(ie.toString());
+            output=Files.readAllBytes(f.toPath());
         }
         return output;
     }
+<<<<<<< Updated upstream
     public static void writeJob(final OutputStream os, final CustomFile file, final ProgressBar pgb)
     {
 
@@ -147,3 +165,17 @@ public class Housekeeper{
 
 
 }
+=======
+    public static void writeJob(OutputStream os, CustomFile file, ProgressBar pgb) throws IOException
+    {
+        DataOutputStream dos=new DataOutputStream(os);
+        byte data[]=file.getContents();
+        for(int i=0;i<data.length;i++)
+        {
+            dos.write(data[i]);
+            pgb.setProgress(i);
+        }
+        dos.close();
+    }
+}
+>>>>>>> Stashed changes
