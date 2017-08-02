@@ -8,17 +8,25 @@ import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
 //import static java.nio.file.StandardWatchEventKinds.ENTRY_OVERFLOW;
 import services.microservices.filehandling.customfile.CustomFile;
 import services.microservices.filehandling.customfile.CustomFilePool;
+import services.microservices.utilities.logger.Logger;
 
 /*
-@author Pratik
-Saves changes to the file pool if some file gets modified in the watched directory. The full path of the subdirectory should be provided if any
-*/
+* @author Pratik
+* Saves changes to the file pool if some file gets modified in the watched directory.The full path of the subdirectory
+* should be provided if any. This class checks for the following kinds of events
+* 	1.ENTRY_MODIFY
+* 			will replace the file from the pool
+* 	2.ENTRY_CREATE
+* 			will add a file to filepool
+* 	3.ENTRY_DELETE
+* 			will remove a file from the pool
+* */
 
 public class FileWatcher extends Thread
 {
-	CustomFilePool cfp;
-	String path;
-	WatchService watcher;
+	private CustomFilePool cfp;//reference can be obtained from FileReaderRunnables.
+	private String path;
+	private WatchService watcher;
 	FileWatcher(String path,CustomFilePool cfp)
 	{
 		try{
@@ -29,7 +37,9 @@ public class FileWatcher extends Thread
         dir.register(watcher,ENTRY_MODIFY,ENTRY_CREATE,ENTRY_DELETE); //ONLY THE REQUIRED EVENT IS REGISTERED.
 		start();
 		}
-		catch(IOException e){}
+		catch(IOException e){
+			Logger.wtf(e.toString());
+		}
 	}
 	public void run()
 	{
@@ -43,31 +53,35 @@ public class FileWatcher extends Thread
 						{
 							WatchEvent<Path> pev = (WatchEvent<Path>) e;
 							Path p = pev.context();
-							cfp.add(p.toString(), new CustomFile(p.toString(), Files.readAllBytes(p)));
+							this.cfp.replace(p.toString(), new CustomFile(p.toString(), Files.readAllBytes(p)));
+							Logger.i("replacing "+p.toString()+" To pool");
 						}
 						else if(kind==ENTRY_CREATE)
 						{
 							WatchEvent<Path> pev = (WatchEvent<Path>) e;
 							Path p = pev.context();
-							cfp.add(p.toString(), new CustomFile(p.toString(),Files.readAllBytes(p)));
+							Logger.i("adding "+p.toString()+" To pool");
+							this.cfp.add(p.toString(), new CustomFile(p.toString(),Files.readAllBytes(p)));
 						}
 						else if(kind==ENTRY_DELETE)
 						{
 							WatchEvent<Path> pev = (WatchEvent<Path>) e;
 							Path p = pev.context();
-							cfp.remove(p.toString());
+							this.cfp.remove(p.toString());
+							Logger.i("removing "+p.toString()+" from pool");
 						}
 
 					}
-					if (key.reset() == false)
+					if (!key.reset() )
 						break;
 				} catch (IOException e) {
+					Logger.wtf(e.toString());
 				}
 			}
 		}
 		catch(InterruptedException ie)
 		{
-
+				Logger.wtf(ie.toString());
 		}
 	}
 }

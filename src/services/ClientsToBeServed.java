@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.net.Socket;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import services.microservices.Comms;
 import services.microservices.UserInfo;
 import services.microservices.database.DatabaseHandler;
 /*@author: Rohan
@@ -25,6 +27,8 @@ This class will be created for every user that hits the server. It does the foll
 public class ClientsToBeServed implements Runnable{
 	//acessibleFilePaths will be obtained from the authenticator thread.
 	private ArrayList <String>accessibleFilePaths;
+
+	private AuthenticatorQueMgr authenticatorQueMgr=null;
 	private static DatabaseHandler databaseHandler;
 	static{
 		ClientsToBeServed.databaseHandler=new DatabaseHandler();
@@ -35,10 +39,11 @@ public class ClientsToBeServed implements Runnable{
 	private UserInfo userInfo;
 	private boolean isAuthenticated;
 
-	public ClientsToBeServed(final Socket sock,final ArrayList accessible){
+	public ClientsToBeServed(final Socket sock,final AuthenticatorQueMgr authenticatorQueMgr){
 
 		this.socket=sock;
-		this.accessibleFilePaths=accessible;
+
+		this.authenticatorQueMgr=authenticatorQueMgr;
 
 	}
 
@@ -101,7 +106,9 @@ public class ClientsToBeServed implements Runnable{
 						if(ClientsToBeServed.databaseHandler.verifyUser(arr[0],arr[1])) {
 							ClientsToBeServed.this.setUserInfo(new UserInfo(arr[0], System.currentTimeMillis(),this.getInputStream(),this.getOutputStream()));
 							ClientsToBeServed.this.isAuthenticated=true;
-							//TBD code to place in Authenticated queue ... Done by authenticator?adding an interface?
+							//TBD code to place in Authenticated queue ie place a CommsObject... Done by authenticator?adding an interface?
+							this.authenticatorQueMgr.addToAuthenticator(new Comms(this.userInfo,null));
+
 							printWriter.println(s);
 							return;
 						}

@@ -38,6 +38,10 @@ public class CustomFilePool{
 	public Set<String> getKeySet(){
 		return this.pool.keySet();
 	}
+
+	public void replace(final String key,CustomFile customFile){
+		this.pool.replace(key,customFile) ;
+	}
 	
 
 	
