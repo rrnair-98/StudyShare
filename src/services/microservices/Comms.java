@@ -6,7 +6,7 @@ import services.AuthenticatorQueMgr;
 import services.microservices.filehandling.FileReaderRunnable;
 import services.microservices.filehandling.ProgressBarUpdater;
 import services.microservices.filehandling.customfile.CustomFile;
-import services.microservices.filehandling.threadpool.GeneralThreadPool;
+import services.microservices.threadpool.GeneralThreadPool;
 import services.microservices.utilities.Housekeeper;
 import services.microservices.utilities.logger.Logger;
 
@@ -54,6 +54,9 @@ public class Comms implements Runnable,ProgressBarUpdater,CommsConstants{
 
     private static String treeString;
 
+    //to be used to remove clients once they send a disconnect request or once an exception occurs.
+    private static AuthenticatorQueMgr queMgr;
+
 
     /* all these members are static since all Comms objs are going to share these and new memory
     * isnt required by them for all instances of this class.
@@ -69,11 +72,21 @@ public class Comms implements Runnable,ProgressBarUpdater,CommsConstants{
     }
 
 
+    public static void setQueMgr(AuthenticatorQueMgr authenticatorQueMgr){
+        Comms.queMgr=authenticatorQueMgr;
+    }
+
+
 
     //private boolean isServer;
 
+    public Comms(final UserInfo userInfo){
+        this.userInfo=userInfo;
+    }
+
+
     public Comms(final UserInfo userInfo,final ThreadNotifier threadNotifier){
-            this.userInfo=userInfo;
+            this(userInfo);
             this.threadNotifier=threadNotifier;
 
     }
@@ -109,7 +122,7 @@ public class Comms implements Runnable,ProgressBarUpdater,CommsConstants{
             this.printWriter=new PrintWriter(this.userInfo.getOutputStream(),true);
             bufferedReader=new BufferedReader(new InputStreamReader(this.userInfo.getInputStream()));
 
-            this.printWriter.println("{message: \""+this.userInfo.getUsername()+"sendin requested files\"}");
+            this.printWriter.println("{message: \""+this.userInfo.getUsername()+"sending requested files\"}");
 
             String s;
             while((s=bufferedReader.readLine())!=null){
@@ -142,6 +155,11 @@ public class Comms implements Runnable,ProgressBarUpdater,CommsConstants{
 
 
                 }
+                else if(s.contains("disconnect")){
+                    /* removing the user*/
+                    Comms.queMgr.removeFromAuthenticator(Comms.this);
+                    break;
+                }
 
             }
             if(this.threadNotifier!=null)
@@ -155,6 +173,8 @@ public class Comms implements Runnable,ProgressBarUpdater,CommsConstants{
 
 
         }catch (IOException ioe){
+            queMgr.removeFromAuthenticator(Comms.this);
+            Logger.wtf(ioe.toString());
             ioe.printStackTrace();
         }finally {
             try{

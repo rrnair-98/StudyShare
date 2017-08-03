@@ -1,4 +1,4 @@
-package services.microservices.filehandling.threadpool;
+package services.microservices.threadpool;
 
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 

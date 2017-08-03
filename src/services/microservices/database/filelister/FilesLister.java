@@ -1,10 +1,9 @@
-package services.microservices;
+package services.microservices.database.filelister;
 
+import services.microservices.ThreadNotifier;
 import services.microservices.utilities.logger.Logger;
 
-import java.awt.image.ImagingOpException;
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.io.File;
 /*

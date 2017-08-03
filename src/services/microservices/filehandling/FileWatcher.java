@@ -8,6 +8,7 @@ import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
 //import static java.nio.file.StandardWatchEventKinds.ENTRY_OVERFLOW;
 import services.microservices.filehandling.customfile.CustomFile;
 import services.microservices.filehandling.customfile.CustomFilePool;
+import services.microservices.filehandling.callback.ArrayListCallback;
 import services.microservices.utilities.logger.Logger;
 
 /*
@@ -20,22 +21,35 @@ import services.microservices.utilities.logger.Logger;
 * 			will add a file to filepool
 * 	3.ENTRY_DELETE
 * 			will remove a file from the pool
+*NOTE: FileWatcher's setFilePool and set filesChanged must be called atleast once
 * */
 
 public class FileWatcher extends Thread
 {
-	private CustomFilePool cfp;//reference can be obtained from FileReaderRunnables.
-	private String path;
+	private static CustomFilePool cfp;//reference can be obtained from FileReaderRunnables.
+	private String folderToWatch;
 	private WatchService watcher;
-	FileWatcher(String path,CustomFilePool cfp)
+	private static ArrayListCallback arrayListCallback;
+
+
+	/* to be called from within FileReaderRunnable*/
+	public static void setFilePool(CustomFilePool customFilePool){
+		FileWatcher.cfp=customFilePool;
+	}
+
+	/* to be called from within Server class*/
+	public static void setArrayListCallback(ArrayListCallback callback){
+		FileWatcher.arrayListCallback=callback;
+	}
+
+	public FileWatcher(String path)
 	{
 		try{
-		this.path=path;
-		this.cfp=cfp;
+		this.folderToWatch=path;
 		this.watcher = FileSystems.getDefault().newWatchService();
-        Path dir = Paths.get(path);
+        Path dir = Paths.get(this.folderToWatch);
         dir.register(watcher,ENTRY_MODIFY,ENTRY_CREATE,ENTRY_DELETE); //ONLY THE REQUIRED EVENT IS REGISTERED.
-		start();
+		this.start();
 		}
 		catch(IOException e){
 			Logger.wtf(e.toString());
@@ -49,27 +63,34 @@ public class FileWatcher extends Thread
 					WatchKey key = watcher.take();
 					for (WatchEvent<?> e : key.pollEvents()) {
 						WatchEvent.Kind<?> kind = e.kind();
+
+						WatchEvent<Path> pev = (WatchEvent<Path>) e;
+
+						Path p = pev.context();
+
 						if(kind==ENTRY_MODIFY)
 						{
-							WatchEvent<Path> pev = (WatchEvent<Path>) e;
-							Path p = pev.context();
-							this.cfp.replace(p.toString(), new CustomFile(p.toString(), Files.readAllBytes(p)));
+							FileWatcher.cfp.replace(p.toString(), new CustomFile(p.toString(), Files.readAllBytes(p)));
 							Logger.i("replacing "+p.toString()+" To pool");
+							if(FileWatcher.arrayListCallback!=null)
+								FileWatcher.arrayListCallback.onAdd(p.toString());
 						}
 						else if(kind==ENTRY_CREATE)
 						{
-							WatchEvent<Path> pev = (WatchEvent<Path>) e;
-							Path p = pev.context();
 							Logger.i("adding "+p.toString()+" To pool");
-							this.cfp.add(p.toString(), new CustomFile(p.toString(),Files.readAllBytes(p)));
+							FileWatcher.cfp.add(p.toString(), new CustomFile(p.toString(),Files.readAllBytes(p)));
+							if(FileWatcher.arrayListCallback!=null)
+								FileWatcher.arrayListCallback.onAdd(p.toString());
 						}
 						else if(kind==ENTRY_DELETE)
 						{
-							WatchEvent<Path> pev = (WatchEvent<Path>) e;
-							Path p = pev.context();
-							this.cfp.remove(p.toString());
+
+							FileWatcher.cfp.remove(p.toString());
 							Logger.i("removing "+p.toString()+" from pool");
+							if (FileWatcher.arrayListCallback!=null)
+								FileWatcher.arrayListCallback.onRemove(p.toString());
 						}
+
 
 					}
 					if (!key.reset() )

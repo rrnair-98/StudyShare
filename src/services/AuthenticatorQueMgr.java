@@ -11,7 +11,7 @@ import services.microservices.Comms;
 *       removes a comms from the list
 * */
 public interface AuthenticatorQueMgr {
-    public void addToAuthenticator(Comms comms);
-    public void removeFromAuthenticator(Comms comms);
+    public void addToAuthenticator(Comms comms,ClientsToBeServed clientToBeRemoved);
+    public void removeFromAuthenticator(Comms client);
 
 }

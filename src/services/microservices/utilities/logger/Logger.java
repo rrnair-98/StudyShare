@@ -58,6 +58,7 @@ public class Logger implements LoggerDefaults{
         Logger.write(LoggerDefaults.DEFAULT_DEBUG+stringToBeWritten,LoggerDefaults.DEBUG_INDEX);
     }
 
+    /* call for writing informative messagesGenerally about the user.*/
     public static void i(String toBeWritten){
         Logger.write(LoggerDefaults.DEFAULT_I+toBeWritten,LoggerDefaults.INFO_INDEX);
     }

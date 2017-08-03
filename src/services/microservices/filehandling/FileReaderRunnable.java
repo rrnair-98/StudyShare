@@ -6,14 +6,13 @@ import services.microservices.filehandling.customfile.CustomFile;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-import services.microservices.filehandling.threadpool.GeneralThreadPool;
+import services.microservices.threadpool.GeneralThreadPool;
 import services.microservices.utilities.Housekeeper;
 import services.microservices.utilities.logger.Logger;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-;
+
 /*
 * @author Rohan
 * This class reads files.
@@ -28,12 +27,12 @@ public class FileReaderRunnable implements Runnable,FileReaderRunnableConstants{
 	private static GeneralThreadPool fileReaderRunnableThreadPool;
 	private String filePath;
 
-	//redundant code ... Sharing reference of main list everywhere.
-	private static ArrayList<String> filesToBeRead;
+	//redundant code ... Sharing reference of main list everywhere. Not required as of now.
+	//private static ArrayList<String> filesToBeRead;
 
 	static{
 		FileReaderRunnable.pool = new CustomFilePool();
-		FileReaderRunnable.filesToBeRead=new ArrayList<String>();
+		//FileReaderRunnable.filesToBeRead=new ArrayList<String>();
 		FileReaderRunnable.fileReaderRunnableThreadPool=new GeneralThreadPool(FileReaderRunnable.MAX_QUE_SIZE);
 	}
 
@@ -48,9 +47,9 @@ public class FileReaderRunnable implements Runnable,FileReaderRunnableConstants{
 
 
 
-	public static void setFilesToBeRead(ArrayList<String> filesToBeRead){
+	/*public static void setFilesToBeRead(ArrayList<String> filesToBeRead){
 		FileReaderRunnable.filesToBeRead=filesToBeRead;
-	}
+	}*/
 
 
 	public static CustomFilePool getPool(){

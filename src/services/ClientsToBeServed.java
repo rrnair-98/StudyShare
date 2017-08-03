@@ -15,7 +15,8 @@ import java.util.regex.Pattern;
 
 import services.microservices.Comms;
 import services.microservices.UserInfo;
-import services.microservices.database.DatabaseHandler;
+import services.microservices.database.DatabaseHelper;
+
 /*@author: Rohan
 This class will be created for every user that hits the server. It does the following things
 *  1.Authenticates the user.
@@ -29,13 +30,13 @@ public class ClientsToBeServed implements Runnable{
 	private ArrayList <String>accessibleFilePaths;
 
 	private AuthenticatorQueMgr authenticatorQueMgr=null;
-	private static DatabaseHandler databaseHandler;
+	/*private static DatabaseHandler databaseHandler;
 	static{
 		ClientsToBeServed.databaseHandler=new DatabaseHandler();
-	}
+	}*/
 	private Socket socket;
 
-	//will be set whenever call is executed
+	//will be set whenever run is executed
 	private UserInfo userInfo;
 	private boolean isAuthenticated;
 
@@ -103,13 +104,14 @@ public class ClientsToBeServed implements Runnable{
 							arr[m++] = matcher.group(1);
 
 						//username and password extracted succesfully
-						if(ClientsToBeServed.databaseHandler.verifyUser(arr[0],arr[1])) {
+						if(DatabaseHelper.verifyUser(arr[0],Long.parseLong(arr[1]))) {
 							ClientsToBeServed.this.setUserInfo(new UserInfo(arr[0], System.currentTimeMillis(),this.getInputStream(),this.getOutputStream()));
 							ClientsToBeServed.this.isAuthenticated=true;
 							//TBD code to place in Authenticated queue ie place a CommsObject... Done by authenticator?adding an interface?
-							this.authenticatorQueMgr.addToAuthenticator(new Comms(this.userInfo,null));
+							this.authenticatorQueMgr.addToAuthenticator(new Comms(this.userInfo,null),this);
 
 							printWriter.println(s);
+
 							return;
 						}
 
@@ -142,7 +144,6 @@ public class ClientsToBeServed implements Runnable{
 	}
 
 
-	//TBD add a reference of another task object for the authenticated queue.
 
 
 
