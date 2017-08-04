@@ -35,6 +35,7 @@ public class Server implements ThreadNotifier,ServerConstants,ArrayListCallback{
 			Logger.wtf(io.toString());
 		}
 
+		Logger.initLogger();
 		this.authenticator=new Authenticator();
 
 

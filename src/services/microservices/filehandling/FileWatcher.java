@@ -72,8 +72,7 @@ public class FileWatcher extends Thread
 						{
 							FileWatcher.cfp.replace(p.toString(), new CustomFile(p.toString(), Files.readAllBytes(p)));
 							Logger.i("replacing "+p.toString()+" To pool");
-							if(FileWatcher.arrayListCallback!=null)
-								FileWatcher.arrayListCallback.onAdd(p.toString());
+							//no need to call add
 						}
 						else if(kind==ENTRY_CREATE)
 						{

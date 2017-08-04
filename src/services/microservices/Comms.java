@@ -155,7 +155,7 @@ public class Comms implements Runnable,ProgressBarUpdater,CommsConstants{
 
 
                 }
-                else if(s.contains("disconnect")){
+                else if(s.contains(CommsConstants.DC)){
                     /* removing the user*/
                     Comms.queMgr.removeFromAuthenticator(Comms.this);
                     break;
@@ -237,4 +237,5 @@ interface CommsConstants{
     public static final String RECEIVING_LIST="sendingRequest";
     public static final String LIST_REQUEST="giveMeList";
     public static final String ABORT_MESSAGE=" \nABORTING SEND OPERATION COULDNT FIND CLASS";
+    public static final String DC="disconnect";
 }

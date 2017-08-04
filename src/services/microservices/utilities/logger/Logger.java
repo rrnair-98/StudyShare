@@ -16,7 +16,7 @@ import java.util.Date;
 *This class is a logger. Will write to a local file.
 *To be used only by the server.
 *The function init must be called at least once before the file starts executing.
-*Class provides 2 static functions
+*Class provides 3 static functions
 *   1.d
 *       for writing debug messages
 *   2.wtf
@@ -32,7 +32,7 @@ public class Logger implements LoggerDefaults{
 
 
 
-    public static void initLogger(final String logFileName){
+    public static void initLogger(){
         String temp=new Date().toString();
         String arr[]={LoggerDefaults.DEFAULT_I,LoggerDefaults.DEFAULT_WTF,LoggerDefaults.DEFAULT_DEBUG};
         for(int i=0;i<3;i++){
@@ -80,6 +80,5 @@ interface LoggerDefaults{
     public static final String DEFAULT_DEBUG="DEBUG:\t";
     public static final String DEFAULT_WTF="WTF:\t";
     public static final String DEFAULT_I="INFO:\t";
-    public static final int DEBUG_INDEX=0;
-    public static final int INFO_INDEX=1,WTF_INDEX=2;
+    public static final int DEBUG_INDEX=0, INFO_INDEX=1,WTF_INDEX=2;
 }
