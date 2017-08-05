@@ -16,12 +16,15 @@ import interfaces.*;
 Comms is the main client communicating thread, this thread performs 3 tasks in this scenario
     1. Sends Login Details of a client to the server and waits until server's response is true or false (true means authenticated and false means otherwise).
     2. Requests the Server for the accessible file paths once authenticated by passing the ServerRequestConstant LIST_REQUEST.
-    3. Once the user has submitted the files to be requested list this threads downloads the files to User.dir/StudyShareDownload folder in the client machine.
+    3. Once the user has submitted the files (through SENDING_REQUEST) to be requested list this threads downloads the files to User.dir/StudyShareDownload folder in the client machine.
 
-This class makes the use of 2 interfaces ServerRequestMessages for LIST_REQUEST and SENDING_LIST constants and CommsMessages for the internal working of comms
+This class makes the use of 2 interfaces ServerRequestMessages for LIST_REQUEST and SENDING_LIST constants and CommsMessages for the internal working of comms and the application class
 
-FOR MAKING THE COMMS OBJECT PASS THE SOCKET'S STREAMS AND PROPERTY OBJECTS
+FOR MAKING THE COMMS OBJECT PASS THE SOCKET'S STREAMS
 APPLICATION CLASS SHOULD IMMEDIATELY CALL THE COMMS PROPERTY GETTERS FOR BIDIRECTIONAL BINDING AND SHOULD IMPLEMENT CHANGE LISTENER FOR THE RESPECTIVE PROPERTY OBJECTS
+THE APPLICATION CLASS SHOULD MAKE AND FOLLOW THE FOLLOWING BIND MAP
+APPLICATIONS'S COMMAND PROPERTY -----------BIDIRECTIONALLY BOUND WITH--------COMMS'S COMMAND PROPERTY
+APPLICATIONS'S COMMAND PROPERTY -----------BIDIRECTIONALLY BOUND WITH--------COMMS'S ACCESSFILESRECIEVED
  */
 public class Comms implements Runnable{
 
@@ -37,17 +40,13 @@ public class Comms implements Runnable{
     private DataInputStream downloadStream;
     private ArrayList<ProgressBar> pgbList;
 
-    public Comms(OutputStream clientOutputStream,InputStream clientInputStream,StringProperty commandProperty,BooleanProperty accessibleFilePathsRecieved){
+    public Comms(OutputStream clientOutputStream,InputStream clientInputStream){
         stringToBeWritten="";
         this.commandProperty=new SimpleStringProperty();
         this.serverWriterStream=clientOutputStream;
         this.serverReaderStream=clientInputStream;
         readyToRead=false;
         this.accessibleFilePathsRecieved= new SimpleBooleanProperty(false);
-        //this.startDownload = new SimpleBooleanProperty(false);
-        this.commandProperty.bindBidirectional(commandProperty);
-        this.accessibleFilePathsRecieved.bindBidirectional(accessibleFilePathsRecieved);
-        //this.startDownload.bindBidirectional(startDownload);
     }
     @Override
     public void run() {
@@ -122,17 +121,21 @@ public class Comms implements Runnable{
     public StringProperty getCommandProperty() {
         return this.commandProperty;
     }
-    public boolean checkAuthentication(String username,String password){
-        try {
-            String jsonCombo = "username:" + username + "password:" + password;
-            serverWriter.println(jsonCombo);
-            if (serverReader.readLine().equals(jsonCombo)) {
-                new Thread(this).start(); //MAKE THE THREAD ONLY IF THE CLIENT IS AUTHENTICATED
-                return true;
+    public void checkAuthentication(String username,String password){
+        //Perform the reading and writing once the UI thread is donw with all the processings
+        Platform.runLater(new Runnable(){
+            @Override
+            public void run(){
+                try {
+                    String jsonCombo = "username:" + username + "password:" + password;
+                    serverWriter.println(jsonCombo);
+                    if (serverReader.readLine().equals(jsonCombo)) {
+                        new Thread(Comms.this).start(); //MAKE THE THREAD ONLY IF THE CLIENT IS AUTHENTICATED
+                    }
+                }
+                catch(IOException i){
+                }
             }
-        }
-        catch(IOException i){
-        }
-        return false;
+        });
     }
 }
