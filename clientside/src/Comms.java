@@ -28,7 +28,7 @@ APPLICATIONS'S COMMAND PROPERTY -----------BIDIRECTIONALLY BOUND WITH--------COM
  */
 public class Comms implements Runnable{
 
-    private String stringToBeWritten;
+    private String serverRequest;
     private StringProperty commandProperty;
     private OutputStream serverWriterStream;
     private PrintWriter serverWriter;
@@ -41,11 +41,11 @@ public class Comms implements Runnable{
     private ArrayList<ProgressBar> pgbList;
 
     public Comms(OutputStream clientOutputStream,InputStream clientInputStream){
-        stringToBeWritten="";
+        serverRequest="";
         this.commandProperty=new SimpleStringProperty();
         this.serverWriterStream=clientOutputStream;
         this.serverReaderStream=clientInputStream;
-        readyToRead=false;
+        this.readyToRead=false;
         this.accessibleFilePathsRecieved= new SimpleBooleanProperty(false);
     }
     @Override
@@ -54,25 +54,25 @@ public class Comms implements Runnable{
         this.serverReader = new BufferedReader(new InputStreamReader(serverReaderStream));
         try {
             while (true) {
-                if (!this.stringToBeWritten.equals("")) {
-                    this.serverWriter.println(this.stringToBeWritten); // FOR PROPER EXECUTION CALL THE setStringToBeWritten() with the proper ServerRequestConstants
+                if (!this.serverRequest.equals("")) {
+                    this.serverWriter.println(this.serverRequest); // FOR PROPER EXECUTION CALL THE setserverRequest() with the proper ServerRequestConstants
                     this.readyToRead = true;//Once the request is performed the code is ready to run the sub loop is ready to read the server's response
                     while (this.readyToRead) {
                             String serverResponse = serverReader.readLine();
-                            if (serverResponse != null && this.stringToBeWritten.equals(ServerRequestConstants.LIST_REQUEST)) { //if the server response is not null and the call to setStringToBeWritten() was done with LIST_REQUEST
+                            if (serverResponse != null && this.serverRequest.equals(ServerRequestConstants.LIST_REQUEST)) { //if the server response is not null and the call to setserverRequest() was done with LIST_REQUEST
                                 this.commandProperty.setValue(serverResponse); // Set the command property to the string tree returned as the server response, this triggers the change event callback in the application class
                                 this.accessibleFilePathsRecieved.setValue(true);// This instruction sets the bound accessibleFilePathsRevieved value to true, the boolean property needs to be checked if is true make the tree with the value of the command Property of the application class
-                            } else if (this.stringToBeWritten.equals(ServerRequestConstants.SENDING_LIST)) { //if the string to be written is SENDING_LIST the list object is sent to the user by object output stream
+                            } else if (this.serverRequest.equals(ServerRequestConstants.SENDING_LIST)) { //if the string to be written is SENDING_LIST the list object is sent to the user by object output stream
                                 ObjectOutputStream filesListWriter = new ObjectOutputStream(this.serverWriterStream);
                                 filesListWriter.writeObject(this.filesListToBeRequested);
                                 this.commandProperty.setValue(CommsMessages.START_DOWNLOADING);// this value setting needs to be checked in the change event call back to generate the downloading, BUT BEFORE MAKING THE DOWNLOAD SCENE INITIALIZE THE PROGRESS BAR LISTS
                             }
                             this.readyToRead = false;
-                        this.stringToBeWritten = "";
+                        this.serverRequest = "";
                     }
                 }
                 else if(this.commandProperty.getValue().equals(CommsMessages.START_DOWNLOADING)){
-                    File directory=new File(System.getProperty("User.dir")+"\\StudyShareDownloads");
+                    File directory=new File(System.getProperty("user.dir")+"/StudyShareDownloads");
                     if(!directory.exists())
                         directory.mkdir();
                     this.downloadStream=new DataInputStream(serverReaderStream);
@@ -102,8 +102,8 @@ public class Comms implements Runnable{
             return;
         }
     }
-    public void setStringToBeWritten(String stringToBeWritten){
-        this.stringToBeWritten=stringToBeWritten;
+    public void setServerRequest(String serverRequest){
+        this.serverRequest=serverRequest;
     }
     public void setSelectedFilesListToBeRequested(List<String> filesListToBeRequested){
         this.filesListToBeRequested=filesListToBeRequested;
@@ -111,8 +111,8 @@ public class Comms implements Runnable{
     public void setProgressBar(ArrayList<ProgressBar> pgb){
         pgbList=pgb;
     }
-    public final String getStringToBeWritten(){
-        return this.stringToBeWritten;
+    public final String getServerRequest(){
+        return this.serverRequest;
     }
     //THE PROPERTY GETTERS ARE USED FOR BINDING THE COMMS CLASS PROPERTIES AND APPLICATION CLASS PROPERTIES
     public BooleanProperty getAccessibleFilePathsRecievedProperty(){
