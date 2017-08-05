@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--@Autor Dhiren Chotwani-->
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="myRoot"  prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MakeUserController">
+    <children>
+        <AnchorPane layoutX="129.0" layoutY="113.0" styleClass="root" prefHeight="430.0" prefWidth="550.0" >
+            <children>
+
+                <Button id="button" fx:id="addNbtn" layoutX="329.0" layoutY="370.0"  text="Add now" onAction="#createUser"></Button>
+                <Button id="button" fx:id="addBtn" layoutX="429.0" layoutY="370.0" mnemonicParsing="false"  text="close" onAction="#createUser" />
+
+                <Label id="text" layoutX="50" layoutY="50" text="Enter Group Name:" textAlignment="CENTER" />
+                <TextField styleClass="tf" id="tf1" fx:id="groupName" layoutX="200" layoutY="47" prefHeight="20" prefWidth="250" promptText="What's your group name ?" />
+
+                <Label id="text" layoutX="50" layoutY="100" text="Enter Client Name:" textAlignment="CENTER" />
+                <TextField styleClass="tf" id="name" fx:id="clientName" layoutX="200" layoutY="97" prefHeight="20" prefWidth="250" promptText="Client's name here !" />
+
+                <Label id="text" layoutX="50" layoutY="150" text="Enter Client Password:" textAlignment="CENTER" />
+                <PasswordField styleClass="tf" id="pass" fx:id="userPass" layoutX="200" layoutY="147" prefHeight="20" prefWidth="250" promptText="Client's password here !" />
+
+                <Label  id="text" layoutX="50" layoutY="200" text="Enter Client's email id:" textAlignment="CENTER">></Label>
+                <TextField  fx:id="email" id="tf2" styleClass="tf" layoutX="200" layoutY="197" prefHeight="20" prefWidth="250" promptText="someone@something.com" />
+
+                <Label id="text" layoutX="50" layoutY="250" text="Members added :" textAlignment="CENTER">></Label>
+                <ListView fx:id="listView" id="listView" layoutX="200.0" layoutY="247.0" prefHeight="111.0" prefWidth="250.0" />
+
+
+
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

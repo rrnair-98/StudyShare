@@ -1,0 +1,83 @@
+.button{
+
+-fx-padding:10px;
+-fx-background-radius:10px;
+    
+}
+
+.tf{
+    -fx-prompt-text-fill:pink;
+    -fx-text-fill:pink;
+    -fx-background-color: rgb(255,255,255,0.3);
+      -fx-font-weight: bold;
+    
+}
+#tf1{
+     -fx-background-image:url(group.png);
+        -fx-background-repeat: no-repeat;
+    -fx-background-position:right;
+    
+}
+
+#tf2{
+     -fx-background-image:url(email.png);
+        -fx-background-repeat: no-repeat;
+    -fx-background-position:right;
+    
+}
+#listView .list-cell:even  {
+-fx-background-color: pink;
+
+}
+#pass{
+    -fx-background-image:url(pass.png);
+      -fx-background-repeat: no-repeat;
+    -fx-background-position:right;
+}
+#name{
+    
+    -fx-background-image:url(client.png);
+      -fx-background-repeat: no-repeat;
+    -fx-background-position:right;
+}
+
+.root{
+-fx-background-image:url(abc1.jpg);
+-fx-background-radius:50px;
+-fx-border-color:pink;
+}
+
+#text{
+    -fx-text-fill:white;
+}
+.button:hover{
+-fx-background-color:pink;
+ -fx-cursor:HAND;
+-fx-text-fill:white;
+
+}
+
+
+
+
+#bg{
+-fx-background-image:url(abc1.jpg);}
+
+#toolbar{
+   
+    -fx-background-image:url(abc1.jpg);
+}
+#title{
+    -fx-text-fill:pink;
+    -fx-font-size:20;
+    -fx-font-style:ITALIC;
+    
+}
+#groupsScrollPane, #filesScrollPane{
+    -fx-background:pink
+    
+}
+#logo
+{
+    -fx-image:url(logo.PNG);
+}
