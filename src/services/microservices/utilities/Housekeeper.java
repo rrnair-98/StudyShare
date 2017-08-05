@@ -9,6 +9,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -29,15 +30,17 @@ public class Housekeeper{
 
     public static byte[] getCompressedBytes(String inputfilepath) throws IOException
     {
-        String fileName = inputfilepath.substring(inputfilepath.length() - 1, inputfilepath.lastIndexOf("//"));
-        File f = new File("d:\\" + fileName + ".zip");
+        if(inputfilepath.contains(".zip"))
+            return Files.readAllBytes(Paths.get(inputfilepath));
+
+        File f = new File(inputfilepath+".zip");
         byte output[] = {0};
         try {
 
             if (!f.exists()) {
                 File inputfileobj = new File(inputfilepath);
                 ZipOutputStream out = new ZipOutputStream(new FileOutputStream(f));
-                ZipEntry e = new ZipEntry(fileName);
+                ZipEntry e = new ZipEntry(inputfilepath);
                 out.putNextEntry(e);
                 byte[] data = Files.readAllBytes(inputfileobj.toPath());
                 out.write(data, 0, data.length);

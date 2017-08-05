@@ -22,7 +22,7 @@ public class CreateRoles
 			
 			/*query for creating db and roles table in it*/
 			String query="CREATE TABLE ROLES("+
-					      "id INTEGER PRIMARY KEY,"
+					      "id INTEGER PRIMARY KEY,"+
 						  "tablename TEXT(1000),"+
 						  "lastaccess TEXT(100)"+
 						  ");";

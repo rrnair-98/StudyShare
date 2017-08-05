@@ -2,16 +2,17 @@ package services.microservices.database.corefunction;
 
 import java.sql.*;
 import java.util.ArrayList;
+import org.sqlite.JDBC;
 
 interface CONSTANT
 {
 	String CLASSDRIVER="org.sqlite.JDBC";
-	String DATABASEPATH="jdbc:sqlite:client.db";
+	String DATABASEPATH="jdbc:sqlite:/Users/damianmandrake/Projects/libs/client.db";
 
 }
 /*
 	@author:jaynam
-*/ 
+*/
 
 public class DatabaseHandler implements CONSTANT
 {
@@ -20,12 +21,13 @@ public class DatabaseHandler implements CONSTANT
 	*/
 	private static Connection con;
 	public static ArrayList list = new ArrayList();
-	static 
+	static
 	{
 		try
 		{
-			Connection con=DriverManager.getConnection("jdbc:sqlite:client.db");
-			DatabaseHandler.con = DriverManager.getConnection(DATABASEPATH);
+			Class.forName(CLASSDRIVER);
+			DatabaseHandler.con=DriverManager.getConnection(DATABASEPATH);
+
 		}
 		catch(Exception e)
 		{
@@ -61,21 +63,21 @@ public class DatabaseHandler implements CONSTANT
 			int length = values.length;
 
 			Statement stmt = DatabaseHandler.getStatement();
-			if(stmt != null) 
+			if(stmt != null)
 			{
 				String sql = "select * from " + tname + ";";
 				System.out.println(sql);
 				ResultSet rs = stmt.executeQuery(sql);
 				ResultSetMetaData rsmd = rs.getMetaData();
 				int colnumber = rsmd.getColumnCount();
-				if (length == colnumber) 
+				if (length == colnumber)
 				{
 
 					/*
 						first we will insert into the table and then check if its ROLES then we will fire Triggered Condition
 					*/
 					sql = "INSERT INTO " + tname + " (";
-					for (i = 1; i <= length; i++) 
+					for (i = 1; i <= length; i++)
 					{
 						System.out.println(rsmd.getColumnName(i));
 						if(i == length)
@@ -115,19 +117,19 @@ public class DatabaseHandler implements CONSTANT
 							first will be the table which will havename of the subject added and it will contain path of files
 							second will be having same name but it will have users added in it
 						*/
-						System.out.println(values[0]);
-						createTrigger(values[0].toString(), stmt);
+						System.out.println(values[1]);
+						createTrigger(values[1].toString(), stmt);
 					}
-				} 
+				}
 				else
-				 {
+				{
 					System.out.println("no of parameter passed are not equal as req");
 					return false;
-				 }
+				}
 			}
 			return true;
 		}
-		catch(Exception e) 
+		catch(Exception e)
 		{
 			e.printStackTrace();
 			return false;
@@ -163,17 +165,17 @@ public class DatabaseHandler implements CONSTANT
 		}
 	}
 
-	public static boolean createUpdateQuery(String table_name,String coltochange,String colforcondition,String oldvalue,String newvalue)
+	public static boolean createUpdateQuery(String table_name,String column,Object value,String columnforcondition,Object valueforcondition)
 	{
 		/*
 			table_name would be pass in which update is needed.
 			UPDATE COMPANY SET ADDRESS = 'Texas' WHERE ID = 6;
 			here
 			COMPANY is the table_name
-			ADDRESS is the coltochange
-			ID is colforcondition
-			6 is the old value
-			Texas is new value
+			ADDRESS is the column
+			ID is columnforcondition
+			6 is the valueforcondition
+			Texas is value
 
 
 		*/
@@ -185,12 +187,12 @@ public class DatabaseHandler implements CONSTANT
 			if(stmt != null)
 			{
 				sql = "UPDATE "+tname+
-					  " SET "+coltochange +" = "+"'"+newvalue+"'"+
-					  " WHERE "+colforcondition+" = "+"'"+oldvalue+"'"+";";
+						" SET "+column +" = "+"'"+value+"'"+
+						" WHERE "+columnforcondition+" = "+"'"+valueforcondition+"'"+";";
 			}
 			System.out.println(sql);
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
-			if (createSeleteQuery(tname, colforcondition, oldvalue)) {
+			if (createSelectQuery(tname, columnforcondition, valueforcondition.toString())) {
 				preparedStmt.executeUpdate();
 				return true;
 			}
@@ -216,7 +218,7 @@ public class DatabaseHandler implements CONSTANT
 				System.out.println(sql);
 			}
 			PreparedStatement preparedStmt = con.prepareStatement(sql);
-			if (createSeleteQuery(tname, colforcondition, valueforcondition)) {
+			if (createSelectQuery(tname, colforcondition, valueforcondition)) {
 				preparedStmt.executeUpdate();
 				return true;
 			}
@@ -228,6 +230,29 @@ public class DatabaseHandler implements CONSTANT
 		catch(Exception e)
 		{
 			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public static boolean createDropQuery(String table_name)
+	{
+		try
+		{
+			String tname = table_name;
+			String sql = null;
+			Statement stmt = DatabaseHandler.getStatement();
+			if (stmt != null)
+			{
+				sql = "DROP TABLE " + tname +" ;";
+				System.out.println(sql);
+			}
+			PreparedStatement preparedStmt = con.prepareStatement(sql);
+			preparedStmt.executeUpdate();
+			return true;
+		}
+		catch (Exception e)
+		{
+			System.out.println(e);
 			return false;
 		}
 	}
@@ -253,7 +278,34 @@ public class DatabaseHandler implements CONSTANT
 		}
 	}
 
-	public static boolean createSeleteQuery(String table_name,String colforcondition,String valueforcondition)
+	public static ArrayList getFilePaths(String table_name)
+	{
+		String tname=table_name;
+		String sql=null;
+		ArrayList<String> paths=new ArrayList<String>();
+		try
+		{
+			sql = "select filepath from " + tname +";";
+			System.out.println(sql);
+			Statement stmt = DatabaseHandler.getStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			String path="";
+			while (rs.next())
+			{
+				paths.add(rs.getString("filepath"));
+			}
+
+			return paths;
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+			return null;
+		}
+
+	}
+
+	public static boolean createSelectQuery(String table_name,String colforcondition,String valueforcondition)
 	{
 		/*
 			We will check if colforcond or valueforcond is null then we will bring the whole table
@@ -286,6 +338,7 @@ public class DatabaseHandler implements CONSTANT
 					will put the value in arraylist here
 				*/
 				count++;
+
 				for (int i = 1; i <= columnsNumber; i++)
 				{
 					String columnValue = rs.getString(i);

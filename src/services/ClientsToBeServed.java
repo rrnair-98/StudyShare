@@ -30,9 +30,9 @@ public class ClientsToBeServed implements Runnable{
 	private ArrayList <String>accessibleFilePaths;
 
 	private AuthenticatorQueMgr authenticatorQueMgr=null;
-	/*private static DatabaseHandler databaseHandler;
+	/*private static DatabaseHelper DatabaseHelper;
 	static{
-		ClientsToBeServed.databaseHandler=new DatabaseHandler();
+		ClientsToBeServed.DatabaseHelper=new DatabaseHelper();
 	}*/
 	private Socket socket;
 

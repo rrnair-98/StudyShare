@@ -2,6 +2,7 @@ package services.microservices.utilities.logger;
 
 import sun.security.provider.MD5;
 
+import javax.swing.text.DateFormatter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.File;
@@ -9,6 +10,8 @@ import java.io.FileOutputStream;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /*
@@ -26,26 +29,54 @@ import java.util.Date;
 * */
 public class Logger implements LoggerDefaults{
     private static PrintWriter printWriter[]=new PrintWriter[3];
+    private static boolean isInited=false;
     private Logger(){
 
     }
 
 
 
-    public static void initLogger(){
-        String temp=new Date().toString();
-        String arr[]={LoggerDefaults.DEFAULT_I,LoggerDefaults.DEFAULT_WTF,LoggerDefaults.DEFAULT_DEBUG};
-        for(int i=0;i<3;i++){
-            File f=new File("StudyShare/logs/"+arr[i]+temp+".log");
-            if(!f.exists())
-                try {
-                    f.createNewFile();
-                    Logger.printWriter[i]=new PrintWriter(new FileOutputStream(f),true);//append true
-                }catch (IOException ioe){
-                    ioe.printStackTrace();
-                }
-        }
+    public static void initLogger() {
+        System.out.println("logger inited");
+        String date = getDate();
 
+        String arr[] = {LoggerDefaults.DEFAULT_I, LoggerDefaults.DEFAULT_WTF, LoggerDefaults.DEFAULT_DEBUG};
+        File file = new File(System.getProperty("user.dir") + "/StudyShare/logs/");
+        if(!file.exists());
+            file.mkdirs();
+        for (int i = 0; i < 3; i++) {
+            Logger.isInited=false;
+            try {
+                System.out.println(file.getCanonicalPath());
+                System.out.println(file.getCanonicalPath() + "/" + (arr[i]) + date + ".log");
+                File f = new File(file.getCanonicalPath() + "/" + (arr[i]) + date + ".log");
+                if (!f.exists()) {
+                    try {
+                        if(!f.getParentFile().exists())
+                            f.getParentFile().mkdirs();
+                        f.createNewFile();
+
+                    } catch (IOException ioe) {
+                        ioe.printStackTrace();
+                    }
+                }else
+                    System.out.println("EXISTS");
+                Logger.printWriter[i] = new PrintWriter(new FileOutputStream(f), true);//append true
+
+            } catch (IOException io) {
+                io.printStackTrace();
+            }
+
+        }
+        Logger.isInited=true;
+    }
+
+    public static boolean isInited(){return Logger.isInited;}
+
+    private static String getDate(){
+        DateTimeFormatter dtf= DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate localDate=LocalDate.now();
+        return dtf.format(localDate);
     }
 
     private static void write(String stringToBeWritten,int whichWriter){
@@ -77,8 +108,8 @@ public class Logger implements LoggerDefaults{
 
 }
 interface LoggerDefaults{
-    public static final String DEFAULT_DEBUG="DEBUG:\t";
-    public static final String DEFAULT_WTF="WTF:\t";
-    public static final String DEFAULT_I="INFO:\t";
+    public static final String DEFAULT_DEBUG="DEBUG";
+    public static final String DEFAULT_WTF="WTF";
+    public static final String DEFAULT_I="INFO";
     public static final int DEBUG_INDEX=0, INFO_INDEX=1,WTF_INDEX=2;
 }

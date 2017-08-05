@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -13,10 +14,12 @@ import services.microservices.database.filelister.FilesLister;
 import services.microservices.ThreadNotifier;
 import services.microservices.filehandling.FileWatcher;
 import services.microservices.filehandling.callback.ArrayListCallback;
+import services.microservices.threadpool.GeneralThreadPool;
+import services.microservices.threadpool.SequenceConvulsion;
 import services.microservices.utilities.Housekeeper;
 import services.microservices.utilities.logger.Logger;
 
-public class Server implements ThreadNotifier,ServerConstants,ArrayListCallback{
+public class Server implements ThreadNotifier,ServerConstants,ArrayListCallback,SequenceConvulsion{
 	private Group someGroup;
 	private ArrayList<String> listOfFiles;
 	private ServerSocket serverSocket;
@@ -25,8 +28,9 @@ public class Server implements ThreadNotifier,ServerConstants,ArrayListCallback{
 	public Server(String groupname){
 
 		this.listOfFiles=new ArrayList<>();
-		//add arraylist of filePaths
-		this.someGroup=new Group(groupname,this);
+		Logger.initLogger();
+		FileReaderRunnable.setSequenceConvulsion(this);
+
 
 		try {
 			this.serverSocket = new ServerSocket(ServerConstants.DEFUALT_PORT, ServerConstants.MAX_QUEUE_SIZE,ServerConstants.ACTUAL_IP);
@@ -35,14 +39,25 @@ public class Server implements ThreadNotifier,ServerConstants,ArrayListCallback{
 			Logger.wtf(io.toString());
 		}
 
-		Logger.initLogger();
+
+		while(!Logger.isInited());
+		//add arraylist of filePaths
+		this.someGroup=new Group(groupname,this);
+
+
+
+
 		this.authenticator=new Authenticator();
 
 
 	}
 
-	public void startServer(){
+
+
+	public void kickStart(){
 		try {
+			FileReaderRunnable.printPool();
+
 
 			while (true) {
 
@@ -70,7 +85,6 @@ public class Server implements ThreadNotifier,ServerConstants,ArrayListCallback{
 	private void setFileReaderRunnables(){
 
 		/* start the progress bar here*/
-
 		for(String str:this.listOfFiles){
 			try {
 				FileReaderRunnable fileReaderRunnable = new FileReaderRunnable(str);
@@ -83,7 +97,7 @@ public class Server implements ThreadNotifier,ServerConstants,ArrayListCallback{
 		}
 
 		/* stop the progress bar here*/
-
+		/* start the server here.*/
 
 	}
 
@@ -120,6 +134,7 @@ public class Server implements ThreadNotifier,ServerConstants,ArrayListCallback{
 		Comms.setFileListerList(this.listOfFiles);
 
 		this.setFileWatchers();
+		this.setFileReaderRunnables();
 	}
 
 	/*
@@ -138,9 +153,12 @@ public class Server implements ThreadNotifier,ServerConstants,ArrayListCallback{
 
 
 
+
+
+
 }
 interface ServerConstants{
-	public final static int DEFUALT_PORT=4444;
+	public final static int DEFUALT_PORT=44444;
 	//could lead to a problem if the ip changes... ie if the user disconnects and then reconnects the user might be given a new IP(DHCP).
 	public final static InetAddress ACTUAL_IP= Housekeeper.getIpAddress();
 	public final static int MAX_QUEUE_SIZE=50;

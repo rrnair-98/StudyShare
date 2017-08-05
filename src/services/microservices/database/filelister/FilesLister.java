@@ -26,6 +26,7 @@ public class FilesLister implements Runnable{
     public FilesLister(ArrayList<String> files,ThreadNotifier threadNotifier){
         this.databaseFolderPaths=files;
         this.threadNotifier=threadNotifier;
+        this.actualFilePaths=new ArrayList<>();
         this.stringBuilder=new StringBuilder();
         this.mThread=new Thread(this);
         this.mThread.start();
@@ -38,6 +39,7 @@ public class FilesLister implements Runnable{
         /* TBD add files to a arraylist */
         StringBuilder stringBuilder=new StringBuilder();
         for(String str:databaseFolderPaths) {
+            System.out.println(str);
             File file=new File(str);
             this.obtainFiles(file);
             FilesLister.makeFileTree(stringBuilder,file);
@@ -61,9 +63,9 @@ public class FilesLister implements Runnable{
                         obtainFiles(f);
                     }
                 } else
-                    this.actualFilePaths.add(root.getCanonicalPath());
+                    this.actualFilePaths.add(root.getAbsolutePath());
             }
-        }catch (IOException io){
+        }catch (Exception io){
             Logger.wtf(io.toString());
         }
     }

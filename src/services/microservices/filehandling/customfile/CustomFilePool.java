@@ -43,6 +43,9 @@ public class CustomFilePool{
 		this.pool.replace(key,customFile) ;
 	}
 	
-
+	@Override
+	public String toString(){
+		return this.pool.toString();
+	}
 	
 }

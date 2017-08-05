@@ -21,7 +21,7 @@ public class Group {
     /* Assuming the groupName is part of the table Roles. */
     public Group(String groupName, ThreadNotifier threadNotifier){
         this.groupName=groupName;
-        this.listOfFolders=DatabaseHelper.getValuesOfTable(this.groupName);
+        this.listOfFolders=DatabaseHelper.getFilePaths(this.groupName);
         this.filesLister= new FilesLister(this.listOfFolders,threadNotifier);
     }
 
