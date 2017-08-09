@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="jfxtras-common-8.0-r5">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Desktop/Project/Extra plugins/jfxtras-common-8.0-r5.jar!/" />
+      <root url="jar://$USER_HOME$/Desktop/Project/Extra plugins/jfxtras-menu-8.0-r5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

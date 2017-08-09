@@ -1,0 +1,51 @@
+#Pane
+{
+  //-fx-background-color:linear-gradient(#00bfff,#0080ff,#0000ff);
+   -fx-font-family: sans-serif;
+   -fx-background-color:green;
+}
+.input{
+    -fx-background-color: rgb(255,255,255,0.3);
+    -fx-text-fill:black;
+   -fx-prompt-text-fill:white;
+}
+
+ #Username:hover,#Password:hover,#Login:hover{
+     -fx-background-color: #99ddff;
+    -fx-border-color:gray;
+    -fx-cursor: TEXT;
+}
+
+#Login:hover{
+     -fx-cursor:HAND;
+    -fx-background-radius: 50;
+}
+
+#Login{
+    -fx-background-image: url('../../resources/loign.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:center;
+     -fx-background-radius: 10;
+      -fx-background-insets: 0,1,2;
+}
+
+#Username {
+    -fx-background-image: url('../../resources/icon_user.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:right;
+   
+}
+
+#Password{
+   -fx-background-image: url('../../resources/lockMobile.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:right;
+    
+    
+}
+
+
+#header{
+    -fx-font-weight: bold;
+    
+}
