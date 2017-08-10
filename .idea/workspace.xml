@@ -1,22 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Tested FileReaderRunnables and the server. FileHandling and GeneralThreadPool work like a charm. Still need to test out Comms, ClientsToBeServed and FileWatcher. Will do so next commit. Added a list watcher to GeneralThreadPool. GeneralThreadPool now takes a SequenceConvulsion argument to notify the user of when the ThreadPool has finished computing all its jobs. FileReaderRunnables also sets the FilePool of FileWatcher now since only FileReaderRunnables has a reference to it. Next commit will include tested versions of Comms , ClientsToBeServed etc">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/services/microservices/filehandling/callback/ArrayListCallback.java" afterPath="$PROJECT_DIR$/src/services/microservices/filehandling/callback/FileWatcherCallback.java" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Server.java" afterPath="$PROJECT_DIR$/src/Server.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/services/Authenticator.java" afterPath="$PROJECT_DIR$/src/services/Authenticator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/services/ClientsToBeServed.java" afterPath="$PROJECT_DIR$/src/services/ClientsToBeServed.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/services/microservices/Comms.java" afterPath="$PROJECT_DIR$/src/services/microservices/Comms.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/services/microservices/UserInfo.java" afterPath="$PROJECT_DIR$/src/services/microservices/UserInfo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/services/microservices/database/DatabaseHelper.java" afterPath="$PROJECT_DIR$/src/services/microservices/database/DatabaseHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/services/microservices/database/corefunction/DatabaseHandler.java" afterPath="$PROJECT_DIR$/src/services/microservices/database/corefunction/DatabaseHandler.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/services/microservices/filehandling/FileReaderRunnable.java" afterPath="$PROJECT_DIR$/src/services/microservices/filehandling/FileReaderRunnable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/services/microservices/filehandling/FileWatcher.java" afterPath="$PROJECT_DIR$/src/services/microservices/filehandling/FileWatcher.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/services/microservices/filehandling/customfile/CustomFile.java" afterPath="$PROJECT_DIR$/src/services/microservices/filehandling/customfile/CustomFile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/services/microservices/filehandling/customfile/CustomFilePool.java" afterPath="$PROJECT_DIR$/src/services/microservices/filehandling/customfile/CustomFilePool.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/services/microservices/threadpool/GeneralThreadPool.java" afterPath="$PROJECT_DIR$/src/services/microservices/threadpool/GeneralThreadPool.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/services/microservices/utilities/Housekeeper.java" afterPath="$PROJECT_DIR$/src/services/microservices/utilities/Housekeeper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/services/microservices/utilities/logger/Logger.java" afterPath="$PROJECT_DIR$/src/services/microservices/utilities/logger/Logger.java" />
     </list>
     <ignored path="JavaFxApplication.iws" />
@@ -79,11 +67,11 @@
       <file leaf-file-name="FileReaderRunnable.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/services/microservices/filehandling/FileReaderRunnable.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="249">
-              <caret line="59" column="39" lean-forward="false" selection-start-line="59" selection-start-column="39" selection-end-line="59" selection-end-column="39" />
+            <state relative-caret-position="614">
+              <caret line="61" column="5" lean-forward="true" selection-start-line="61" selection-start-column="5" selection-end-line="61" selection-end-column="5" />
               <folding>
-                <element signature="e#2443#2444#0" expanded="true" />
-                <element signature="e#2504#2505#0" expanded="true" />
+                <element signature="e#2442#2443#0" expanded="true" />
+                <element signature="e#2503#2504#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -92,8 +80,8 @@
       <file leaf-file-name="Housekeeper.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/services/microservices/utilities/Housekeeper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1">
-              <caret line="56" column="67" lean-forward="true" selection-start-line="56" selection-start-column="67" selection-end-line="56" selection-end-column="67" />
+            <state relative-caret-position="762">
+              <caret line="66" column="5" lean-forward="true" selection-start-line="66" selection-start-column="5" selection-end-line="66" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -101,11 +89,31 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="Logger.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/services/microservices/utilities/logger/Logger.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="114">
+              <caret line="33" column="0" lean-forward="true" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ServerConstants.class" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ServerConstants.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Server.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Server.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="429">
-              <caret line="167" column="45" lean-forward="true" selection-start-line="167" selection-start-column="45" selection-end-line="167" selection-end-column="45" />
+            <state relative-caret-position="93">
+              <caret line="28" column="82" lean-forward="false" selection-start-line="28" selection-start-column="82" selection-end-line="28" selection-end-column="82" />
               <folding />
             </state>
           </provider>
@@ -124,24 +132,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CustomFilePool.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/services/microservices/filehandling/customfile/CustomFilePool.java">
+      <file leaf-file-name="GeneralThreadPool.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/services/microservices/threadpool/GeneralThreadPool.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="15" column="67" lean-forward="false" selection-start-line="15" selection-start-column="67" selection-end-line="15" selection-end-column="67" />
-              <folding />
+            <state relative-caret-position="1345">
+              <caret line="116" column="10" lean-forward="false" selection-start-line="116" selection-start-column="10" selection-end-line="116" selection-end-column="10" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GeneralThreadPool.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/services/microservices/threadpool/GeneralThreadPool.java">
+      <file leaf-file-name="SequenceConvulsion.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/services/microservices/threadpool/SequenceConvulsion.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-9">
-              <caret line="86" column="39" lean-forward="true" selection-start-line="86" selection-start-column="39" selection-end-line="86" selection-end-column="39" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="30">
+              <caret line="2" column="17" lean-forward="false" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -156,31 +164,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CustomFile.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/services/microservices/filehandling/customfile/CustomFile.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-9">
-              <caret line="4" column="2" lean-forward="true" selection-start-line="4" selection-start-column="2" selection-end-line="4" selection-end-column="2" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="FileWatcherCallback.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/services/microservices/filehandling/callback/FileWatcherCallback.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="105">
               <caret line="7" column="36" lean-forward="false" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="36" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Authenticator.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/services/Authenticator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="67">
-              <caret line="12" column="47" lean-forward="false" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="47" />
               <folding />
             </state>
           </provider>
@@ -198,7 +186,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>DatabaseHandler</find>
       <find>DatabaseHelper</find>
       <find>Connection</find>
       <find>getFilePaths</find>
@@ -223,11 +210,12 @@
       <find>adding</find>
       <find>init</find>
       <find>pool</find>
-      <find>iterate</find>
       <find>FileReaderRunnable</find>
       <find>implements Array</find>
       <find>arrayListCallback</find>
       <find>setFileWat</find>
+      <find>iterate</find>
+      <find>catch</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -279,7 +267,6 @@
         <option value="$PROJECT_DIR$/src/services/microservices/database/Group.java" />
         <option value="$PROJECT_DIR$/src/services/microservices/database/filelister/FilesLister.java" />
         <option value="$PROJECT_DIR$/src/services/Authenticator.java" />
-        <option value="$PROJECT_DIR$/src/services/microservices/utilities/logger/Logger.java" />
         <option value="$PROJECT_DIR$/src/services/microservices/database/DatabaseHelper.java" />
         <option value="$PROJECT_DIR$/src/services/microservices/database/corefunction/DatabaseHandler.java" />
         <option value="$PROJECT_DIR$/src/services/microservices/UserInfo.java" />
@@ -289,10 +276,11 @@
         <option value="$PROJECT_DIR$/src/services/microservices/threadpool/GeneralThreadPool.java" />
         <option value="$PROJECT_DIR$/src/services/microservices/filehandling/customfile/CustomFile.java" />
         <option value="$PROJECT_DIR$/src/services/microservices/utilities/Housekeeper.java" />
-        <option value="$PROJECT_DIR$/src/services/microservices/filehandling/FileReaderRunnable.java" />
         <option value="$PROJECT_DIR$/src/services/microservices/filehandling/callback/ArrayListCallback.java" />
         <option value="$PROJECT_DIR$/src/services/microservices/filehandling/callback/FileWatcherCallback.java" />
         <option value="$PROJECT_DIR$/src/services/microservices/filehandling/FileWatcher.java" />
+        <option value="$PROJECT_DIR$/src/services/microservices/filehandling/FileReaderRunnable.java" />
+        <option value="$PROJECT_DIR$/src/services/microservices/utilities/logger/Logger.java" />
         <option value="$PROJECT_DIR$/src/Server.java" />
       </list>
     </option>
@@ -486,6 +474,12 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="services" type="462c0819:PsiDirectoryNode" />
               <item name="ClientsToBeServed.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
+            </path>
+            <path>
+              <item name="StudyShare" type="b2602c69:ProjectViewProjectNode" />
+              <item name="StudyShare" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Server.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
             </path>
             <path>
               <item name="StudyShare" type="b2602c69:ProjectViewProjectNode" />
@@ -685,7 +679,14 @@
       <option name="project" value="LOCAL" />
       <updated>1501948602605</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Made a few minor changes in FileWatcher[ the callback is now called FileWatcherCallback]. FileReaderRunnable has a public method to reinitialize the pool[ Using it so that more jobs can be queued even after the server has started since shutdown is being used on the executor to join it to the current thread so that kickStart is called only after all files have been read] . Tested 1 to 1 communication with client. Works properly. Will test 1 to many by next commit and prolly integrate ui.">
+      <created>1502359758787</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1502359758787</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -712,7 +713,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921812" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921812" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32921812" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2580645" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -781,7 +782,8 @@
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
     <MESSAGE value="Tested FileReaderRunnables and the server. FileHandling and GeneralThreadPool work like a charm. Still need to test out Comms, ClientsToBeServed and FileWatcher. Will do so next commit. Added a list watcher to GeneralThreadPool. GeneralThreadPool now takes a SequenceConvulsion argument to notify the user of when the ThreadPool has finished computing all its jobs. FileReaderRunnables also sets the FilePool of FileWatcher now since only FileReaderRunnables has a reference to it. Next commit will include tested versions of Comms , ClientsToBeServed etc" />
-    <option name="LAST_COMMIT_MESSAGE" value="Tested FileReaderRunnables and the server. FileHandling and GeneralThreadPool work like a charm. Still need to test out Comms, ClientsToBeServed and FileWatcher. Will do so next commit. Added a list watcher to GeneralThreadPool. GeneralThreadPool now takes a SequenceConvulsion argument to notify the user of when the ThreadPool has finished computing all its jobs. FileReaderRunnables also sets the FilePool of FileWatcher now since only FileReaderRunnables has a reference to it. Next commit will include tested versions of Comms , ClientsToBeServed etc" />
+    <MESSAGE value="Made a few minor changes in FileWatcher[ the callback is now called FileWatcherCallback]. FileReaderRunnable has a public method to reinitialize the pool[ Using it so that more jobs can be queued even after the server has started since shutdown is being used on the executor to join it to the current thread so that kickStart is called only after all files have been read] . Tested 1 to 1 communication with client. Works properly. Will test 1 to many by next commit and prolly integrate ui." />
+    <option name="LAST_COMMIT_MESSAGE" value="Made a few minor changes in FileWatcher[ the callback is now called FileWatcherCallback]. FileReaderRunnable has a public method to reinitialize the pool[ Using it so that more jobs can be queued even after the server has started since shutdown is being used on the executor to join it to the current thread so that kickStart is called only after all files have been read] . Tested 1 to 1 communication with client. Works properly. Will test 1 to many by next commit and prolly integrate ui." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -792,14 +794,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Server.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="48" column="59" lean-forward="false" selection-start-line="48" selection-start-column="59" selection-end-line="48" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/services/AuthenticatorQueMgr.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -821,8 +815,8 @@
         <state relative-caret-position="195">
           <caret line="16" column="29" lean-forward="false" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
           <folding>
-            <element signature="e#872#873#0" expanded="true" />
-            <element signature="e#918#919#0" expanded="true" />
+            <element signature="e#872#873#0" expanded="false" />
+            <element signature="e#918#919#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -874,6 +868,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="157">
           <caret line="24" column="52" lean-forward="false" selection-start-line="24" selection-start-column="52" selection-end-line="24" selection-end-column="52" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -885,27 +880,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/services/microservices/threadpool/SequenceConvulsion.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/services/microservices/threadpool/GeneralThreadPool$1.class" />
     <entry file="file://$PROJECT_DIR$/src/services/microservices/database/corefunction/DatabaseHandler.class" />
     <entry file="file://$PROJECT_DIR$/src/services/AuthenticatorQueMgr.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="16" column="1" lean-forward="false" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/services/microservices/utilities/logger/Logger.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="35" column="5" lean-forward="false" selection-start-line="35" selection-start-column="5" selection-end-line="35" selection-end-column="5" />
           <folding />
         </state>
       </provider>
@@ -984,50 +964,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/services/microservices/threadpool/GeneralThreadPool.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-9">
-          <caret line="86" column="39" lean-forward="true" selection-start-line="86" selection-start-column="39" selection-end-line="86" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/services/microservices/Comms.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="228" column="67" lean-forward="false" selection-start-line="228" selection-start-column="63" selection-end-line="228" selection-end-column="67" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/services/microservices/utilities/Housekeeper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1">
-          <caret line="56" column="67" lean-forward="true" selection-start-line="56" selection-start-column="67" selection-end-line="56" selection-end-column="67" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/services/microservices/filehandling/customfile/CustomFilePool.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
           <caret line="15" column="67" lean-forward="false" selection-start-line="15" selection-start-column="67" selection-end-line="15" selection-end-column="67" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/services/microservices/filehandling/FileReaderRunnable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="59" column="39" lean-forward="false" selection-start-line="59" selection-start-column="39" selection-end-line="59" selection-end-column="39" />
-          <folding>
-            <element signature="e#2443#2444#0" expanded="true" />
-            <element signature="e#2504#2505#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1047,6 +988,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/services/microservices/Comms.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="169">
+          <caret line="228" column="67" lean-forward="false" selection-start-line="228" selection-start-column="63" selection-end-line="228" selection-end-column="67" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/services/microservices/filehandling/FileWatcher.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-204">
@@ -1058,10 +1007,65 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/services/microservices/threadpool/SequenceConvulsion.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="17" lean-forward="false" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/services/microservices/threadpool/GeneralThreadPool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1345">
+          <caret line="116" column="10" lean-forward="false" selection-start-line="116" selection-start-column="10" selection-end-line="116" selection-end-column="10" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/services/microservices/utilities/Housekeeper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="762">
+          <caret line="66" column="5" lean-forward="true" selection-start-line="66" selection-start-column="5" selection-end-line="66" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ServerConstants.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/services/microservices/filehandling/FileReaderRunnable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="614">
+          <caret line="61" column="5" lean-forward="true" selection-start-line="61" selection-start-column="5" selection-end-line="61" selection-end-column="5" />
+          <folding>
+            <element signature="e#2442#2443#0" expanded="true" />
+            <element signature="e#2503#2504#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/services/microservices/utilities/logger/Logger.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="33" column="0" lean-forward="true" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Server.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="167" column="45" lean-forward="true" selection-start-line="167" selection-start-column="45" selection-end-line="167" selection-end-column="45" />
+        <state relative-caret-position="93">
+          <caret line="28" column="82" lean-forward="false" selection-start-line="28" selection-start-column="82" selection-end-line="28" selection-end-column="82" />
           <folding />
         </state>
       </provider>

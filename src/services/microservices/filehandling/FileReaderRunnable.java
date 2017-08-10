@@ -59,7 +59,6 @@ public class FileReaderRunnable implements Runnable,FileReaderRunnableConstants{
 	}
 	public static void reinitThreadPool(){
 		FileReaderRunnable.fileReaderRunnableThreadPool=new GeneralThreadPool(FileReaderRunnable.MAX_QUE_SIZE);
-
 	}
 
 

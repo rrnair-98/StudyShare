@@ -25,7 +25,10 @@ public class Server implements ThreadNotifier,ServerConstants,FileWatcherCallbac
 	public Server(String groupname){
 
 		this.listOfFiles=new ArrayList<>();
+
+		/* Logger will have to be inited from the UI ... doing it here temporarily*/
 		Logger.initLogger();
+
 		FileReaderRunnable.setSequenceConvulsion(this);
 
 
@@ -33,16 +36,13 @@ public class Server implements ThreadNotifier,ServerConstants,FileWatcherCallbac
 			this.serverSocket = new ServerSocket(ServerConstants.DEFUALT_PORT, ServerConstants.MAX_QUEUE_SIZE,ServerConstants.ACTUAL_IP);
 		}catch (IOException io){
 			System.out.println("exception - couldnt create socket\n"+io.toString());
-			Logger.wtf(io.toString());
+			Logger.wtf(io.toString()+" from Server ctor");
+			/* TODO Throw an exception here for the ui guys */
 		}
 
 
-		while(!Logger.isInited());
 		//add arraylist of filePaths
 		this.someGroup=new Group(groupname,this);
-
-
-
 
 		this.authenticator=new Authenticator();
 
@@ -67,7 +67,7 @@ public class Server implements ThreadNotifier,ServerConstants,FileWatcherCallbac
 
 		}catch (IOException ioe){
 			ioe.printStackTrace();
-			Logger.wtf(ioe.toString());
+			Logger.wtf(ioe.toString()+" from kickStart in Server");
 		}
 
 	}
@@ -92,7 +92,7 @@ public class Server implements ThreadNotifier,ServerConstants,FileWatcherCallbac
 			try {
 				fileReaderRunnable = new FileReaderRunnable(str);
 			}catch (FileNotFoundException fnfe){
-				Logger.wtf(fnfe.toString());
+				Logger.wtf(fnfe.toString()+" from setFileReaderRunnable in Server");
 
 				/* TBD code to notify server of the absence of certain files */
 

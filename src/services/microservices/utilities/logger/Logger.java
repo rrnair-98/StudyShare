@@ -33,7 +33,10 @@ public class Logger implements LoggerDefaults{
 
 
 
-     public static void initLogger() {
+     synchronized public static void initLogger() {
+        if(Logger.isInited)
+            throw new IllegalStateException("Logger has already been inited");
+        Logger.isInited=true;
         System.out.println("logger inited");
         String date = getDate();
 
@@ -67,7 +70,6 @@ public class Logger implements LoggerDefaults{
         Logger.isInited=true;
     }
 
-    public static boolean isInited(){return Logger.isInited;}
 
     private static String getDate(){
         DateTimeFormatter dtf= DateTimeFormatter.ofPattern("yyyy-MM-dd");
