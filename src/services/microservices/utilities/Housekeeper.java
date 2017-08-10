@@ -26,31 +26,37 @@ import services.microservices.utilities.logger.Logger;
 * Has several functions
 * */
 
-public class Housekeeper{
+public class Housekeeper implements HouseKeeperConstants{
 
     public static byte[] getCompressedBytes(String inputfilepath) throws IOException
     {
-        if(inputfilepath.contains(".zip"))
-            return Files.readAllBytes(Paths.get(inputfilepath));
 
-        File f = new File(inputfilepath+".zip");
+
+
+        File inputfileobj = new File(inputfilepath);
+
+        File newFile=new File(HouseKeeperConstants.PATH_TO_ZIP+"/"+inputfileobj.getName()+".zip");
+        if(inputfilepath.contains(".zip") )
+            return Files.readAllBytes(Paths.get(inputfilepath));
+        else if(newFile.exists())
+            return Files.readAllBytes(Paths.get(newFile.getCanonicalPath()));
+        if(!newFile.getParentFile().exists())
+            newFile.getParentFile().mkdirs();
         byte output[] = {0};
         try {
+            newFile.createNewFile();
 
-            if (!f.exists()) {
-                File inputfileobj = new File(inputfilepath);
-                ZipOutputStream out = new ZipOutputStream(new FileOutputStream(f));
+                ZipOutputStream out = new ZipOutputStream(new FileOutputStream(newFile));
+
                 ZipEntry e = new ZipEntry(inputfilepath);
                 out.putNextEntry(e);
                 byte[] data = Files.readAllBytes(inputfileobj.toPath());
                 out.write(data, 0, data.length);
                 out.closeEntry();
                 out.close();
-                output = Files.readAllBytes(f.toPath());
+                output = Files.readAllBytes(inputfileobj.toPath());
                 //f.delete();
-            } else {
-                output = Files.readAllBytes(f.toPath());
-            }
+
         }catch (IOException ioe) {
             Logger.wtf(ioe.toString());
         }
@@ -66,24 +72,29 @@ public class Housekeeper{
                     byte data[] = file.getContents();
                     int i[]=new int[1];
 
+                    //sending file size.
+                    System.out.println("file size "+file.getFileSize());
+                    dos.writeUTF(""+file.getFileSize());
                     for (i[0]= 0; i[0] < data.length; i[0]++) {
 
                         dos.write(data[i[0]]);
                         /* running this method on the ui thread since it could lead to an illegal state exception*/
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                pgb.setProgress(i[0]*1.0);
+                        if(pgb!=null)
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    pgb.setProgress(i[0]*1.0);
 
-                            }
-                        });
+                                }
+                            });
                     }
-                    dos.close();
+                    dos=null;
                 }
                 catch (IOException e)
                 {
                     Logger.wtf(e.toString());
                 }
+                System.out.println("Done sending");
 
 
     }
@@ -147,4 +158,7 @@ public class Housekeeper{
 
 
 
+}
+interface HouseKeeperConstants{
+    public static final String PATH_TO_ZIP=System.getProperty("user.dir")+"/StudyShare/zips";
 }

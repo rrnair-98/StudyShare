@@ -9,6 +9,7 @@ import services.microservices.filehandling.customfile.CustomFile;
 import services.microservices.threadpool.GeneralThreadPool;
 import services.microservices.utilities.Housekeeper;
 import services.microservices.utilities.logger.Logger;
+import sun.rmi.rmic.iiop.Generator;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -89,6 +90,11 @@ public class Comms implements Runnable,ProgressBarUpdater,CommsConstants{
             this(userInfo);
             this.threadNotifier=threadNotifier;
 
+            /* to be removed.SHOULD BE ADDED TO QUEUE ONLY WHEN PGB REF IS SET */
+            System.out.println("adding to queue");
+            this.addCurrentToQueue();
+
+
     }
 
 
@@ -113,56 +119,60 @@ public class Comms implements Runnable,ProgressBarUpdater,CommsConstants{
     }
 
     @Override
-    public void run(){
-        BufferedReader bufferedReader=null;
+    public void run() {
+        BufferedReader bufferedReader = null;
 
-        if(this.threadNotifier!=null)
+        if (this.threadNotifier != null)
             this.threadNotifier.onPreExecute(this.userInfo.getUsername());
         try {
-            this.printWriter=new PrintWriter(this.userInfo.getOutputStream(),true);
-            bufferedReader=new BufferedReader(new InputStreamReader(this.userInfo.getInputStream()));
-
-            this.printWriter.println("{message: \""+this.userInfo.getUsername()+"sending requested files\"}");
-
+            this.printWriter = this.userInfo.getPrintWriter();
+            bufferedReader = this.userInfo.getBufferedReader();
             String s;
-            while((s=bufferedReader.readLine())!=null){
+
+            while ((s = bufferedReader.readLine()) != null) {
+                System.out.println("RECEIVED MESSAGE " + s);
                 /*TBD send the arraylist of files to the user. Will be obtained from fileRunnables*/
-                if(s.contains(CommsConstants.LIST_REQUEST))
+                if (s.contains(CommsConstants.LIST_REQUEST)) {
                     /* this string is going to be used to construct a fileTree*/
                     this.printWriter.println(Comms.treeString);
+                    System.out.println("sending tree list");
+                } else if (s.contains(CommsConstants.RECEIVING_LIST)) {
 
-                else if(s.contains(CommsConstants.RECEIVING_LIST)){
+                    System.out.println("receving request");
 
                     //code to heed to request and obtain a list of strings
-                    ObjectInputStream objectInputStream=new ObjectInputStream(this.userInfo.getInputStream());
+                    ObjectInputStream objectInputStream = new ObjectInputStream(this.userInfo.getInputStream());
                     //cant cast to ArrayList since objectInputStream understands List for somereason
                     /*
                     * The client is expected to send a list of Strings ie List<String>
                     * */
-                    try {
-                        List<String> reqeustedFiles = (List<String>) objectInputStream.readObject();
 
-                        objectInputStream.close();
+
+                    try {
+                        ArrayList<String> reqeustedFiles = (ArrayList<String>) objectInputStream.readObject();
+
+                        objectInputStream=null;
+                        System.out.println(reqeustedFiles.toString());
+
                         //code to send files to users.
                         this.iterateAndSendList(reqeustedFiles);
+                        this.userInfo.addToFilesUsed(reqeustedFiles);
 
-
-                    }catch (ClassNotFoundException cfe){
-                        Logger.wtf(cfe.toString()+ABORT_MESSAGE);
+                    } catch (ClassNotFoundException cfe) {
+                        Logger.wtf(cfe.toString() + ABORT_MESSAGE);
                         System.out.println(ABORT_MESSAGE);
                     }
 
 
-
-                }
-                else if(s.contains(CommsConstants.DC)){
+                } else if (s.contains(CommsConstants.DC)) {
                     /* removing the user*/
-                    Comms.queMgr.removeFromAuthenticator(Comms.this);
-                    break;
+                    this.removeThisUser();
+                    this.userInfo.close();
+                    return;
                 }
 
             }
-            if(this.threadNotifier!=null)
+            if (this.threadNotifier != null)
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
@@ -170,41 +180,58 @@ public class Comms implements Runnable,ProgressBarUpdater,CommsConstants{
                     }
                 });
 
-
-
-        }catch (IOException ioe){
-            queMgr.removeFromAuthenticator(Comms.this);
+        } catch (IOException | NullPointerException ioe) {
+            this.removeThisUser();
+            try {
+                this.userInfo.close();
+            } catch (IOException epp) {
+                Logger.wtf(epp.toString());
+            }
             Logger.wtf(ioe.toString());
             ioe.printStackTrace();
-        }finally {
-            try{
+        } finally {
+            /*try{
                 if(printWriter!=null)
-                    printWriter.close();
+                    printWriter.flush();
                 if(bufferedReader!=null)
-                    bufferedReader.close();
+                    bufferedReader.reset();
             }catch (IOException ioe){
                 ioe.printStackTrace();
-            }
-        }
+            }*/
+
+
 
         /* TBD
         * add code to remove the current user from the queue. ie when a disconnect request is sent
         * */
-        this.addCurrentToQueue();
+            if (!this.userInfo.getIsClosed())
+                this.addCurrentToQueue();
+        }
     }
 
 
 
-    private void iterateAndSendList(List<String> requestedFiles){
+    private void removeThisUser(){
+        queMgr.removeFromAuthenticator(Comms.this);
+
+    }
+
+
+    private void iterateAndSendList(ArrayList<String> requestedFiles)throws IOException{
         for(String fstr:requestedFiles){
             /*TBD
             * Length of progress bar will be the sum of the size of the entire list... Will have to set it manually.
             * */
+            OutputStream outputStream=this.userInfo.getOutputStream();
             CustomFile customFile= FileReaderRunnable.getPool().get(fstr);
-            if(customFile!=null)
-                Housekeeper.writeJob(this.userInfo.getOutputStream(),customFile,this.progressBar);
-            else
+            if(customFile!=null) {
+                System.out.println("sending "+fstr);
+                Housekeeper.writeJob(outputStream, customFile, this.progressBar);
+            }
+            else {
+
                 this.writeErrorToStream(fstr);
+            }
         }
     }
     /* to be used only when the file cant be written to stream*/
@@ -220,7 +247,6 @@ public class Comms implements Runnable,ProgressBarUpdater,CommsConstants{
     public void setProgress(final ProgressBar progress){
         this.progressBar=progress;
         //TBD code to add this thread to the executable queue.
-       this.addCurrentToQueue();
 
     }
 

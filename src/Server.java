@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -10,16 +9,14 @@ import services.Authenticator;
 import services.microservices.Comms;
 import services.microservices.database.Group;
 import services.microservices.filehandling.FileReaderRunnable;
-import services.microservices.database.filelister.FilesLister;
 import services.microservices.ThreadNotifier;
 import services.microservices.filehandling.FileWatcher;
-import services.microservices.filehandling.callback.ArrayListCallback;
-import services.microservices.threadpool.GeneralThreadPool;
+import services.microservices.filehandling.callback.FileWatcherCallback;
 import services.microservices.threadpool.SequenceConvulsion;
 import services.microservices.utilities.Housekeeper;
 import services.microservices.utilities.logger.Logger;
 
-public class Server implements ThreadNotifier,ServerConstants,ArrayListCallback,SequenceConvulsion{
+public class Server implements ThreadNotifier,ServerConstants,FileWatcherCallback,SequenceConvulsion{
 	private Group someGroup;
 	private ArrayList<String> listOfFiles;
 	private ServerSocket serverSocket;
@@ -55,13 +52,16 @@ public class Server implements ThreadNotifier,ServerConstants,ArrayListCallback,
 
 
 	public void kickStart(){
+		System.out.println("in KICKSTART");
 		try {
 			FileReaderRunnable.printPool();
 
-
+			System.out.println("YOUR IP "+ServerConstants.ACTUAL_IP);
+			Logger.i("IP address "+ServerConstants.ACTUAL_IP);
 			while (true) {
 
 				Socket clientSocket = serverSocket.accept();
+				System.out.println("Someone connected");
 				this.authenticator.addClient(clientSocket);
 			}
 
@@ -82,12 +82,15 @@ public class Server implements ThreadNotifier,ServerConstants,ArrayListCallback,
 
 
 	/* running on main thread since the files need to be read before the server can start running*/
-	private void setFileReaderRunnables(){
+	private void setFileReaderRunnables(ArrayList<String> listOfFiles){
+		FileReaderRunnable fileReaderRunnable=null;
+
+		/* Whenever a new file is obtained the file pool will have to be reiinited*/
 
 		/* start the progress bar here*/
-		for(String str:this.listOfFiles){
+		for(String str:listOfFiles){
 			try {
-				FileReaderRunnable fileReaderRunnable = new FileReaderRunnable(str);
+				fileReaderRunnable = new FileReaderRunnable(str);
 			}catch (FileNotFoundException fnfe){
 				Logger.wtf(fnfe.toString());
 
@@ -95,6 +98,14 @@ public class Server implements ThreadNotifier,ServerConstants,ArrayListCallback,
 
 			}
 		}
+		/* shutting down pool and preventing anymore FileReaderRunnables from spawning*/
+		FileReaderRunnable.getThreadPool().shutdown();
+		/* This method recreates the threadpool and assigns the current class as the reference to the sequence convulsion
+		* This also allows me to add more FileReaderRunnables since shutting down an executor wont let you add more runnables to it.
+		* */
+		FileReaderRunnable.reinitThreadPool();
+
+
 
 		/* stop the progress bar here*/
 		/* start the server here.*/
@@ -105,7 +116,7 @@ public class Server implements ThreadNotifier,ServerConstants,ArrayListCallback,
 
 
 	private void setFileWatchers(){
-		FileWatcher.setArrayListCallback(this);
+		FileWatcher.setfileWatcherCallbackk(this);
 
 		for(String str:this.someGroup.getListOfFolders()){
 			FileWatcher fileWatcher=new FileWatcher(str);
@@ -132,23 +143,34 @@ public class Server implements ThreadNotifier,ServerConstants,ArrayListCallback,
 		this.listOfFiles=(ArrayList<String>)allFiles[0];
 		Comms.setTreeString(allFiles[1].toString());
 		Comms.setFileListerList(this.listOfFiles);
+		System.out.println("Tree string is "+allFiles[1].toString() );
 
 		this.setFileWatchers();
-		this.setFileReaderRunnables();
+		this.setFileReaderRunnables(this.listOfFiles);
 	}
 
 	/*
-	* implementing ArrayListCallback methods
+	* implementing FileWatcherCallback methods
 	*
 	*
 	* */
 	@Override
 	public void onAdd(String toBeAdded){
 		this.listOfFiles.add(toBeAdded);
+		/* TODO add file to treeString */
+		try {
+			FileReaderRunnable newFile = new FileReaderRunnable(toBeAdded);
+		}catch (FileNotFoundException fnfe){
+			Logger.wtf(fnfe.toString()+" from FileWatcherCallback in Server");
+		}
 	}
 	@Override
 	public void onRemove(String toBeRemoved){
 		this.listOfFiles.remove(toBeRemoved);
+		FileReaderRunnable.getPool().remove(toBeRemoved);
+
+		/* TODO remove fileName from treeString*/
+
 	}
 
 

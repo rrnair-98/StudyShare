@@ -1,6 +1,7 @@
 package services;
 
 import services.microservices.Comms;
+import services.microservices.threadpool.SequenceConvulsion;
 
 import java.net.Socket;
 import java.util.ArrayList;
@@ -10,7 +11,6 @@ public class Authenticator implements AuthenticatorQueMgr{
 
     private ArrayList<ClientsToBeServed> clientsToBeServed;
     private ArrayList<Comms> authenticatedUsers;
-
     public Authenticator(){
         this.authenticatedUsers=new ArrayList<>();
         this.clientsToBeServed=new ArrayList<>();

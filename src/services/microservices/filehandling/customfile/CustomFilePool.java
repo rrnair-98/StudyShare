@@ -13,6 +13,7 @@ public class CustomFilePool{
 
 	public void add(final String path,final CustomFile customFile){
 		this.pool.put(path,customFile);
+		System.out.println("added "+customFile.getFileName()+" PATH "+customFile.getPath());
 	}
 
 	public void remove(final String key){

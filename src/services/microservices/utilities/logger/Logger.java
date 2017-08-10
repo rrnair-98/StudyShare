@@ -3,10 +3,7 @@ package services.microservices.utilities.logger;
 import sun.security.provider.MD5;
 
 import javax.swing.text.DateFormatter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -36,11 +33,11 @@ public class Logger implements LoggerDefaults{
 
 
 
-    public static void initLogger() {
+     public static void initLogger() {
         System.out.println("logger inited");
         String date = getDate();
 
-        String arr[] = {LoggerDefaults.DEFAULT_I, LoggerDefaults.DEFAULT_WTF, LoggerDefaults.DEFAULT_DEBUG};
+        String arr[] = {LoggerDefaults.DEFAULT_DEBUG,LoggerDefaults.DEFAULT_I, LoggerDefaults.DEFAULT_WTF} ;
         File file = new File(System.getProperty("user.dir") + "/StudyShare/logs/");
         if(!file.exists());
             file.mkdirs();
@@ -59,9 +56,8 @@ public class Logger implements LoggerDefaults{
                     } catch (IOException ioe) {
                         ioe.printStackTrace();
                     }
-                }else
-                    System.out.println("EXISTS");
-                Logger.printWriter[i] = new PrintWriter(new FileOutputStream(f), true);//append true
+                }
+                Logger.printWriter[i] = new PrintWriter(new FileWriter(f,true), true);//append true
 
             } catch (IOException io) {
                 io.printStackTrace();
@@ -86,18 +82,18 @@ public class Logger implements LoggerDefaults{
 
     /* calls for writing debug messages*/
     public static void d(String stringToBeWritten){
-        Logger.write(LoggerDefaults.DEFAULT_DEBUG+stringToBeWritten,LoggerDefaults.DEBUG_INDEX);
+        Logger.write(LoggerDefaults.DEFAULT_DEBUG+"\t"+stringToBeWritten,LoggerDefaults.DEBUG_INDEX);
     }
 
     /* call for writing informative messagesGenerally about the user.*/
     public static void i(String toBeWritten){
-        Logger.write(LoggerDefaults.DEFAULT_I+toBeWritten,LoggerDefaults.INFO_INDEX);
+        Logger.write(LoggerDefaults.DEFAULT_I+"\t"+toBeWritten,LoggerDefaults.INFO_INDEX);
     }
     /*calls for writing a terrible failure message or exceptions
     * wtf=whatATerrribleFailure :)
     * */
     public static void wtf(String stringToBeWritten){
-        Logger.write(LoggerDefaults.DEFAULT_WTF+stringToBeWritten,LoggerDefaults.WTF_INDEX);
+        Logger.write(LoggerDefaults.DEFAULT_WTF+"\t"+stringToBeWritten,LoggerDefaults.WTF_INDEX);
     }
 
 

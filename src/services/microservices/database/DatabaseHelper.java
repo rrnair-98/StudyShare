@@ -15,7 +15,7 @@ public class DatabaseHelper
     */
     public static boolean verifyUser(String email_id,long password)
     {
-        return DatabaseHandler.createVerifyQuery("USERS",email_id,password);
+        return DatabaseHandler.createVerifyQuery("USER",email_id,password);
 
     }
 

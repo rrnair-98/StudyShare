@@ -261,7 +261,7 @@ public class DatabaseHandler implements CONSTANT
 	{
 		try
 		{
-			String sql="SELECT * FROM "+table_name+" WHERE email_id ='"+userid+"' AND password= "+password;
+			String sql="SELECT * FROM USER WHERE USERNAME = '"+userid+"' AND PASSWORD = "+password+";";
 			System.out.println(sql);
 			Statement stmt = DatabaseHandler.getStatement();
 			ResultSet rs = stmt.executeQuery(sql);

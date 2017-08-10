@@ -29,14 +29,14 @@ public class FileReaderRunnable implements Runnable,FileReaderRunnableConstants{
 	private String filePath;
 	private static SequenceConvulsion sequenceConvulsion;
 
+	private static long fileLength;
 	//redundant code ... Sharing reference of main list everywhere. Not required as of now.
 	//private static ArrayList<String> filesToBeRead;
 
 	static{
-		FileReaderRunnable.pool = new CustomFilePool();
+		FileReaderRunnable.pool=new CustomFilePool();
 		FileWatcher.setFilePool(FileReaderRunnable.pool);
 		//FileReaderRunnable.filesToBeRead=new ArrayList<String>();
-		FileReaderRunnable.fileReaderRunnableThreadPool=new GeneralThreadPool(FileReaderRunnable.MAX_QUE_SIZE,FileReaderRunnable.sequenceConvulsion);
 	}
 
 	public FileReaderRunnable(String filePath)throws FileNotFoundException{
@@ -53,6 +53,13 @@ public class FileReaderRunnable implements Runnable,FileReaderRunnableConstants{
 	}
 	public static void setSequenceConvulsion(SequenceConvulsion sequenceConvulsion){
 		FileReaderRunnable.sequenceConvulsion=sequenceConvulsion;
+		FileReaderRunnable.fileReaderRunnableThreadPool=new GeneralThreadPool(FileReaderRunnable.MAX_QUE_SIZE,FileReaderRunnable.sequenceConvulsion);
+
+
+	}
+	public static void reinitThreadPool(){
+		FileReaderRunnable.fileReaderRunnableThreadPool=new GeneralThreadPool(FileReaderRunnable.MAX_QUE_SIZE);
+
 	}
 
 
@@ -65,12 +72,24 @@ public class FileReaderRunnable implements Runnable,FileReaderRunnableConstants{
 		return FileReaderRunnable.pool;
 	}
 
+
+	public static GeneralThreadPool getThreadPool(){
+		return FileReaderRunnable.fileReaderRunnableThreadPool;
+	}
+
 	@Override
 	public void run(){
 
 		try{
-					FileReaderRunnable.pool.add(this.filePath, new CustomFile(this.filePath, Housekeeper.getCompressedBytes(this.filePath)));
+			if(this.filePath.contains(".DS"))
+				return;
+			System.out.println("about to read "+this.filePath );
+					CustomFile customFile=new CustomFile(this.filePath, Housekeeper.getCompressedBytes(this.filePath));
+			System.out.println("ASDASD");
 
+						FileReaderRunnable.pool.add(this.filePath, customFile);
+
+					System.out.println("ASDASD DONE");
 		}catch (IOException exception){
 			Logger.wtf(exception.toString());
 		}

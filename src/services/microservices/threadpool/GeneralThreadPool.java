@@ -51,32 +51,25 @@ public class GeneralThreadPool extends ScheduledThreadPoolExecutor implements Ge
                 try{
                     int i=0;
 					/* this works since arrayList.size is never going to be 0 whenver a task has been submitted*/
-                    while(i!=GeneralThreadPool.this.arrayList.size())
+
 				/* not using for each since it leads to ConcurrentModificationException. JVM does that whenver new items are added to the iterator of Collection to maintain safe state*/
-                        for(i=0;i<arrayList.size();i++){
-
-                            Future fut=GeneralThreadPool.this.arrayList.get(i);
-                            fut.get();
-
-
-                        }
-                    System.out.println("Done with thread");
+                        while(!GeneralThreadPool.this.isTerminated());
+                    System.out.println("Done with watching");
 
 
 
-                    GeneralThreadPool.this.terminated();
+                    //GeneralThreadPool.this.terminated();
                     if(GeneralThreadPool.this.sequenceConvulsion!=null)
                         GeneralThreadPool.this.sequenceConvulsion.kickStart();
 				/* for cases when jobs are added later*/
 
+				    GeneralThreadPool.this.terminated();
                     GeneralThreadPool.this.arrayList.clear();
                     GeneralThreadPool.this.isFirst=false;
 				/* since threads cant be restarted */
                     GeneralThreadPool.this.initListWatcher();
 
-                }catch(InterruptedException ie){
-                    ie.printStackTrace();
-                }catch(	ExecutionException e){
+                }catch(	Exception e){
                     e.printStackTrace();
                 }
             }
@@ -92,6 +85,7 @@ public class GeneralThreadPool extends ScheduledThreadPoolExecutor implements Ge
     }
 
     public void add(Runnable runnable){
+        System.out.println("adding");
         this.submit(runnable);
     }
 

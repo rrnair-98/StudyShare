@@ -6,9 +6,9 @@ import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
 //import static java.nio.file.StandardWatchEventKinds.ENTRY_OVERFLOW;
+import services.microservices.filehandling.callback.FileWatcherCallback;
 import services.microservices.filehandling.customfile.CustomFile;
 import services.microservices.filehandling.customfile.CustomFilePool;
-import services.microservices.filehandling.callback.ArrayListCallback;
 import services.microservices.utilities.logger.Logger;
 
 /*
@@ -29,7 +29,7 @@ public class FileWatcher extends Thread
 	private static CustomFilePool cfp;//reference can be obtained from FileReaderRunnables.
 	private String folderToWatch;
 	private WatchService watcher;
-	private static ArrayListCallback arrayListCallback;
+	private static FileWatcherCallback fileWatcherCallbackk;
 
 
 	/* to be called from within FileReaderRunnable*/
@@ -38,8 +38,8 @@ public class FileWatcher extends Thread
 	}
 
 	/* to be called from within Server class*/
-	public static void setArrayListCallback(ArrayListCallback callback){
-		FileWatcher.arrayListCallback=callback;
+	public static void setfileWatcherCallbackk(FileWatcherCallback callback){
+		FileWatcher.fileWatcherCallbackk=callback;
 	}
 
 	public FileWatcher(String path)
@@ -78,16 +78,16 @@ public class FileWatcher extends Thread
 						{
 							Logger.i("adding "+p.toString()+" To pool");
 							FileWatcher.cfp.add(p.toString(), new CustomFile(p.toString(),Files.readAllBytes(p)));
-							if(FileWatcher.arrayListCallback!=null)
-								FileWatcher.arrayListCallback.onAdd(p.toString());
+							if(FileWatcher.fileWatcherCallbackk!=null)
+								FileWatcher.fileWatcherCallbackk.onAdd(p.toString());
 						}
 						else if(kind==ENTRY_DELETE)
 						{
 
 							FileWatcher.cfp.remove(p.toString());
 							Logger.i("removing "+p.toString()+" from pool");
-							if (FileWatcher.arrayListCallback!=null)
-								FileWatcher.arrayListCallback.onRemove(p.toString());
+							if (FileWatcher.fileWatcherCallbackk!=null)
+								FileWatcher.fileWatcherCallbackk.onRemove(p.toString());
 						}
 
 

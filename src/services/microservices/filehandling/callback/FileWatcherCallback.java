@@ -5,7 +5,7 @@ package services.microservices.filehandling.callback;
 * whenever the FileWatcher detects changes in a particular directory.
 * NOTE: filewatcher removes the entry from CustomFilePool so the only thing that needs to be done is remove the filePath from the main arraylist.
 * */
-public interface ArrayListCallback {
+public interface FileWatcherCallback {
     public void onAdd(String toBeAdded);
     public void onRemove(String toBeRemoved);
 }
