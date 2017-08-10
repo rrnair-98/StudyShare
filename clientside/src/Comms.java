@@ -1,8 +1,5 @@
 import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.scene.control.ProgressBar;
 
 import java.io.*;
@@ -24,11 +21,11 @@ FOR MAKING THE COMMS OBJECT PASS THE SOCKET'S STREAMS
 APPLICATION CLASS SHOULD IMMEDIATELY CALL THE COMMS PROPERTY GETTERS FOR BIDIRECTIONAL BINDING AND SHOULD IMPLEMENT CHANGE LISTENER FOR THE RESPECTIVE PROPERTY OBJECTS
 THE APPLICATION CLASS SHOULD MAKE AND FOLLOW THE FOLLOWING BIND MAP
 APPLICATIONS'S COMMAND PROPERTY -----------BIDIRECTIONALLY BOUND WITH--------COMMS'S COMMAND PROPERTY
-APPLICATIONS'S COMMAND PROPERTY -----------BIDIRECTIONALLY BOUND WITH--------COMMS'S ACCESSFILESRECIEVED
+APPLICATIONS'S ACCESSFILESRECIEVED PROPERTY -----------BIDIRECTIONALLY BOUND WITH--------COMMS'S ACCESSFILESRECIEVED
  */
-public class Comms implements Runnable{
+public class Comms /*implements Runnable*/ {
 
-    private String serverRequest;
+    private volatile String serverRequest;
     private StringProperty commandProperty;
     private OutputStream serverWriterStream;
     private PrintWriter serverWriter;
@@ -38,104 +35,151 @@ public class Comms implements Runnable{
     private BooleanProperty accessibleFilePathsRecieved;
     private List<String> filesListToBeRequested;
     private DataInputStream downloadStream;
-    private ArrayList<ProgressBar> pgbList;
+    private ProgressBar pgb;
+    private boolean authenticationStatus;
+    static boolean downloadStatus = false;
 
-    public Comms(OutputStream clientOutputStream,InputStream clientInputStream){
-        serverRequest="";
-        this.commandProperty=new SimpleStringProperty();
-        this.serverWriterStream=clientOutputStream;
-        this.serverReaderStream=clientInputStream;
-        this.readyToRead=false;
-        this.accessibleFilePathsRecieved= new SimpleBooleanProperty(false);
-    }
-    @Override
-    public void run() {
-        this.serverWriter=new PrintWriter(serverWriterStream,true);
+    public Comms(OutputStream clientOutputStream, InputStream clientInputStream) {
+        serverRequest = "";
+        this.commandProperty = new SimpleStringProperty("none");
+        this.serverWriterStream = clientOutputStream;
+        this.serverReaderStream = clientInputStream;
+        this.readyToRead = false;
+        this.accessibleFilePathsRecieved = new SimpleBooleanProperty(false);
+        this.serverWriter = new PrintWriter(serverWriterStream, true);
         this.serverReader = new BufferedReader(new InputStreamReader(serverReaderStream));
-        try {
-            while (true) {
-                if (!this.serverRequest.equals("")) {
-                    this.serverWriter.println(this.serverRequest); // FOR PROPER EXECUTION CALL THE setserverRequest() with the proper ServerRequestConstants
-                    this.readyToRead = true;//Once the request is performed the code is ready to run the sub loop is ready to read the server's response
-                    while (this.readyToRead) {
-                            String serverResponse = serverReader.readLine();
-                            if (serverResponse != null && this.serverRequest.equals(ServerRequestConstants.LIST_REQUEST)) { //if the server response is not null and the call to setserverRequest() was done with LIST_REQUEST
-                                this.commandProperty.setValue(serverResponse); // Set the command property to the string tree returned as the server response, this triggers the change event callback in the application class
-                                this.accessibleFilePathsRecieved.setValue(true);// This instruction sets the bound accessibleFilePathsRevieved value to true, the boolean property needs to be checked if is true make the tree with the value of the command Property of the application class
-                            } else if (this.serverRequest.equals(ServerRequestConstants.SENDING_LIST)) { //if the string to be written is SENDING_LIST the list object is sent to the user by object output stream
-                                ObjectOutputStream filesListWriter = new ObjectOutputStream(this.serverWriterStream);
-                                filesListWriter.writeObject(this.filesListToBeRequested);
-                                this.commandProperty.setValue(CommsMessages.START_DOWNLOADING);// this value setting needs to be checked in the change event call back to generate the downloading, BUT BEFORE MAKING THE DOWNLOAD SCENE INITIALIZE THE PROGRESS BAR LISTS
-                            }
-                            this.readyToRead = false;
-                        this.serverRequest = "";
-                    }
-                }
-                else if(this.commandProperty.getValue().equals(CommsMessages.START_DOWNLOADING)){
-                    File directory=new File(System.getProperty("user.dir")+"/StudyShareDownloads");
-                    if(!directory.exists())
-                        directory.mkdir();
-                    this.downloadStream=new DataInputStream(serverReaderStream);
-                    int readData;
-                    int i=0;
-                    while(i<filesListToBeRequested.size()) {
-                        String path=filesListToBeRequested.get(i);
-                        File newFile = new File(directory+"\\"+path.substring(path.lastIndexOf("/"),path.length()-1)+".zip");
-                        FileOutputStream fos=new FileOutputStream(newFile);
-                        while ((readData = downloadStream.read()) != -1) {
-                            fos.write(readData);
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    //CODE TO UPDATE PROGRESS BARS
+    }
+
+    //@Override
+    public void run() {
+        System.out.println("Thread made");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (true) {
+                        //System.out.println(serverRequest);
+                        if (Comms.this.serverRequest.equals("") == false) {
+                            Comms.this.serverWriter.println(Comms.this.serverRequest); // FOR PROPER EXECUTION CALL THE setserverRequest() with the proper ServerRequestConstants
+                            System.out.println(serverRequest);
+                            Comms.this.readyToRead = true;//Once the request is performed the code is ready to run the sub loop is ready to read the server's response
+                            while (Comms.this.readyToRead) {
+                                System.out.println(serverRequest + "123");
+                                String serverResponse;
+                                if (Comms.this.serverRequest.equals(ServerRequestConstants.LIST_REQUEST)) {
+                                    serverResponse = Comms.this.serverReader.readLine();//if the server response is not null and the call to setserverRequest() was done with LIST_REQUEST
+                                    Comms.this.commandProperty.setValue(serverResponse);// Set the command property to the string tree returned as the server response, this triggers the change event callback in the application class
+                                    Comms.this.accessibleFilePathsRecieved.setValue(true);// This instruction sets the bound accessibleFilePathsRevieved value to true, the boolean property needs to be checked if is true make the tree with the value of the command Property of the application class
+                                } else if (Comms.this.serverRequest.equals(ServerRequestConstants.SENDING_LIST)) { //if the string to be written is SENDING_LIST the list object is sent to the user by object output stream
+                                    System.out.println("Sending List");
+                                    ObjectOutputStream filesListWriter = new ObjectOutputStream(Comms.this.serverWriterStream);
+                                    filesListWriter.writeObject(Comms.this.filesListToBeRequested);
+                                    filesListWriter.flush();
+                                    Comms.this.commandProperty.setValue(CommsMessages.START_DOWNLOADING);// this value setting needs to be checked in the change event call back to generate the downloading, BUT BEFORE MAKING THE DOWNLOAD SCENE INITIALIZE THE PROGRESS BAR LISTS
                                 }
-                            });
+
+
+                                Comms.this.readyToRead = false;
+                            }
+                            serverRequest = "";
+                        } else if (Comms.this.commandProperty.getValue().equals(CommsMessages.START_DOWNLOADING)) {
+                            File directory = new File(System.getProperty("user.dir") + "/StudyShareDownloads");
+                            if (!directory.exists())
+                                directory.mkdir();
+                            Comms.this.downloadStream = new DataInputStream(serverReaderStream);
+                            //int readData;
+                            int i = 0;
+                            //int lengthOfEachFile = 100 / filesListToBeRequested.size();
+                            //while (i < filesListToBeRequested.size()) {
+                            String path = filesListToBeRequested.get(i++);
+                            File newFile = new File(directory + "/" + path.substring(path.lastIndexOf("/"), path.length()) + ".zip");
+                            try {
+                                FileOutputStream fos = new FileOutputStream(newFile);
+                                DataOutputStream dos = new DataOutputStream(fos);
+                                int perclength = Integer.parseInt(downloadStream.readUTF());
+                                System.out.println(perclength);
+                                int t[] = new int[1];
+                                t[0] = 0;
+                                System.out.println("Starting to download");
+
+                                for (t[0] = 0; t[0] < perclength; t[0]++) {
+                                    byte bytes = downloadStream.readByte();
+                                    dos.write(bytes);
+                                        Platform.runLater(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                //CODE TO UPDATE PROGRESS BAR
+                                                //pgb.setProgress(((t[0]++) / lengthOfEachFile) * 100);
+                                            }
+                                        });
+                                }
+                                dos.close();
+                                fos.close();
+
+                                System.out.println("Hellooooooo");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                            filesListToBeRequested = null;
+                            Comms.this.commandProperty.setValue(CommsMessages.DOWNLOAD_COMPLETED); //CHECK FOR THIS VALUE IN THE changedEvent CALLBACK AND ROLLBACK THE CLIENT TO GET MORE FILES TO BE DOWNLOADE
+                            downloadStatus = true;
                         }
-                        i++;
                     }
-                    filesListToBeRequested=null;
-                    this.commandProperty.setValue(CommsMessages.DOWNLOAD_COMPLETED); //CHECK FOR THIS VALUE IN THE changedEvent CALLBACK AND ROLLBACK THE CLIENT TO GET MORE FILES TO BE DOWNLOADER
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
-        }
-        catch(Exception e){
-            return;
-        }
+        }).start();
+
     }
-    public void setServerRequest(String serverRequest){
-        this.serverRequest=serverRequest;
+
+    public void setServerRequest(String serverRequest) {
+        System.out.println("Hello");
+        this.serverRequest = serverRequest;
     }
-    public void setSelectedFilesListToBeRequested(List<String> filesListToBeRequested){
-        this.filesListToBeRequested=filesListToBeRequested;
+
+    public void setSelectedFilesListToBeRequested(List<String> filesListToBeRequested) {
+        this.filesListToBeRequested = filesListToBeRequested;
     }
-    public void setProgressBar(ArrayList<ProgressBar> pgb){
-        pgbList=pgb;
+
+    public void setProgressBar(ProgressBar pgb) {
+        this.pgb = pgb;
     }
-    public final String getServerRequest(){
+
+    public final String getServerRequest() {
         return this.serverRequest;
     }
+
     //THE PROPERTY GETTERS ARE USED FOR BINDING THE COMMS CLASS PROPERTIES AND APPLICATION CLASS PROPERTIES
-    public BooleanProperty getAccessibleFilePathsRecievedProperty(){
+    public BooleanProperty getAccessibleFilePathsRecievedProperty() {
         return this.accessibleFilePathsRecieved;
     }
+
     public StringProperty getCommandProperty() {
         return this.commandProperty;
     }
-    public void checkAuthentication(String username,String password){
-        //Perform the reading and writing once the UI thread is donw with all the processings
-        Platform.runLater(new Runnable(){
-            @Override
-            public void run(){
-                try {
-                    String jsonCombo = "username:" + username + "password:" + password;
-                    serverWriter.println(jsonCombo);
-                    if (serverReader.readLine().equals(jsonCombo)) {
-                        new Thread(Comms.this).start(); //MAKE THE THREAD ONLY IF THE CLIENT IS AUTHENTICATED
-                    }
+
+    public boolean checkAuthentication(String username, String password) {
+        if (!authenticationStatus) {
+            try {
+                String jsonCombo = "username:\"" + username + "\" , password:\"" + password + "\"";
+                serverWriter.println(jsonCombo);
+                System.out.println("Reading");
+                String temp = serverReader.readLine();
+                //System.out.println(temp);
+                if (temp.equals("verified")) {
+                    System.out.println(temp);
+                    //System.out.println(serverReader.readLine());
+                    Comms.this.run();//MAKE THE THREAD ONLY IF THE CLIENT IS AUTHENTICATE
+                    authenticationStatus = true;
+                    return true;
                 }
-                catch(IOException i){
-                }
+            } catch (IOException i) {
             }
-        });
+            authenticationStatus = false;
+            return false;
+        }
+        return true;
     }
 }
