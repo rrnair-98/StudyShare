@@ -5,16 +5,16 @@
    -fx-background-color:white;
 }
 .input{
-    -fx-background-color: rgb(255,255,255,0.3);
+    //-fx-background-color: rgb(255,255,255,0.3);
     -fx-text-fill:black;
-   -fx-prompt-text-fill:white;
+   //-fx-prompt-text-fill:white;
 }
 
- #Username:hover,#Password:hover,#Login:hover{
+ /*#Username:hover,#Password:hover,#Login:hover{
      -fx-background-color: #99ddff;
     -fx-border-color:gray;
     -fx-cursor: TEXT;
-}
+}*/
 
 #Login:hover{
      -fx-cursor:HAND;
@@ -30,14 +30,14 @@
 }
 
 #Username {
-    -fx-background-image: url('../../resources/icon_user.png');
+    //-fx-background-image: url('../../resources/icon_user.png');
     -fx-background-repeat: no-repeat;
     -fx-background-position:right;
    
 }
 
 #Password{
-   -fx-background-image: url('../../resources/lockMobile.png');
+   //-fx-background-image: url('../../resources/lockMobile.png');
     -fx-background-repeat: no-repeat;
     -fx-background-position:right;
     

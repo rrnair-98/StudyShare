@@ -6,6 +6,7 @@ package ui.pages;
 import com.jfoenix.controls.JFXButton;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import  javafx.fxml.FXML;
@@ -19,6 +20,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.util.Callback;
+import javafx.util.Duration;
 import jfxtras.scene.menu.CirclePopupMenu;
 import ui.pages.constants.BasicController;
 import ui.pages.constants.PageConstants;
@@ -54,6 +56,7 @@ public class Dashboard implements PageConstants,BasicController{
     ManageUser manageUser;
     Share share;
     Recent recent;
+    ScrollableRecent scrollableRecent;
 
 
     //RecentsController recentsController;
@@ -63,8 +66,9 @@ public class Dashboard implements PageConstants,BasicController{
     DisplayYourIp yourIp;
 
     /*Supporting Objects*/
+    TranslateTransition translateTransitionForDashboard;
     CirclePopupMenu circlePopupMenu;
-    FXMLLoader manageUserLoader,manageGroupLoader,shareLoader,recentLoader,serverAccountControllerLoader;
+    FXMLLoader manageUserLoader,manageGroupLoader,shareLoader,recentLoader,scrollableRecentLoader;
 
 
     /*this method will initialize other fxml files cotrollers and add them to pageManager*/
@@ -109,6 +113,12 @@ public class Dashboard implements PageConstants,BasicController{
             recentLoader.load();
             recent=(Recent) recentLoader.getController();
 
+            /*FOR MAIN DISPLAY*/
+            scrollableRecentLoader=new FXMLLoader();
+            scrollableRecentLoader.setLocation(getClass().getResource("fxml//scrollableRecent.fxml"));
+            scrollableRecentLoader.load();
+            scrollableRecent=(ScrollableRecent)scrollableRecentLoader.getController();
+
             yourIp=new DisplayYourIp();
 
         }catch(Exception e){
@@ -152,6 +162,7 @@ public class Dashboard implements PageConstants,BasicController{
             @Override
             public void handle(ActionEvent event) {
                 dashboardHolder.setVisible(true);
+                animateIn();
             }
         });
 
@@ -160,7 +171,9 @@ public class Dashboard implements PageConstants,BasicController{
         AnchorPane.setTopAnchor(defaultHolderTitle,new Double("10"));
         AnchorPane.setLeftAnchor(defaultHolderTitle,new Double("340"));
         defaultHolderTop.getChildren().addAll(show_dashBoard,defaultHolderTitle);
-        defaultHolder.setCenter(yourIp);
+        System.out.println("*********************************************"+scrollableRecent.getRoot());
+        defaultHolder.setCenter(scrollableRecent.getRoot());
+        defaultHolder.setCenter(yourIp.getRoot("192.767867"));
     }
 
     private void initDashboardHolder(){
@@ -184,7 +197,7 @@ public class Dashboard implements PageConstants,BasicController{
         hide_dashBoard.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                dashboardHolder.setVisible(false);
+                animateOut();
             }
         });
         showManageGroupPage.setOnAction(new EventHandler<ActionEvent>() {
@@ -298,6 +311,27 @@ public class Dashboard implements PageConstants,BasicController{
     public void refreshPage(){
 
     }
+
+    public void animateIn(){
+        translateTransitionForDashboard=new TranslateTransition(Duration.millis(600),dashBoardControlsHolder);
+        translateTransitionForDashboard.setFromX(-600.0);
+        translateTransitionForDashboard.setToX(0.0);
+        translateTransitionForDashboard.play();
+    }
+
+    public void animateOut() {
+        translateTransitionForDashboard=new TranslateTransition(Duration.millis(600),dashBoardControlsHolder);
+        translateTransitionForDashboard.setFromX(0.0);
+        translateTransitionForDashboard.setToX(-600.0);
+        translateTransitionForDashboard.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                dashboardHolder.setVisible(false);
+            }
+        });
+        translateTransitionForDashboard.play();
+    }
+
 }
 
 class DisplayYourIp extends AnchorPane{
