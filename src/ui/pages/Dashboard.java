@@ -53,6 +53,7 @@ public class Dashboard implements PageConstants,BasicController{
     ManageGroup manageGroup;
     ManageUser manageUser;
     Share share;
+    Recent recent;
 
 
     //RecentsController recentsController;
@@ -63,7 +64,7 @@ public class Dashboard implements PageConstants,BasicController{
 
     /*Supporting Objects*/
     CirclePopupMenu circlePopupMenu;
-    FXMLLoader manageUserLoader,manageGroupLoader,shareLoader,recentsControllerLoader,serverAccountControllerLoader;
+    FXMLLoader manageUserLoader,manageGroupLoader,shareLoader,recentLoader,serverAccountControllerLoader;
 
 
     /*this method will initialize other fxml files cotrollers and add them to pageManager*/
@@ -102,6 +103,11 @@ public class Dashboard implements PageConstants,BasicController{
             shareLoader.setLocation(getClass().getResource("fxml//share.fxml"));
             shareLoader.load();
             share=(Share)shareLoader.getController();
+
+            recentLoader=new FXMLLoader();
+            recentLoader.setLocation(getClass().getResource("fxml//recent.fxml"));
+            recentLoader.load();
+            recent=(Recent) recentLoader.getController();
 
             yourIp=new DisplayYourIp();
 
@@ -162,12 +168,14 @@ public class Dashboard implements PageConstants,BasicController{
         JFXButton showSharePage;
         JFXButton showManageGroupPage;
         JFXButton showManageUserPage;
+        JFXButton showRecentPage;
         FontAwesomeIconView hide_dashboard_icon;
 
         hide_dashBoard=new JFXButton();
         showManageGroupPage=new JFXButton("Manage Group");
         showManageUserPage=new JFXButton("Manage User");
         showSharePage=new JFXButton("Share");
+        showRecentPage=new JFXButton("Recents");
 
         hide_dashboard_icon = new FontAwesomeIconView(FontAwesomeIcon.REMOVE);
         hide_dashboard_icon.getStyleClass().add("close_icon");
@@ -203,6 +211,14 @@ public class Dashboard implements PageConstants,BasicController{
                 pageManager.setCurrentPageIndex(PageContantsForDashboard.SHARE_PAGE);
             }
         });
+        showRecentPage.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                dashboardHolder.setVisible(false);
+                pageHolder.setVisible(true);
+                pageManager.setCurrentPageIndex(PageContantsForDashboard.RECENT_PAGE);
+            }
+        });
 
         AnchorPane.setTopAnchor(hide_dashBoard,new Double("0"));
         AnchorPane.setLeftAnchor(hide_dashBoard,new Double("252"));
@@ -212,8 +228,10 @@ public class Dashboard implements PageConstants,BasicController{
         AnchorPane.setLeftAnchor(showManageUserPage,new Double("50"));
         AnchorPane.setTopAnchor(showSharePage,new Double("300"));
         AnchorPane.setLeftAnchor(showSharePage,new Double("50"));
+        AnchorPane.setTopAnchor(showRecentPage,new Double("400"));
+        AnchorPane.setLeftAnchor(showRecentPage,new Double("50"));
 
-        dashBoardControlsHolder.getChildren().addAll(hide_dashBoard,showManageGroupPage,showManageUserPage,showSharePage);
+        dashBoardControlsHolder.getChildren().addAll(hide_dashBoard,showManageGroupPage,showManageUserPage,showSharePage,showRecentPage);
 
         dashboardHolder.setVisible(false);
     }
@@ -261,7 +279,7 @@ public class Dashboard implements PageConstants,BasicController{
             return share.getRoot();
         }
         else if(pageIndex==PageContantsForDashboard.RECENT_PAGE){
-         //   return recentsController.getRoot();
+            return recent.getRoot();
         }
 
         return new Button("Dhananjay");

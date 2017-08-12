@@ -78,8 +78,8 @@ public class PageKeeper implements PageConstants{
     private Node pageSelector(int pageIndex) {
 
         if(pageIndex==PageConstants.LOGIN_PAGE) {
-          // return loginPage.getRoot();
-            return dashboard.getRoot();
+           return loginPage.getRoot();
+            //return dashboard.getRoot();
         }
         else if (pageIndex==PageConstants.DASHBOARD_PAGE){
             return dashboard.getRoot();
