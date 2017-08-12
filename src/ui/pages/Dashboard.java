@@ -172,7 +172,7 @@ public class Dashboard implements PageConstants,BasicController{
         AnchorPane.setLeftAnchor(defaultHolderTitle,new Double("340"));
         defaultHolderTop.getChildren().addAll(show_dashBoard,defaultHolderTitle);
         System.out.println("*********************************************"+scrollableRecent.getRoot());
-        defaultHolder.setCenter(scrollableRecent.getRoot());
+        defaultHolder.setBottom(scrollableRecent.getRoot());
         defaultHolder.setCenter(yourIp.getRoot("192.767867"));
     }
 
