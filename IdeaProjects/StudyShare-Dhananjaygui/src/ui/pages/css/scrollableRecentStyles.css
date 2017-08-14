@@ -1,0 +1,35 @@
+/*AnchorPane*/
+.root{
+    -fx-background-color:linear-gradient(#00bfff,#0080ff,#0000ff);
+
+}
+
+/*Button*/
+#btnRecent{
+    -fx-background-color: radial-gradient(radius 180%, #9e9999, #696767, #2f2f2f);
+}
+
+#sample:hover{
+    -fx-cursor: HAND;
+}
+#sample{
+  -fx-background-color: radial-gradient(radius 180%, red,orange,yellow);
+}
+
+/*Layout Panes*/
+#recentsHolder, #recentsItemHolder{
+    -fx-background-color: lightgray;
+    -fx-text-fill: #000;
+    -fx-font-family: "cursive";
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+#sp, #fp{
+    -fx-border-styles: solid 2px #000;
+}
+
+#rootRecents{
+    -fx-background-color: rgba(211,211,211);
+}
+
