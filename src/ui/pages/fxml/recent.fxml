@@ -10,17 +10,21 @@
 <!--@author: Ashutosh-->
 <!--anchor pane upon which there is a label and array of buttons-->
 <?import javafx.scene.layout.StackPane?>
-<StackPane  fx:controller="ui.pages.Recent" layoutX="0" layoutY="0" fx:id="parent" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../../css/recentStyles.css">
+<?import javafx.stage.Screen?>
+<StackPane fx:controller="ui.pages.Recent" prefHeight="${screen.visualBounds.width}" prefWidth="${screen.visualBounds.width}" layoutX="0" layoutY="0" fx:id="parent" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../../css/recentStyles.css">
+    <fx:define>
+        <Screen fx:factory="getPrimary" fx:id="screen"/>
+    </fx:define>
     <AnchorPane layoutY="20" layoutX="30" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="613.0"  xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" >
         <children>
-            <Label layoutX="200.0" layoutY="-100.0" prefHeight="25.0" prefWidth="200" text="StudyShare" textAlignment="CENTER" >
+            <Label layoutX="200.0" layoutY="0" prefHeight="-500" prefWidth="200" text="StudyShare" textAlignment="CENTER" >
                 <font>
                     <Font name="Segoe UI Semibold" size="36.0" />
                 </font>
             </Label>
             <!--after clicking it will call a function createButtons and perform the action by passing the arrayList as argument in the getNumberOfGroups(arrayList obj) in ShareController.java-->
-            <Button id="btn_share" fx:id="btn1" layoutX="115.0" layoutY="-30.0" mnemonicParsing="false" onAction="#createButtons" prefHeight="50.0" prefWidth="370.0"  text="Button"  styleClass=""/>
-            <GridPane fx:id="Grid" layoutX="-40.0" layoutY="80.0" prefHeight="400.0" prefWidth="700.0"/>
+            <Button id="btn_share" fx:id="btn1" layoutX="-100" layoutY="-300" mnemonicParsing="false" onAction="#createButtons" prefHeight="50.0" prefWidth="370.0"  text="Button"  styleClass=""/>
+            <GridPane fx:id="Grid" layoutX="-300" layoutY="-250" prefHeight="400.0" prefWidth="700.0"/>
         </children>
     </AnchorPane>
 </StackPane>
