@@ -56,7 +56,6 @@ public class PageKeeper implements PageConstants{
     /*This will init all the pages so that they can be added*/
     private void initPages(){
         try {
-            System.out.println("Inside initialize of PageKeeper.java");
             loginFxmlLoader = new FXMLLoader();
             loginFxmlLoader.setLocation(getClass().getResource("fxml//login.fxml"));
             loginFxmlLoader.load();
@@ -65,10 +64,8 @@ public class PageKeeper implements PageConstants{
 
             dashboardFxmlLoader=new FXMLLoader();
             dashboardFxmlLoader.setLocation(getClass().getResource("fxml//dashboard.fxml"));
-
             dashboardFxmlLoader.load();
             dashboard=(Dashboard) dashboardFxmlLoader.getController();
-            System.out.println("Value is a "+dashboard);
 
         }catch(Exception e){
             e.printStackTrace();

@@ -3,11 +3,11 @@
 <?import javafx.scene.control.Pagination?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="${screen.visualBounds.width}" prefWidth="${screen.visualBounds.width}" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@/ui/pages/css/pageKeeperStyles.css" fx:controller="ui.pages.PageKeeper">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="${screen.visualBounds.height}" prefWidth="${screen.visualBounds.width}" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@/ui/pages/css/pageKeeperStyles.css" fx:controller="ui.pages.PageKeeper">
    <fx:define>
       <Screen fx:factory="getPrimary" fx:id="screen"/>
    </fx:define>
    <children>
-      <Pagination layoutX="-3.0" layoutY="-2.0" prefHeight="${screen.visualBounds.width}" prefWidth="${screen.visualBounds.width}" id="pageManager" fx:id="pageManager"/>
+      <Pagination layoutX="0" layoutY="0" prefHeight="${screen.visualBounds.height}" prefWidth="${screen.visualBounds.width}" id="pageManager" fx:id="pageManager"/>
    </children>
 </AnchorPane>

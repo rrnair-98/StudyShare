@@ -10,14 +10,15 @@
 
 
 <?import javafx.stage.Screen?>
-<StackPane    layoutX="-1000" layoutY="-1000" maxHeight="-Infinity"  maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1400" prefWidth="${screen.visualBounds.width}" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:id="dashboardRoot" fx:controller="ui.pages.Dashboard" stylesheets="@../../css/dashboardStyles.css">
+<StackPane  maxHeight="-Infinity"  maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="${screen.visualBounds.height}" prefWidth="${screen.visualBounds.width}" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:id="dashboardRoot" id="dashboardRoot" fx:controller="ui.pages.Dashboard" stylesheets="@../../css/dashboardStyles.css">
    <fx:define>
       <Screen fx:factory="getPrimary" fx:id="screen"/>
    </fx:define>
    <children>
-      <BorderPane layoutX="10" layoutY="20" prefHeight="${screen.visualBounds.height}" prefWidth="${screen.visualBounds.width}" fx:id="defaultHolder">
+
+      <BorderPane  prefHeight="${screen.visualBounds.height}" prefWidth="${screen.visualBounds.width}" fx:id="defaultHolder">
          <top>
-            <AnchorPane prefHeight="73.0" prefWidth="${screen.visualBounds.width}" BorderPane.alignment="CENTER" fx:id="defaultHolderTop">
+            <AnchorPane  prefHeight="100.0" prefWidth="${screen.visualBounds.width}" BorderPane.alignment="CENTER" fx:id="defaultHolderTop">
                <children>
                </children>
             </AnchorPane>
@@ -27,18 +28,18 @@
          </center>
       </BorderPane>
 
-      <AnchorPane prefHeight="${screen.visualBounds.width}" prefWidth="${screen.visualBounds.width}" id="dashboardHolder" fx:id="dashboardHolder">
+      <AnchorPane prefHeight="${screen.visualBounds.height}" prefWidth="${screen.visualBounds.width}" id="dashboardHolder" fx:id="dashboardHolder">
          <children>
-            <AnchorPane  layoutX="0" layoutY="0" prefHeight="${screen.visualBounds.width}" prefWidth="300.0" fx:id="dashBoardControlsHolder" id="dashBoardControlsHolder" >
+            <AnchorPane  layoutX="0" layoutY="0" prefHeight="${screen.visualBounds.height}" prefWidth="300.0" fx:id="dashBoardControlsHolder" id="dashBoardControlsHolder" >
                <children>
                </children>
             </AnchorPane>
          </children>
       </AnchorPane>
 
-       <AnchorPane prefHeight="${screen.visualBounds.width}" prefWidth="${screen.visualBounds.width}" fx:id="pageHolder">
+       <AnchorPane prefHeight="${screen.visualBounds.height}" prefWidth="${screen.visualBounds.width}" fx:id="pageHolder" >
            <children>
-               <Pagination fx:id="pageManager"></Pagination>
+               <Pagination layoutX="0" layoutY="0" fx:id="pageManager" prefHeight="${screen.visualBounds.height}"  prefWidth="${screen.visualBounds.width}"></Pagination>
            </children>
        </AnchorPane>
 

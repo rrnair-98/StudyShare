@@ -16,15 +16,12 @@
     </fx:define>
     <children>
         <CustomTextField id="Username" fx:id="username" layoutX="210.0" layoutY="144.0" prefHeight="45.0" prefWidth="354.0" promptText="Username" styleClass="input" />
-
         <CustomPasswordField id="Password" fx:id="password" layoutX="210.0" layoutY="212.0" prefHeight="45.0" prefWidth="354.0" promptText="Password" styleClass="input" />
         <Button id="Login" fx:id="btnLogin" layoutX="269.0" layoutY="289.0" mnemonicParsing="false" onAction="#validateLogin" prefHeight="45.0" prefWidth="237.0" styleClass="input" />
         <Label id="header" accessibleRole="IMAGE_VIEW" alignment="CENTER" layoutX="-1.0" layoutY="1.0" prefHeight="68.0" prefWidth="775.0" text="StudyShare" textFill="#61514f">
             <font>
-
                 <Font name="Segoe UI Semibold" size="36.0" />
             </font>
-
         </Label>
     </children>
 </AnchorPane>

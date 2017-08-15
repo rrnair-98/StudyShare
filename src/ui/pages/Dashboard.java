@@ -143,22 +143,23 @@ public class Dashboard implements PageConstants,BasicController{
         //circlePopupMenu.getItems().add(new MenuItem("Dhananjya3",item));
 
 
-        Button show_dashBoard;
+        Button show_dashboard;
         Label defaultHolderTitle;
         FontAwesomeIconView show_dashboard_Icon;
 
-        show_dashBoard=new Button();
+        show_dashboard=new Button();
         defaultHolderTitle=new Label("STUDY SHARE");
         show_dashboard_Icon= new FontAwesomeIconView(FontAwesomeIcon.REORDER);
 
         defaultHolderTitle.setPrefSize(500,100);
         defaultHolderTitle.setFont(Font.font(27));
-        show_dashBoard.setGraphic(show_dashboard_Icon);
-        show_dashboard_Icon.setOpacity(0.1);
-        show_dashboard_Icon.getStyleClass().add("close_icon");
+        show_dashboard.setGraphic(show_dashboard_Icon);
+        //show_dashboard_Icon.setOpacity(0.1);
+        show_dashboard_Icon.getStyleClass().add("show_icon");
+        show_dashboard.getStyleClass().add("show_dashboard");
 
-        show_dashBoard.setPrefSize(50,50);
-        show_dashBoard.setOnAction(new EventHandler<ActionEvent>() {
+        show_dashboard.setPrefSize(50,50);
+        show_dashboard.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 dashboardHolder.setVisible(true);
@@ -166,14 +167,14 @@ public class Dashboard implements PageConstants,BasicController{
             }
         });
 
-        AnchorPane.setTopAnchor(show_dashBoard, new Double("10"));
-        AnchorPane.setLeftAnchor(show_dashBoard,new Double("10"));
+        AnchorPane.setTopAnchor(show_dashboard, new Double("10"));
+        AnchorPane.setLeftAnchor(show_dashboard,new Double("10"));
         AnchorPane.setTopAnchor(defaultHolderTitle,new Double("10"));
         AnchorPane.setLeftAnchor(defaultHolderTitle,new Double("340"));
-        defaultHolderTop.getChildren().addAll(show_dashBoard,defaultHolderTitle);
+        defaultHolderTop.getChildren().addAll(show_dashboard,defaultHolderTitle);
         System.out.println("*********************************************"+scrollableRecent.getRoot());
-        defaultHolder.setBottom(scrollableRecent.getRoot());
-        defaultHolder.setCenter(yourIp.getRoot("192.767867"));
+       // defaultHolder.setBottom(scrollableRecent.getRoot());
+        //defaultHolder.setCenter(yourIp.getRoot("192.767867"));
     }
 
     private void initDashboardHolder(){
@@ -191,8 +192,8 @@ public class Dashboard implements PageConstants,BasicController{
         showRecentPage=new JFXButton("Recents");
 
         hide_dashboard_icon = new FontAwesomeIconView(FontAwesomeIcon.REMOVE);
-        hide_dashboard_icon.getStyleClass().add("close_icon");
-        hide_dashBoard.getStyleClass().add("btn-raised");
+        hide_dashboard_icon.getStyleClass().add("hide_icon");
+        hide_dashBoard.getStyleClass().add("hide_dashboard");
         hide_dashBoard.setGraphic(hide_dashboard_icon);
         hide_dashBoard.setOnAction(new EventHandler<ActionEvent>() {
             @Override

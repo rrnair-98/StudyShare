@@ -5,5 +5,8 @@
 
 .pagination-control {
     visibility: hidden;
+}
 
+#pageManager{
+    -fx-background-color:red;
 }

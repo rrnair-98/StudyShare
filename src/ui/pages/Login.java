@@ -47,6 +47,7 @@ public class Login implements PageConstants,BasicController{
         lockIcon.setFill(Color.web("#41464b"));
         lockIcon.setStyle("-glyph-size:35px;");
         FontAwesomeIconView userIcon = new FontAwesomeIconView(FontAwesomeIcon.USER);
+        userIcon.setStyle("-glyph-size:35px;");
         userIcon.setFill(Color.web("#41464b"));
         JFXButton jfoenixButton = new JFXButton("JFoenix Button");
         password.setRight(lockIcon);
