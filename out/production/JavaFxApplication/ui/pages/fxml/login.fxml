@@ -2,26 +2,41 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.stage.Screen?>
 
 <?import org.controlsfx.control.textfield.CustomTextField?>
 <?import org.controlsfx.control.textfield.CustomPasswordField?>
-<AnchorPane id="Pane" fx:id="loginRoot" prefHeight="${screen.visualBounds.width}" prefWidth="${screen.visualBounds.width}" stylesheets="@../../css/loginStyles.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.pages.Login">
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<AnchorPane id="Pane" fx:id="loginRoot" prefHeight="${screen.visualBounds.height}" prefWidth="${screen.visualBounds.width}" stylesheets="@../../css/loginStyles.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.pages.Login">
     <fx:define>
         <Screen fx:factory="getPrimary" fx:id="screen"/>
     </fx:define>
+
     <children>
-        <CustomTextField id="Username" fx:id="username" layoutX="210.0" layoutY="144.0" prefHeight="45.0" prefWidth="354.0" promptText="Username" styleClass="input" />
-        <CustomPasswordField id="Password" fx:id="password" layoutX="210.0" layoutY="212.0" prefHeight="45.0" prefWidth="354.0" promptText="Password" styleClass="input" />
-        <Button id="Login" fx:id="btnLogin" layoutX="269.0" layoutY="289.0" mnemonicParsing="false" onAction="#validateLogin" prefHeight="45.0" prefWidth="237.0" styleClass="input" />
-        <Label id="header" accessibleRole="IMAGE_VIEW" alignment="CENTER" layoutX="-1.0" layoutY="1.0" prefHeight="68.0" prefWidth="775.0" text="StudyShare" textFill="#61514f">
+
+        <Label id="header" accessibleRole="IMAGE_VIEW" alignment="CENTER" layoutX="65.0" layoutY="1.0" prefHeight="40.0" prefWidth="700.0" text="StudyShare" textFill="#61514f">
             <font>
+
                 <Font name="Segoe UI Semibold" size="36.0" />
             </font>
+
         </Label>
+        <AnchorPane id="Pane2" fx:id="loginRoot2" layoutX="160" layoutY="130" prefHeight="450" prefWidth="500" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+            <ImageView styleClass="image-icon" layoutX="180" layoutY="1">
+                <image >
+                    <Image url="@../../../resources/user1.png" ></Image>
+                </image>
+            </ImageView>
+
+            <CustomTextField id="Username" fx:id="username" layoutX="70.0" layoutY="205.0" prefHeight="49.0" prefWidth="365.0"  styleClass="input" />
+            <Label id="usernameLabel" text="Username" layoutX="80" layoutY="215" fx:id="userlbl"/>
+            <CustomPasswordField id="Password" fx:id="password" layoutX="70.0" layoutY="290.0" prefHeight="49.0" prefWidth="354.0"  styleClass="input" />
+            <Label id="passwordLabel" text="Password" layoutX="80" layoutY="300" fx:id="passwordlbl"/>
+            <Button id="Login" fx:id="btnLogin" layoutX="130.0" layoutY="370.0" mnemonicParsing="false" onAction="#validateLogin" prefHeight="45.0" prefWidth="237.0" styleClass="input" />
+
+        </AnchorPane>
     </children>
 </AnchorPane>
