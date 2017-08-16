@@ -1,5 +1,11 @@
 package ui.pages;
 //<!--@Autor Dhiren Chotwani-->
+import de.jensd.fx.glyphs.emojione.EmojiOne;
+import de.jensd.fx.glyphs.emojione.EmojiOneView;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import de.jensd.fx.glyphs.icons525.Icons525;
+import de.jensd.fx.glyphs.icons525.Icons525View;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,6 +19,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import org.controlsfx.control.textfield.CustomPasswordField;
+import org.controlsfx.control.textfield.CustomTextField;
 
 //This class is the controller class for makeUser.fxml file and this is used to initialize the elements of makeUser.fxml
 // the essentials of this groups are:
@@ -43,20 +51,29 @@ public class MakeUser {
     @FXML
     AnchorPane myRoot;
     @FXML
-    TextField email;
+    CustomTextField email;
     @FXML
-    PasswordField userPass;
+    CustomPasswordField clientPass;
     @FXML
-    TextField groupName;
+    CustomTextField groupName;
     @FXML
-    TextField clientName;
+    CustomTextField clientName;
 
     @FXML protected  void initialize(){
         //populating list view
 //        String arr[]={"dhiren","dhiren","dhiren","dhiren","dhiren","dhiren"};
         items.addAll("Enter","your data","in the above","text-field!");
         listView.setItems(items);
+        FontAwesomeIconView groupIcon = new FontAwesomeIconView(FontAwesomeIcon.GROUP);
+        FontAwesomeIconView clientIcon=new FontAwesomeIconView(FontAwesomeIcon.USER);
+        EmojiOneView emailIcon=new EmojiOneView(EmojiOne.ENVELOPE);
+        Icons525View passIcon=new Icons525View(Icons525.LOCK);
 
+
+        groupName.setRight(groupIcon);
+        clientPass.setRight(passIcon);
+        clientName.setRight(clientIcon);
+        email.setRight(emailIcon);
     }
 
     //this method sets the stackpane
@@ -131,7 +148,7 @@ public class MakeUser {
     }
 
     public PasswordField getUserPass() {
-        return userPass;
+        return clientPass;
     }
 
     public TextField getClientName() {
@@ -156,20 +173,20 @@ public class MakeUser {
         this.addNbtn = addNbtn;
     }
 
-    public void setEmail(TextField email) {
+    public void setEmail(CustomTextField email) {
         this.email = email;
     }
 
-    public void setGroupName(TextField groupName) {
+    public void setGroupName(CustomTextField groupName) {
         this.groupName = groupName;
     }
 
-    public void setClientName(TextField clientName) {
+    public void setClientName(CustomTextField clientName) {
         this.clientName = clientName;
     }
 
-    public void setUserPass(PasswordField userPass) {
-        this.userPass = userPass;
+    public void setUserPass(CustomPasswordField userPass) {
+        this.clientPass = userPass;
     }
 
     public void setItems(ObservableList<String> items) {

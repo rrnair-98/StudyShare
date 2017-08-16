@@ -85,8 +85,8 @@ public class ManageUser implements BasicController{
         }
 
         //setting content of scrollpane is to be done here
-        groupsScrollPane.setContent(new ImageView(getClass().getResource("..//resources//images(3).jpg").toExternalForm()));
-        usersScrollPane.setContent(new ImageView(getClass().getResource("..//resources//images(3).jpg").toExternalForm()));
+//        groupsScrollPane.setContent(new ImageView(getClass().getResource("..//resources//images(3).jpg").toExternalForm()));
+//        usersScrollPane.setContent(new ImageView(getClass().getResource("..//resources//images(3).jpg").toExternalForm()));
 
         try
 
