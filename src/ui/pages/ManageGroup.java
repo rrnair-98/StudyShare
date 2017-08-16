@@ -1,5 +1,7 @@
 package ui.pages;
 //<!--@Autor Dhiren Chotwani-->
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
@@ -12,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.control.ListView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import ui.pages.constants.BasicController;
@@ -31,6 +34,8 @@ public class ManageGroup implements BasicController{
 
     //Supporting objects for all the fxmls
     FXMLLoader loader=new FXMLLoader(getClass().getResource("fxml//makeGroup.fxml"));
+    ObservableList<String> items = FXCollections.observableArrayList ();
+    ObservableList<String> items1 = FXCollections.observableArrayList ();
 
     // Objects refrenced from FXML file for this controller i.e ManageGroups.fxml
     @FXML
@@ -62,6 +67,10 @@ public class ManageGroup implements BasicController{
     @FXML
     Button delete1;
 
+    @FXML
+    ListView<String> list;
+    @FXML
+    ListView<String> list1;
 
 
     private Stage myStage=new Stage();
@@ -75,6 +84,7 @@ public class ManageGroup implements BasicController{
     {
         System.out.println("hey hello i am inside dhirens initilize");
         MakeGroup mgController=null;
+
         try{
             // This will load the makeGroup.fxml file which is used to create groups
             loader.load();
@@ -87,14 +97,21 @@ public class ManageGroup implements BasicController{
 //        edit.setDisable(true);
             delete.setDisable(true);
 
-            delete1.setDisable(true);}
+            delete1.setDisable(true);
+            items.addAll("HI","HI","HI","HI","HI","HI");
+            list.setItems(items);
+
+            items1.addAll("HI","HI","HI","HI","HI","HI");
+            list1.setItems(items1);
+
+        }
         catch (Exception e){
             System.out.println("Hello World");
         }
 
         //setting content of scrollpane is to be done here
-        groupsScrollPane.setContent(new ImageView(String.valueOf(getClass().getResource("..//resources//images(3).jpg"))));
-        filesScrollPane.setContent(new ImageView(getClass().getResource("..//resources//images(3).jpg").toExternalForm()));
+        //groupsScrollPane.setContent(new ImageView(String.valueOf(getClass().getResource("..//resources//images(3).jpg"))));
+        //filesScrollPane.setContent(new ImageView(getClass().getResource("..//resources//images(3).jpg").toExternalForm()));
 
         try
 
@@ -146,13 +163,7 @@ public class ManageGroup implements BasicController{
         return edit;
     }
 
-    public ScrollPane getGroupsScrollPane() {
-        return groupsScrollPane;
-    }
 
-    public ScrollPane getFilesScrollPane() {
-        return filesScrollPane;
-    }
 
     public void setAdd(Button add) {
         this.add = add;
@@ -172,16 +183,6 @@ public class ManageGroup implements BasicController{
 
     public void setEdit(Button edit) {
         this.edit = edit;
-    }
-
-
-
-    public void setGroupsScrollPane(ScrollPane groupsScrollPane) {
-        this.groupsScrollPane = groupsScrollPane;
-    }
-
-    public void setFilesScrollPane(ScrollPane filesScrollPane) {
-        this.filesScrollPane = filesScrollPane;
     }
 
     public Node getRoot(){

@@ -6,21 +6,22 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="myRoot"  prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.pages.MakeGroup" stylesheets="@../../css/manageGroupStyles.css">
+<?import org.controlsfx.control.textfield.CustomTextField?>
+<AnchorPane fx:id="myRoot" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.pages.MakeGroup" stylesheets="@../../css/manageGroupStyles.css">
     <children>
-        <AnchorPane layoutX="149.0" layoutY="143.0" styleClass="root" prefHeight="339.0" prefWidth="510.0" >
+        <AnchorPane layoutX="109.0" layoutY="203.0" styleClass="root" prefHeight="349.0" prefWidth="600.0" >
             <children>
 
-                <Button id="button" fx:id="addNbtn" layoutX="329.0" layoutY="269.0" onAction="#random" text="Add now"></Button>
-                <Button id="button" fx:id="addBtn" layoutX="429.0" layoutY="269.0" mnemonicParsing="false" onAction="#random" text="Add" />
-                <Label id="text" layoutX="50" layoutY="50" text="Enter Group Name:" textAlignment="CENTER" />
-                <TextField styleClass="tf" id="tf1" fx:id="groupName" layoutX="200" layoutY="47" prefHeight="20" prefWidth="250" promptText="What's your group name ?" />
+                <Button id="button" fx:id="addNbtn" layoutX="349.0" layoutY="289.0" onAction="#random" text="Add now"></Button>
+                <Button id="button" fx:id="addBtn" layoutX="449.0" layoutY="289.0" mnemonicParsing="false" onAction="#random" text="Close" />
+                <Label id="text" styleClass="labelText" layoutX="60" layoutY="50" text="Enter Group Name:" textAlignment="CENTER" />
+                <CustomTextField styleClass="tf" id="tf1" fx:id="groupName" layoutX="260" layoutY="47" prefHeight="20" prefWidth="250" promptText="What's your group name ?" />
 
-                <Label  id="text" layoutX="50" layoutY="100" text="Enter Student's email id:" textAlignment="CENTER">></Label>
-                <TextField  fx:id="email" id="tf2" styleClass="tf" layoutX="200" layoutY="97" prefHeight="20" prefWidth="250" promptText="someone@something.com" />
+                <Label  id="text" styleClass="labelText" layoutX="60" layoutY="100" text="Enter Student's email id:" textAlignment="CENTER">></Label>
+                <CustomTextField fx:id="email" id="tf2" styleClass="tf" layoutX="260" layoutY="97" prefHeight="20" prefWidth="250" promptText="someone@something.com" />
 
-                <Label id="text" layoutX="50" layoutY="150" text="Members added :" textAlignment="CENTER">></Label>
-                <ListView fx:id="listView" id="listView" layoutX="200.0" layoutY="150.0" prefHeight="111.0" prefWidth="250.0" />
+                <Label id="text" layoutX="60" layoutY="150" text="Members added :" textAlignment="CENTER">></Label>
+                <ListView fx:id="listView" id="listView" layoutX="260.0" layoutY="150.0" prefHeight="111.0" prefWidth="250.0" />
             </children>
         </AnchorPane>
     </children>

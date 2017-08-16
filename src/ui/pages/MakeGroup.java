@@ -1,17 +1,25 @@
 package ui.pages;
 
 //<!--@Autor Dhiren Chotwani-->
-        import javafx.collections.FXCollections;
-        import javafx.collections.ObservableList;
-        import javafx.event.ActionEvent;
-        import javafx.fxml.FXML;
-        import javafx.fxml.FXMLLoader;
-        import javafx.scene.control.Button;
-        import javafx.scene.control.ListView;
-        import javafx.scene.control.TextField;
-        import javafx.scene.layout.AnchorPane;
-        import javafx.scene.layout.BorderPane;
-        import javafx.scene.layout.StackPane;
+import de.jensd.fx.glyphs.emojione.EmojiOne;
+import de.jensd.fx.glyphs.emojione.EmojiOneView;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import de.jensd.fx.glyphs.weathericons.WeatherIcon;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import org.controlsfx.control.textfield.CustomTextField;
+import org.controlsfx.glyphfont.FontAwesome;
 
 //This class is the controller class for makeGroup.fxml file and this is used to initialize the elements of makeGroup.fxml
 // the essentials of this groups are:
@@ -42,9 +50,9 @@ public class MakeGroup{
 
     @FXML  AnchorPane myRoot;
     @FXML
-    TextField email;
+    CustomTextField email;
     @FXML
-    TextField groupName;
+    CustomTextField groupName;
 
     //Methods that will initialze all the necessary element for manageGroups.fxml
     @FXML protected  void initialize(){
@@ -58,9 +66,14 @@ public class MakeGroup{
         items.addAll("Enter","your data","in the above","text-field!");
 
         listView.setItems(items);
+        FontAwesomeIconView groupNameIcon=new FontAwesomeIconView(FontAwesomeIcon.GROUP);
+        groupNameIcon.setFill(Color.web("white"));
 
+        EmojiOneView emailIcon=new EmojiOneView(EmojiOne.ENVELOPE);
+        emailIcon.setFill(Color.web("white"));
 
-
+        groupName.setRight(groupNameIcon);
+        email.setRight(emailIcon);
         try{
 
 
@@ -161,11 +174,11 @@ public class MakeGroup{
         this.addNbtn = addNbtn;
     }
 
-    public void setEmail(TextField email) {
+    public void setEmail(CustomTextField email) {
         this.email = email;
     }
 
-    public void setGroupName(TextField groupName) {
+    public void setGroupName(CustomTextField groupName) {
         this.groupName = groupName;
     }
 

@@ -1,74 +1,76 @@
 .button{
-
 -fx-padding:10px;
--fx-background-radius:10px;
-
+-fx-background-radius:50px;
 }
 
 .tf{
-    -fx-prompt-text-fill:pink;
+    -fx-prompt-text-fill:white;
+    -fx-background-color: rgba(255,255,255,0.1);
+    -fx-font-weight: bold;
     -fx-text-fill:white;
-    -fx-background-color: rgb(255,255,255,0.3);
-      -fx-font-weight: bold;
-
 }
+
 #tf1{
-     -fx-background-image:url(../../resources/group.png);
-        -fx-background-repeat: no-repeat;
-    -fx-background-position:right;
+      //-fx-background-image:url(../../resources/group.png);
+      -fx-background-repeat: no-repeat;
+      -fx-background-position:right;
 
 }
-
+.labelText {
+    -fx-text-fill: #000;
+}
 #tf2{
-     -fx-background-image:url(../../resources/email.png);
-        -fx-background-repeat: no-repeat;
+     //-fx-background-image:url(../../resources/email.png);
+    -fx-background-repeat: no-repeat;
     -fx-background-position:right;
+
 
 }
 #listView .list-cell:even  {
--fx-background-color: pink;
-
+-fx-background-color: #878484;
+-fx-text-color: #fff;
 }
 
+
 .root{
--fx-background-image:url(../../resources/abc.jpg);
+-fx-background-color:#41464b;
 -fx-background-radius:50px;
--fx-border-color:yellow;
+
 }
 
 #text{
     -fx-text-fill:white;
 }
 .button:hover{
--fx-background-color:lightgray;
+-fx-background-color:#878484;
  -fx-cursor:HAND;
 -fx-text-fill:white;
 
 }
 
 .button:pressed{
-   -fx-background-image:url(../../resources/abc.jpg);
+   -fx-background-color:#878484;
 }
 
 
 #bg{
--fx-background-image:url(../../resources/abc.jpg);}
+-fx-background-color:#1b2737;}
 
 #toolbar{
 
-    -fx-background-image:url(../../resources/abc.jpg);
+    -fx-background-color: #1b2737;
 }
 #title{
-    -fx-text-fill:pink;
+    -fx-text-fill:#34c6d3;
     -fx-font-size:20;
-    -fx-font-style:ITALIC;
-
-}
-#groupsScrollPane, #filesScrollPane{
-    -fx-background:pink
-
 }
 #logo
 {
     -fx-image:url(../../resources/logo.PNG);
+
+    -fx-font-style:ITALIC;
+
+}
+ #filesScrollPane{
+    -fx-background:white;
 }
