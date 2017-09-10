@@ -23,6 +23,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Material;
 import org.controlsfx.control.StatusBar;
+import ui.core.Server;
 import ui.pages.constants.BasicController;
 import javafx.geometry.Insets;
 
@@ -42,6 +43,8 @@ public class StartSharing implements BasicController{
     StackPane myStackPane;
     StatusBar sp[] =new StatusBar[20];
     Button btn[] = new Button[20];
+    String groupName;
+    Server server;
     int i;
     float val;
     //this method is used to initialize all the necessary components before the fxml is displayed
@@ -127,6 +130,11 @@ public class StartSharing implements BasicController{
 
     //    ********** setters for this file **********
 
+
+    public  void setAll(String groupName, Server server){
+        this.groupName=groupName;
+        this.server=server;
+    }
 
     public void setStartShare(Button startShare) {
         this.startShare = startShare;

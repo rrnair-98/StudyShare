@@ -40,12 +40,12 @@ public class Share implements BasicController{
     StackPane parent;
 
     AnchorPane startSharingRoot;
-
+    StartSharing ssC=null;
     //this method is used to initialize all the necessary components before the fxml is displayed
     public void initialize()
     {
         //linking the startSharingController with ShareController
-        StartSharing ssC=null;
+
         try{
             loader.load();
             ssC=loader.getController();
@@ -74,7 +74,7 @@ public class Share implements BasicController{
                         public void handle(ActionEvent event) {
                             Button b=(Button) event.getSource();
                             Server s=new Server(b.getText());
-                            //startSharingRoot.setAll(b.getText(),s);
+                            ssC.setAll(b.getText(),s);
                             parent.getChildren().add(startSharingRoot);
                         }
                     });
