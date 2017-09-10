@@ -30,7 +30,7 @@ public class ManageUser implements BasicController{
     @FXML
     StackPane parent;
 
-    AnchorPane timepass;
+    AnchorPane myRoot;
 
 
     @FXML
@@ -92,8 +92,8 @@ public class ManageUser implements BasicController{
 
         {
             //loading the root of makeGroup.fxml in order to be added on the stack pane
-            timepass = (AnchorPane)loader.getRoot();
-            muController.setMyRoot(timepass);
+            myRoot = (AnchorPane)loader.getRoot();
+            muController.setMyRoot(myRoot);
         }catch (Exception e){}
 
     }
@@ -103,7 +103,7 @@ public class ManageUser implements BasicController{
         Button btn=(Button)ae.getSource();
         if(btn==addGroup || btn==edit ){
             borderPane.setStyle("-fx-opacity:0.5");
-            parent.getChildren().add(timepass);
+            parent.getChildren().add(myRoot);
         }
     }
 

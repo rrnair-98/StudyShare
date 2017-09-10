@@ -1,25 +1,25 @@
 package ui.pages;
 
 //<!--@Autor Dhiren Chotwani-->
-import de.jensd.fx.glyphs.emojione.EmojiOne;
-import de.jensd.fx.glyphs.emojione.EmojiOneView;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import de.jensd.fx.glyphs.weathericons.WeatherIcon;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import org.controlsfx.control.textfield.CustomTextField;
-import org.controlsfx.glyphfont.FontAwesome;
+        import de.jensd.fx.glyphs.emojione.EmojiOne;
+        import de.jensd.fx.glyphs.emojione.EmojiOneView;
+        import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+        import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+        import de.jensd.fx.glyphs.weathericons.WeatherIcon;
+        import javafx.collections.FXCollections;
+        import javafx.collections.ObservableList;
+        import javafx.event.ActionEvent;
+        import javafx.fxml.FXML;
+        import javafx.fxml.FXMLLoader;
+        import javafx.scene.control.Button;
+        import javafx.scene.control.ListView;
+        import javafx.scene.control.TextField;
+        import javafx.scene.layout.AnchorPane;
+        import javafx.scene.layout.BorderPane;
+        import javafx.scene.layout.StackPane;
+        import javafx.scene.paint.Color;
+        import org.controlsfx.control.textfield.CustomTextField;
+        import org.controlsfx.glyphfont.FontAwesome;
 
 //This class is the controller class for makeGroup.fxml file and this is used to initialize the elements of makeGroup.fxml
 // the essentials of this groups are:

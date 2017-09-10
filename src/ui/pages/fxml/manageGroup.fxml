@@ -28,7 +28,7 @@
             <Pane prefHeight="431.0" prefWidth="621.0" BorderPane.alignment="CENTER">
                 <children>
 
-                    <ListView fx:id="list" id="listView" prefHeight="200.0" prefWidth="600.0" layoutX="110" layoutY="65"/>
+                     <ListView fx:id="list" id="listView" prefHeight="200.0" prefWidth="600.0" layoutX="110" layoutY="65"/>
 
                     <ToolBar id="toolbar" layoutX="491.0" layoutY="275.0" prefHeight="40.0" prefWidth="206.0">
                         <items>
@@ -38,7 +38,7 @@
                         </items>
                     </ToolBar>
 
-                    <ListView fx:id="list1" id="listView" prefHeight="200.0" prefWidth="600.0" layoutX="110" layoutY="325" />
+                     <ListView fx:id="list1" id="listView" prefHeight="200.0" prefWidth="600.0" layoutX="110" layoutY="325" />
 
                     <ToolBar id="toolbar" layoutX="491.0" layoutY="525.0" prefHeight="40.0" prefWidth="206.0">
                         <items>

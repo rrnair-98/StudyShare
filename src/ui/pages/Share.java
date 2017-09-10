@@ -1,7 +1,5 @@
 //@author: Ashutosh
 
-
-
 package ui.pages;
 
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
@@ -9,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -23,8 +22,6 @@ import java.util.ArrayList;
 //The essentials of this class is
 //1. This class displays all the groups (in form of buttons) for the current server
 //2. By clicking on the desired group a new scene appears which displays all the users for that particular group
-
-
 
 //NOTE- THIS CLASS AND ITS CORRESPONDING FXML WILL BE USED WHEN THE SERVER CLICKS Share from dashboard options
 public class Share implements BasicController{
@@ -41,9 +38,6 @@ public class Share implements BasicController{
     StackPane parent;
 
     AnchorPane startSharingRoot;
-
-
-    ArrayList myArray = new ArrayList();
 
     //this method is used to initialize all the necessary components before the fxml is displayed
     public void initialize()
@@ -66,10 +60,14 @@ public class Share implements BasicController{
 
     //method which will create Groups(button) which is accepting arraylist
     //will be displaying buttons in column of 3
-    public void getNumberOfGroups(ArrayList arr) throws Exception {
-        int arraySize = arr.size();
+    public void getData() throws Exception {
+        //ArrayList will be initialized by database
+//        /Random random = new Random();
+        int arraySize= 9;//random.nextInt(9)+9;
+        ArrayList arr = new ArrayList();
+        for(int i=1;i<10;i++)
+            arr.add("Group Number : " + i);
         int z = 0;
-
         Button[] btn = new Button[arraySize];
         while (z < arraySize) {
             for (int i = 0; i < 3; i++) {
@@ -79,35 +77,23 @@ public class Share implements BasicController{
                     //event handler functions which loads the the panel of users list when the groups(button) are clicked
                     btn[z].setOnAction(new EventHandler<ActionEvent>() {
                         public void handle(ActionEvent event) {
-
                             parent.getChildren().add(startSharingRoot);
                         }
                     });
-
                     //populating the grid layout which displays the group names
-                    btn[z].setId("btn_style");
+                    btn[z].getStyleClass().add("all_btnBlueBackground");
+                    btn[z].setId("share_btnGroup");
+                    btn[z].setPadding(new Insets(5));
                     btn[z].setPrefHeight(150);
                     btn[z].setPrefWidth(250);
                     btn[z].setText(arr.get(z) + "");
-                    btn[z].setAlignment(Pos.BOTTOM_CENTER);
+                    btn[z].setAlignment(Pos.CENTER);
                     Grid.add(btn[z], i, j);
                     z++;
                 }
             }
         }
-        Grid.setHgap(20);
-        Grid.setVgap(20);
-    }
-
-    //event handler function for adding data to in the grid layout groups ********** TEMPORARY FUNCTIONS **********
-    @FXML
-    public void createButtons(ActionEvent ae) throws  Exception {
-
-        // do your job of creating Buttons and pass the arraylist as function parameters
-        for(int i=1;i<10;i++)
-            myArray.add("Group Number : " + i);
-        this.getNumberOfGroups(myArray);
-        System.out.println("I was clicked");
+        //Grid.setPadding(new Insets(10, 10, 10, 10)); //margins around the whole grid//
     }
 
     //    ********** getters for this file **********
@@ -122,6 +108,7 @@ public class Share implements BasicController{
     public StackPane getMyParent() {
         return parent;
     }
+
 
 //    ********** setters for this file **********
 
@@ -138,7 +125,13 @@ public class Share implements BasicController{
         this.parent = parent;
     }
 
+
     public Node getRoot(){
+        try {
+            getData();
+
+        }
+        catch (Exception e){}
         return parent;
     }
 
@@ -150,7 +143,6 @@ public class Share implements BasicController{
         /*Code for DHIREN*/
     }
 }
-
 
 
 

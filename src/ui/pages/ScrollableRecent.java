@@ -24,8 +24,8 @@ public class ScrollableRecent implements BasicController {
 
     //   Disabling scrollbars
     public void initialize(){
-        sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+      //  sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        //sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
     }
 
     //recents tab

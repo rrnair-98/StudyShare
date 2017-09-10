@@ -1,19 +1,30 @@
 //Author@: Dhiren
 
+//Author@: Dhiren
+
 package ui.pages;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Material;
 import org.controlsfx.control.StatusBar;
 import ui.pages.constants.BasicController;
+import javafx.geometry.Insets;
 
 public class StartSharing implements BasicController{
     //Supporting objects
@@ -29,20 +40,36 @@ public class StartSharing implements BasicController{
     @FXML
     AnchorPane myRoot;
     StackPane myStackPane;
-    StatusBar sp[] =new StatusBar[20] ;
-
+    StatusBar sp[] =new StatusBar[20];
+    Button btn[] = new Button[20];
+    int i;
+    float val;
     //this method is used to initialize all the necessary components before the fxml is displayed
     public void initialize(){
 
+        FontAwesomeIconView btn_back = new FontAwesomeIconView(FontAwesomeIcon.MAIL_REPLY);
+        back.setGraphic(btn_back);
+        back.setTooltip(new Tooltip("Back"));
+        btn_back.setFill(Color.web("#1b3737"));
+        btn_back.setId("share_btnBackIcon");
+
+        MaterialDesignIconView btn_share = new MaterialDesignIconView(MaterialDesignIcon.RADIO_TOWER);
+        startShare.setGraphic(btn_share);
+        startShare.setTooltip(new Tooltip("Start Sharing"));
+        btn_share.setFill(Color.web("#1b3737"));
+        btn_share.setId("share_btnShareIcon");
+
+
         //populating the status bars in the scrollpane. CHANGE 20 HERE by obtaining the total no of users in that group from db
-        for(int i=0;i<20;i++){
+        for( i=0;i<20;i++){
+            btn[i]=new Button("x");
+            btn[i].setId("share_btnCancel");
             sp[i]=new StatusBar();
             sp[i].setProgress(0.5);
             sp[i].setText("Status Bar number " + (i+1));
-            sp[i].getRightItems().add(new Button("x"));
-            sp[i].setStyle("fx-padding:0 0 10 0");
+            sp[i].getRightItems().add(btn[i]);
+            sp[i].setId("share_StatusBar");
         }
-
         //populating the list view with status bars
         items.addAll(sp);
         listView.setFixedCellSize(50);
@@ -68,7 +95,6 @@ public class StartSharing implements BasicController{
             }
         });
     }
-
 
 //    ********** getters for this file **********
 

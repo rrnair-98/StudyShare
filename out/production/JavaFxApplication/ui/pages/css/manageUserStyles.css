@@ -84,7 +84,7 @@
     -fx-text-fill:#34c6d3;
     -fx-font-size:20;
     //-fx-font-style:ITALIC;
-   // -fx-font-style:Bold;
+    -fx-font-weight:Bold;
 
 }
 #groupsScrollPane, #filesScrollPane{

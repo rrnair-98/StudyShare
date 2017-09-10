@@ -173,7 +173,7 @@ public class Dashboard implements PageConstants,BasicController{
         AnchorPane.setLeftAnchor(defaultHolderTitle,new Double("340"));
         defaultHolderTop.getChildren().addAll(show_dashboard,defaultHolderTitle);
         System.out.println("*********************************************"+scrollableRecent.getRoot());
-       // defaultHolder.setBottom(scrollableRecent.getRoot());
+        defaultHolder.setBottom(scrollableRecent.getRoot());
         //defaultHolder.setCenter(yourIp.getRoot("192.767867"));
     }
 
@@ -252,9 +252,10 @@ public class Dashboard implements PageConstants,BasicController{
 
     private void initPageHolder(){
          /*Calls and sets the reuired page to be shown*/
-         JFXButton hideCurrentPage;
+         Button hideCurrentPage;
 
-         hideCurrentPage=new JFXButton("Hide it");
+         hideCurrentPage=new Button();
+         hideCurrentPage.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.CLOSE));
 
         hideCurrentPage.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -273,8 +274,8 @@ public class Dashboard implements PageConstants,BasicController{
                 return null;
             }
         });
-        AnchorPane.setLeftAnchor(hideCurrentPage,new Double("400"));
-        AnchorPane.setTopAnchor(hideCurrentPage,new Double("100"));
+        AnchorPane.setLeftAnchor(hideCurrentPage,new Double("730"));
+        AnchorPane.setTopAnchor(hideCurrentPage,new Double("50"));
 
         pageHolder.getChildren().add(hideCurrentPage);
         pageHolder.setVisible(false);
