@@ -7,10 +7,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import ui.core.Server;
+import ui.core.services.microservices.database.DatabaseHelper;
 import ui.pages.constants.ScreenSize;
 
 public class ServerUi extends Application implements ScreenSize {
 
+    private static final  String dbPath="C:\\Users\\Dhananjay\\IdeaProjects\\StudyShare\\src\\ui\\resources\\client.db";
 
     public void start(Stage primaryStage){
         try{
@@ -24,6 +27,7 @@ public class ServerUi extends Application implements ScreenSize {
             scene.getStylesheets().add(getClass().getResource("pages//css//applicationStyles.css").toExternalForm());
             primaryStage.setScene(scene);
             primaryStage.show();
+            DatabaseHelper.init(dbPath);
         }catch(Exception e){
             System.out.println("Oops Exception occured :"+e);
         }

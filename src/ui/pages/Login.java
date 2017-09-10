@@ -11,15 +11,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.paint.Color;
+import javafx.stage.Popup;
 import javafx.util.Duration;
 import org.controlsfx.control.textfield.CustomPasswordField;
 import org.controlsfx.control.textfield.CustomTextField;
+import ui.core.services.microservices.database.DatabaseHelper;
+import ui.core.services.microservices.utilities.Housekeeper;
 import ui.pages.constants.BasicController;
 import ui.pages.constants.PageConstants;
 
@@ -164,35 +168,19 @@ public class Login implements PageConstants,BasicController{
     @FXML protected void validateLogin(ActionEvent ae)
     {
         try {
-            if (validateUsername(ae) || validatePassword(ae)) {
+            if (DatabaseHelper.verifyUser(this.username.getText(), Housekeeper.getMd5(this.password.getText()))==1) {
             /*Login sucessful*/
                 System.out.println("Value of pagekeeper"+pageKeeper);
                 pageKeeper.pageManager.setCurrentPageIndex(PageConstants.DASHBOARD_PAGE);
-            } else {
-                System.out.println("Something is wrong plz check again");
-                password.setText("");
-                username.setText("");
+                return;}
+                Alert wrong=new Alert(Alert.AlertType.ERROR);
+            wrong.setContentText("Opps");
+            wrong.showAndWait();
             /*Plz write the code to show error message @Vishal*/
-            }
         }catch(Exception e){
             System.out.println("inside call of button click of login button");
         }
 
-    }
-    /*chutya return type should be boolean*/
-    private boolean validatePassword(ActionEvent ae)
-    {
-        if((password.getText().length() == 0)||(password.getText().length() < 8))
-            return false;
-        return true;
-
-    }
-
-    private boolean validateUsername(ActionEvent ae)
-    {
-        if(username.getText().length() == 0)
-            return false;
-        return true;
     }
 
     public Node getRoot(){

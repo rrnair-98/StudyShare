@@ -11,5 +11,6 @@
     <orderEntry type="library" name="fontawesomefx-weathericons-2.0.10-5" level="project" />
     <orderEntry type="library" name="jfxtras-common-8.0-r5" level="project" />
     <orderEntry type="library" name="controlsfx-8.40.13" level="project" />
+    <orderEntry type="library" name="sqlite" level="project" />
   </component>
 </module>
