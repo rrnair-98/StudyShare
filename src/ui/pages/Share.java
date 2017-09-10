@@ -14,6 +14,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import ui.core.Server;
+import ui.core.services.microservices.database.DatabaseHelper;
 import ui.pages.constants.BasicController;
 
 import java.util.ArrayList;
@@ -63,38 +65,31 @@ public class Share implements BasicController{
     public void getData() throws Exception {
         //ArrayList will be initialized by database
 //        /Random random = new Random();
-        int arraySize= 9;//random.nextInt(9)+9;
-        ArrayList arr = new ArrayList();
-        for(int i=1;i<10;i++)
-            arr.add("Group Number : " + i);
-        int z = 0;
-        Button[] btn = new Button[arraySize];
-        while (z < arraySize) {
-            for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 3; j++) {
-                    btn[z] = new Button();
-
+        ArrayList allGroups= DatabaseHelper.readBatchName();
+        Button[] btn = new Button[allGroups.size()];
+        for(int i=0;i<allGroups.size();i++){
+                    btn[i] = new Button();
                     //event handler functions which loads the the panel of users list when the groups(button) are clicked
-                    btn[z].setOnAction(new EventHandler<ActionEvent>() {
+                    btn[i].setOnAction(new EventHandler<ActionEvent>() {
                         public void handle(ActionEvent event) {
+                            Button b=(Button) event.getSource();
+                            Server s=new Server(b.getText());
+                            //startSharingRoot.setAll(b.getText(),s);
                             parent.getChildren().add(startSharingRoot);
                         }
                     });
                     //populating the grid layout which displays the group names
-                    btn[z].getStyleClass().add("all_btnBlueBackground");
-                    btn[z].setId("share_btnGroup");
-                    btn[z].setPadding(new Insets(5));
-                    btn[z].setPrefHeight(150);
-                    btn[z].setPrefWidth(250);
-                    btn[z].setText(arr.get(z) + "");
-                    btn[z].setAlignment(Pos.CENTER);
-                    Grid.add(btn[z], i, j);
-                    z++;
+                    btn[i].getStyleClass().add("all_btnBlueBackground");
+                    btn[i].setId("share_btnGroup");
+                    btn[i].setPadding(new Insets(5));
+                    btn[i].setPrefHeight(150);
+                    btn[i].setPrefWidth(250);
+                    btn[i].setText(allGroups.get(i).toString()+ "");
+                    btn[i].setAlignment(Pos.CENTER);
+                    Grid.add(btn[i],i,i);
                 }
             }
-        }
         //Grid.setPadding(new Insets(10, 10, 10, 10)); //margins around the whole grid//
-    }
 
     //    ********** getters for this file **********
     public Button getBtn_share() {

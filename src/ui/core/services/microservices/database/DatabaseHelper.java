@@ -215,8 +215,9 @@ public class DatabaseHelper
         try
         {
             String query = "SELECT count(*) FROM USERS WHERE emailId='" + emailId + "' AND password=" + password + ";";
+            System.out.println(query);
             ArrayList verify= DatabaseHelper.dh.readValues(query);
-
+            System.out.println(verify.toString());
             if (((String)verify.get(0)).equals("0"))
                 return 0;
             else
