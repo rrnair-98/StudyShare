@@ -2,34 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/JavaFxApplication/ui/pages/Dashboard$7.class" afterPath="$PROJECT_DIR$/out/production/JavaFxApplication/ui/pages/Dashboard$7.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/JavaFxApplication/ui/pages/Dashboard$8.class" afterPath="$PROJECT_DIR$/out/production/JavaFxApplication/ui/pages/Dashboard$8.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/JavaFxApplication/ui/pages/Dashboard$9.class" afterPath="$PROJECT_DIR$/out/production/JavaFxApplication/ui/pages/Dashboard$9.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/JavaFxApplication/ui/pages/Dashboard.class" afterPath="$PROJECT_DIR$/out/production/JavaFxApplication/ui/pages/Dashboard.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/JavaFxApplication/ui/pages/DisplayYourIp.class" afterPath="$PROJECT_DIR$/out/production/JavaFxApplication/ui/pages/DisplayYourIp.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/JavaFxApplication/ui/pages/ScrollableRecent.class" afterPath="$PROJECT_DIR$/out/production/JavaFxApplication/ui/pages/ScrollableRecent.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/JavaFxApplication/ui/pages/fxml/scrollableRecent.fxml" afterPath="$PROJECT_DIR$/out/production/JavaFxApplication/ui/pages/fxml/scrollableRecent.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/ServerUi.java" afterPath="$PROJECT_DIR$/src/ui/ServerUi.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/pages/Dashboard.java" afterPath="$PROJECT_DIR$/src/ui/pages/Dashboard.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/pages/MakeGroup.java" afterPath="$PROJECT_DIR$/src/ui/pages/MakeGroup.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/pages/MakeUser.java" afterPath="$PROJECT_DIR$/src/ui/pages/MakeUser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/pages/ManageGroup.java" afterPath="$PROJECT_DIR$/src/ui/pages/ManageGroup.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/pages/ManageUser.java" afterPath="$PROJECT_DIR$/src/ui/pages/ManageUser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/pages/PageKeeper.java" afterPath="$PROJECT_DIR$/src/ui/pages/PageKeeper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/pages/ScrollableRecent.java" afterPath="$PROJECT_DIR$/src/ui/pages/ScrollableRecent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/pages/Share.java" afterPath="$PROJECT_DIR$/src/ui/pages/Share.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/pages/StartSharing.java" afterPath="$PROJECT_DIR$/src/ui/pages/StartSharing.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/pages/css/manageGroupStyles.css" afterPath="$PROJECT_DIR$/src/ui/pages/css/manageGroupStyles.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/pages/css/manageUserStyles.css" afterPath="$PROJECT_DIR$/src/ui/pages/css/manageUserStyles.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/pages/css/shareStyles.css" afterPath="$PROJECT_DIR$/src/ui/pages/css/shareStyles.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/pages/fxml/makeGroup.fxml" afterPath="$PROJECT_DIR$/src/ui/pages/fxml/makeGroup.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/pages/fxml/makeUser.fxml" afterPath="$PROJECT_DIR$/src/ui/pages/fxml/makeUser.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/pages/fxml/manageGroup.fxml" afterPath="$PROJECT_DIR$/src/ui/pages/fxml/manageGroup.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/pages/fxml/manageUser.fxml" afterPath="$PROJECT_DIR$/src/ui/pages/fxml/manageUser.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/pages/fxml/scrollableRecent.fxml" afterPath="$PROJECT_DIR$/src/ui/pages/fxml/scrollableRecent.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/pages/fxml/share.fxml" afterPath="$PROJECT_DIR$/src/ui/pages/fxml/share.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/pages/fxml/startSharing.fxml" afterPath="$PROJECT_DIR$/src/ui/pages/fxml/startSharing.fxml" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -562,7 +535,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -572,9 +544,9 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17320262" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17320262" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24432677" sideWeight="0.6703755" order="4" side_tool="false" content_ui="combo" />
