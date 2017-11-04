@@ -1,0 +1,12 @@
+/*Remove all the controls*/
+.pagination{
+   //  -fx-background-color:red;
+}
+
+.pagination-control {
+    visibility: hidden;
+}
+
+#pageManager{
+    -fx-background-color:red;
+}

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--@Autor Dhiren Chotwani-->
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import org.controlsfx.control.textfield.CustomTextField?>
+<?import org.controlsfx.control.textfield.CustomPasswordField?>
+<AnchorPane fx:id="myRoot" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.pages.MakeUser" stylesheets="@../../css/manageUserStyles.css">
+    <children>
+        <AnchorPane layoutX="75.0" layoutY="148.0" styleClass="root" prefHeight="510.0" prefWidth="670.0" >
+            <children>
+
+                <Button styleClass="manageUser_button" fx:id="addNbtn" layoutX="409.0" layoutY="389.0"  text="Add now" onAction="#createUser"></Button>
+                <Button styleClass="manageUser_button" fx:id="addBtn" layoutX="549.0" layoutY="389.0" mnemonicParsing="false"  text="close" onAction="#createUser" />
+
+                <Label styleClass="manageUser_text" layoutX="50" layoutY="70" text="Enter Group Name:" textAlignment="CENTER" />
+                <CustomTextField styleClass="manageUser_tf" id="manageUser_group" fx:id="groupName" layoutX="370" layoutY="67" prefHeight="20" prefWidth="250" promptText="What's your group name ?" />
+
+                <Label styleClass="manageUser_text" layoutX="50" layoutY="120" text="Enter Client Name:" textAlignment="CENTER" />
+                <CustomTextField styleClass="manageUser_tf" id="manageUser_name" fx:id="clientName" layoutX="370" layoutY="117" prefHeight="20" prefWidth="250" promptText="Client's name here !" />
+
+                <Label styleClass="manageUser_text" layoutX="50" layoutY="170" text="Enter Client Password:" textAlignment="CENTER" />
+                <CustomPasswordField styleClass="manageUser_tf" id="manageUser_pass" fx:id="clientPass" layoutX="370" layoutY="167" prefHeight="20" prefWidth="250" promptText="Client's password here !" />
+
+                <Label  styleClass="manageUser_text" layoutX="50" layoutY="220" text="Enter Client's email id:" textAlignment="CENTER">></Label>
+                <CustomTextField fx:id="email" id="manageUser_email" styleClass="manageUser_tf" layoutX="370" layoutY="217" prefHeight="20" prefWidth="250" promptText="someone@something.com" />
+
+                <Label styleClass="manageUser_text" layoutX="50" layoutY="270" text="Members added :" textAlignment="CENTER">></Label>
+                <ListView fx:id="listView" id="listView" layoutX="370.0" layoutY="267.0" prefHeight="111.0" prefWidth="250.0" />
+
+
+
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

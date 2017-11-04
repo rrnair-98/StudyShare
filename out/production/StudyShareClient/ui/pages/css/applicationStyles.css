@@ -1,0 +1,9 @@
+@font-face{
+    -fx-font-family:"Century Gothic","sans-serif";
+    src: url("../../resources/GOTHIC.TTF");
+}
+.root{
+    -fx-font-size: 16pt;
+    -fx-font-family: "Century Gothic";
+}
+

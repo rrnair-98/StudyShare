@@ -1,0 +1,39 @@
+
+
+
+/*Styles for default Holder*/
+#dashboardRoot{
+}
+
+#greenColor{
+    -fx-background-color:green;
+}
+
+.show_icon
+{
+    -glyph-size: 40px;
+}
+
+.show_dashboard{
+    -fx-background-color:rgba(0,0,0,0);
+}
+
+/*Styles for dashboard*/
+
+.hide_icon{
+    -glyph-size: 40px;
+}
+
+.btn-raised{
+     -fx-padding: 1em 1em;
+        -fx-font-size: 14px;
+        -jfx-button-type: RAISED;
+        //-fx-background-color: white;
+        -fx-pref-width: 48;
+        -fx-pref-height:48;
+        -fx-text-fill: black;
+}
+
+.hide_dashboard{
+    -fx-background-color:rgba(0,0,0,0);
+}
