@@ -7,9 +7,16 @@ import com.jfoenix.controls.JFXButton;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.animation.TranslateTransition;
+import javafx.beans.InvalidationListener;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import  javafx.fxml.FXML;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -21,11 +28,15 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.util.Callback;
 import javafx.util.Duration;
+import ui.core.Comms;
+import ui.core.interfaces.CommsMessages;
+import ui.core.interfaces.ServerRequestConstants;
 import ui.pages.constants.BasicController;
 import ui.pages.constants.PageConstants;
 import ui.pages.constants.PageContantsForDashboard;
+import ui.pages.utilities.ObjectCacher;
 
-public class Dashboard implements PageConstants,BasicController{
+public class Dashboard implements PageConstants,BasicController,CommsMessages{
 
     /*Required objects of pageKeeper.fxml*/
     @FXML
@@ -64,6 +75,12 @@ public class Dashboard implements PageConstants,BasicController{
     /*Supporting Objects*/
     TranslateTransition translateTransitionForDashboard;
     FXMLLoader downloadLoader,recentLoader,scrollableRecentLoader;
+    String treeString;
+    boolean showDownload=false;
+    /*Supporting object for core part*/
+    StringProperty commandProperty;
+    BooleanProperty pathRecieved;
+
 
 
     /*this method will initialize other fxml files cotrollers and add them to pageManager*/
@@ -78,6 +95,8 @@ public class Dashboard implements PageConstants,BasicController{
             initDashboardHolder();
             /*inint pages in pagination*/
             initPageHolder();
+            /*init Client core part*/
+            initClientCore();
         }catch(Exception e){
             System.out.println("Inside initiakize in pagekeeper"+e);
         }
@@ -196,10 +215,17 @@ public class Dashboard implements PageConstants,BasicController{
         showDownloadPage.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("Inside call of download page");
-                dashboardHolder.setVisible(false);
-                pageHolder.setVisible(true);
-                pageManager.setCurrentPageIndex(PageContantsForDashboard.DOWNLOAD_PAGE);
+                if(showDownload){
+                    System.out.println("Inside call of download page");
+                    dashboardHolder.setVisible(false);
+                    pageHolder.setVisible(true);
+                    pageManager.setCurrentPageIndex(PageContantsForDashboard.DOWNLOAD_PAGE);
+                }
+                else
+                {
+                    System.out.println("Files not received yet");
+                }
+
             }
         });
 
@@ -247,12 +273,45 @@ public class Dashboard implements PageConstants,BasicController{
         pageHolder.setVisible(false);
     }
 
+    private void initClientCore(){
+        Comms comms=(Comms) ObjectCacher.getObjectCacher().get(Comms.class);
+
+        comms.setServerRequest(ServerRequestConstants.LIST_REQUEST);
+
+
+
+        commandProperty=new SimpleStringProperty();
+        pathRecieved=new SimpleBooleanProperty();
+
+        commandProperty.addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                /*Code for command property*/
+            }
+        });
+
+        pathRecieved.addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(newValue==true){
+
+                    treeString=commandProperty.getValue();
+                }
+            }
+        });
+
+
+        pathRecieved.bindBidirectional(comms.getAccessibleFilePathsRecievedProperty());
+
+
+    }
+
     private Node pageSelector(int pageIndex) {
 
         if(pageIndex==PageContantsForDashboard.RECENT_PAGE){
             return recent.getRoot();
         }else if(pageIndex==PageContantsForDashboard.DOWNLOAD_PAGE)
-            return download.getRoot("Allfiles:{A:{a.java,b.java,c.java},B:{a.java,b.java,c.java},C:{a.java,b.java,c.java},D:{E:{F:{a.java,b.java,c.java}}}}");
+            return download.getRoot();
 
         return new Button("Dhananjay");
     }

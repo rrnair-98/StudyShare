@@ -12,7 +12,7 @@ import java.net.Socket;
 import java.util.List;
 import java.util.ArrayList;
 
-public class CommsDriver{
+public class CommsDriver {
     public static void main(String[] args) throws Exception{
 //Socket user=new Socket("192.168.0.145",44444);
       //  Comms c = new Comms(user.getOutputStream(), user.getInputStream());

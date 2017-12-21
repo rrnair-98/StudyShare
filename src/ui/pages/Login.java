@@ -5,17 +5,15 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import de.jensd.fx.glyphs.icons525.Icons525;
 import de.jensd.fx.glyphs.icons525.Icons525View;
-import de.jensd.fx.glyphs.octicons.OctIcon;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import org.controlsfx.control.textfield.CustomPasswordField;
@@ -91,6 +89,13 @@ public class Login implements PageConstants,BasicController{
                     username.setStyle("-fx-border-color: transparent");
                 }
                 reverseUsernameAnimate();
+            }
+        });
+
+        password.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                btnLogin.fire();
             }
         });
 
@@ -171,8 +176,10 @@ public class Login implements PageConstants,BasicController{
             /*Login sucessful*/
 
                 System.out.println("Value of pagekeeper"+pageKeeper);
-               //*********after connection if(c.checkAuthentication(username.getText(),password.getText()))
+                if(c.checkAuthentication(username.getText(),password.getText())) {
+                    System.out.println("YOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
                     pageKeeper.pageManager.setCurrentPageIndex(PageConstants.DASHBOARD_PAGE);
+                }
             } else {
                 System.out.println("Something is wrong plz check again");
                 password.setText("");
@@ -210,6 +217,5 @@ public class Login implements PageConstants,BasicController{
     }
 
     public void refreshPage(){
-
     }
 }

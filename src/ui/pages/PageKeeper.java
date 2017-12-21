@@ -84,8 +84,8 @@ public class PageKeeper implements PageConstants{
 
 
         if(pageIndex==PageConstants.IPADDRESS_PAGE){
-            //return ipAddress.getRoot();
-            return dashboard.getRoot();
+            return ipAddress.getRoot();
+            //return dashboard.getRoot();
         }
         if(pageIndex==PageConstants.LOGIN_PAGE) {
            return loginPage.getRoot();

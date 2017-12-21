@@ -2,10 +2,12 @@
 * This will initiate the application on server side and will
 * load the pagination(pageKeeper.fxml)*/
 package ui;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import ui.core.Comms;
 import ui.pages.constants.ScreenSize;

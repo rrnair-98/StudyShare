@@ -217,10 +217,11 @@ public class Comms /*implements Runnable*/ {
                 serverWriter.println(jsonCombo);
                 System.out.println("Reading");
                 String temp = serverReader.readLine();
-                //System.out.println(temp);
+                System.out.println(temp);
                 if (temp.equals("verified")) {
                     System.out.println(temp);
-                    //System.out.println(serverReader.readLine());
+                    System.out.println(serverReader.readLine());
+                    System.out.println("After this");
                     Comms.this.run();//MAKE THE THREAD ONLY IF THE CLIENT IS AUTHENTICATE
                     authenticationStatus = true;
                     return true;
